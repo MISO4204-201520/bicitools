@@ -1,0 +1,7 @@
+com\bicitools\dao\TemporalDAOLocal.class
+com\bicitools\bussines\TemporalBussinesLocal.class
+com\bicitools\entity\Temporal_.class
+com\bicitools\entity\Temporal.class
+com\bicitools\ws\EjemploService.class
+com\bicitools\bussines\TemporalBussines.class
+com\bicitools\dao\TemporalDAO.class
