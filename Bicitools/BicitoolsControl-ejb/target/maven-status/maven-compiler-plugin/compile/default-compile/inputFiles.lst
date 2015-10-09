@@ -1,6 +1,7 @@
-C:\LBD\tmp\pruebajpa\Bicitools\BicitoolsControl-ejb\src\main\java\com\bicitools\dao\TemporalDAOLocal.java
-C:\LBD\tmp\pruebajpa\Bicitools\BicitoolsControl-ejb\src\main\java\com\bicitools\ws\EjemploService.java
-C:\LBD\tmp\pruebajpa\Bicitools\BicitoolsControl-ejb\src\main\java\com\bicitools\entity\Temporal.java
-C:\LBD\tmp\pruebajpa\Bicitools\BicitoolsControl-ejb\src\main\java\com\bicitools\bussines\TemporalBussinesLocal.java
-C:\LBD\tmp\pruebajpa\Bicitools\BicitoolsControl-ejb\src\main\java\com\bicitools\dao\TemporalDAO.java
-C:\LBD\tmp\pruebajpa\Bicitools\BicitoolsControl-ejb\src\main\java\com\bicitools\bussines\TemporalBussines.java
+C:\LBD\tmp\pruebajpa\Bicitools\BicitoolsControl-ejb\src\main\java\com\bicitools\entity\Domiciliario.java
+C:\LBD\tmp\pruebajpa\Bicitools\BicitoolsControl-ejb\src\main\java\com\bicitools\dao\DomiciliarioDAOLocal.java
+C:\LBD\tmp\pruebajpa\Bicitools\BicitoolsControl-ejb\src\main\java\com\bicitools\entity\Horariodomiciliario.java
+C:\LBD\tmp\pruebajpa\Bicitools\BicitoolsControl-ejb\src\main\java\com\bicitools\dao\ServicioDomicilioDAOLocal.java
+C:\LBD\tmp\pruebajpa\Bicitools\BicitoolsControl-ejb\src\main\java\com\bicitools\entity\Serviciodomicilio.java
+C:\LBD\tmp\pruebajpa\Bicitools\BicitoolsControl-ejb\src\main\java\com\bicitools\dao\ServicioDomicilioDAO.java
+C:\LBD\tmp\pruebajpa\Bicitools\BicitoolsControl-ejb\src\main\java\com\bicitools\dao\DomiciliarioDAO.java

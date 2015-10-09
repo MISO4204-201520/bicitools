@@ -43,13 +43,13 @@
                             <bundleFileName>BicitoolsServices-war.war</bundleFileName>
                             <contextRoot>/bicitools</contextRoot>                         
                         </webModule>
-                        <jarModule>
+    <!--                    <jarModule>
                             <artifactId>BicitoolsCommon-jar</artifactId>
                             <groupId>${project.groupId}</groupId>
                             <bundleFileName>BicitoolsCommon-jar.jar</bundleFileName>
                            
                         </jarModule>
-    <!--                    <ejbModule>
+                        <ejbModule>
                             <artifactId>BicitoolsControl-ejb</artifactId>
                             <groupId>${project.groupId}</groupId>
                             <bundleFileName>BicitoolsControl-ejb.jar</bundleFileName>
