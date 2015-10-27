@@ -6,11 +6,12 @@
 		</div>
 	</div>
 	<div class="row" ng-controller="registrarController">
+		{{u | json}}
 		<form name="form" class="col-sm-offset-4 col-sm-4" ng-submit="form.$valid && submit()" novalidate>
 			<h2>Regístrese a Bicitools</h2>
 			<br>
 			<fieldset>
-				<sg-textbox  model="u.numeroIdentificacion" label="Número de identificación" required></sg-textbox>
+				<sg-numberbox  model="u.numeroIdentificacion" label="Número de identificación" required></sg-numberbox>
 				<sg-combobox model="u.tipoIdentificacion" label="Tipo de identificación" list="tiposIdentificacion" required></sg-combobox>
 				<sg-combobox model="u.tipoPerfil" label="Tipo de perfil" list="tiposPerfil" required></sg-combobox>
 				<sg-radiobuttons model="u.genero" label="Género" list="generos" required></sg-radiobuttons>

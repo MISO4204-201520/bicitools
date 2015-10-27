@@ -36,6 +36,13 @@ app.run(['$rootScope', function ($rootScope) {
 		templateUrl: getTemplateUrl('sg-passwordbox')
 	});
 
+	// ==== Number box ============================
+	$rootScope.numberboxDirective = defaultDirective({
+		scope: formScope,
+		templateUrl: getTemplateUrl('sg-numberbox')
+	});
+
+
 	// ==== Datetime ===============================
 	$rootScope.datetimeDirective = defaultDirective({
 		scope: formScope,

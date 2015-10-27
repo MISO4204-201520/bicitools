@@ -57,6 +57,7 @@ app.run(["$q", "$rootScope", "$state", "$http", "$urlRouter", function ($q, $roo
         {
             name: "home",
             parent: 'menu-footer',
+            controller: "HomeController"
             url: "home",
             templateUrl : "views/home.html"
         },
@@ -187,31 +188,6 @@ app.run(["$q", "$rootScope", "$state", "$http", "$urlRouter", function ($q, $roo
             parent: 'menu-footer',
             url: "domicilios/registrar-servicio",
             templateUrl : "views/modulos/domicilios/registrar-servicio.html"
-        },
-        // ==== SWAS ==========================================
-        {
-            name: "swas-index",
-            parent: "index",
-            url: "swas/usuarios",
-            templateUrl : "views/swas/usuarios/index.html"
-        },
-        {
-            name: "swas-nuevo-usuario",
-            parent: "index",
-            url: "swas/nuevo-usuario",
-            templateUrl : "views/swas/usuarios/nuevo-usuario.html"
-        },
-        {
-            name: "swas-persona",
-            parent: "index",
-            url: "swas/persona",
-            templateUrl : "views/swas/usuarios/persona-form.html"
-        },
-        {
-            name: "swas-usu-ejecutor",
-            parent: "index",
-            url: "swas/usuario-ejecutor",
-            templateUrl : "views/swas/usuarios/usu-ejecutor.html"
         }
     ];
     states.forEach(function(state){
@@ -225,11 +201,18 @@ app.run(["$q", "$rootScope", "$state", "$http", "$urlRouter", function ($q, $roo
 
 
 app.config(["$stateProvider", "$httpProvider", "$locationProvider", "$urlMatcherFactoryProvider", "$urlRouterProvider",
-    function ($stateProvider, $httpProvider, $locationProvider, $urlMatcherFactoryProvider, $urlRouterProvider) {
-        $urlRouterProvider.deferIntercept();
-        $urlRouterProvider.otherwise("/404");
-        $urlMatcherFactoryProvider.caseInsensitive(true);
-        $locationProvider.hashPrefix("!").html5Mode(true);
-        $stateProviderRef = $stateProvider;
-        //$httpProvider.interceptors.push("AuthHttpResponseInterceptor");
-    }]);
+function ($stateProvider, $httpProvider, $locationProvider, $urlMatcherFactoryProvider, $urlRouterProvider) {
+    $urlRouterProvider.deferIntercept();
+    $urlRouterProvider.otherwise("/404");
+    $urlMatcherFactoryProvider.caseInsensitive(true);
+    $locationProvider.hashPrefix("!").html5Mode(true);
+    $stateProviderRef = $stateProvider;
+    //$httpProvider.interceptors.push("AuthHttpResponseInterceptor");
+}]);
+
+
+app.filter('num', function() {
+    return function(input) {
+        return parseInt(input, 10);
+    };
+});

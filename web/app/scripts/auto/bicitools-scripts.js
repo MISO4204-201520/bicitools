@@ -57,6 +57,7 @@ app.run(["$q", "$rootScope", "$state", "$http", "$urlRouter", function ($q, $roo
         {
             name: "home",
             parent: 'menu-footer',
+            controller: "HomeController"
             url: "home",
             templateUrl : "views/home.html"
         },
@@ -187,31 +188,6 @@ app.run(["$q", "$rootScope", "$state", "$http", "$urlRouter", function ($q, $roo
             parent: 'menu-footer',
             url: "domicilios/registrar-servicio",
             templateUrl : "views/modulos/domicilios/registrar-servicio.html"
-        },
-        // ==== SWAS ==========================================
-        {
-            name: "swas-index",
-            parent: "index",
-            url: "swas/usuarios",
-            templateUrl : "views/swas/usuarios/index.html"
-        },
-        {
-            name: "swas-nuevo-usuario",
-            parent: "index",
-            url: "swas/nuevo-usuario",
-            templateUrl : "views/swas/usuarios/nuevo-usuario.html"
-        },
-        {
-            name: "swas-persona",
-            parent: "index",
-            url: "swas/persona",
-            templateUrl : "views/swas/usuarios/persona-form.html"
-        },
-        {
-            name: "swas-usu-ejecutor",
-            parent: "index",
-            url: "swas/usuario-ejecutor",
-            templateUrl : "views/swas/usuarios/usu-ejecutor.html"
         }
     ];
     states.forEach(function(state){
@@ -225,14 +201,21 @@ app.run(["$q", "$rootScope", "$state", "$http", "$urlRouter", function ($q, $roo
 
 
 app.config(["$stateProvider", "$httpProvider", "$locationProvider", "$urlMatcherFactoryProvider", "$urlRouterProvider",
-    function ($stateProvider, $httpProvider, $locationProvider, $urlMatcherFactoryProvider, $urlRouterProvider) {
-        $urlRouterProvider.deferIntercept();
-        $urlRouterProvider.otherwise("/404");
-        $urlMatcherFactoryProvider.caseInsensitive(true);
-        $locationProvider.hashPrefix("!").html5Mode(true);
-        $stateProviderRef = $stateProvider;
-        //$httpProvider.interceptors.push("AuthHttpResponseInterceptor");
-    }]);
+function ($stateProvider, $httpProvider, $locationProvider, $urlMatcherFactoryProvider, $urlRouterProvider) {
+    $urlRouterProvider.deferIntercept();
+    $urlRouterProvider.otherwise("/404");
+    $urlMatcherFactoryProvider.caseInsensitive(true);
+    $locationProvider.hashPrefix("!").html5Mode(true);
+    $stateProviderRef = $stateProvider;
+    //$httpProvider.interceptors.push("AuthHttpResponseInterceptor");
+}]);
+
+
+app.filter('num', function() {
+    return function(input) {
+        return parseInt(input, 10);
+    };
+});
 
 
 app.controller('domiciliarioController', ['$scope', '$http', '$state',
@@ -345,6 +328,70 @@ function($scope, $http, $state) {
 		});
 	};
 }]);
+
+app.controller('indexController', ['$scope', '$http', '$state', '$localStorage', function($scope, $http, $state, $localStorage) {
+    $scope.$storage = $localStorage;
+
+    var domain = "http://192.168.0.11:8080/"; //"http://localhost:8080/";
+
+    $scope.setUsersPath = function(path) {
+        return domain + "bicitoolsgu/webresources/gestionusuario/" + path;
+    }
+
+    $scope.setRoutesPath = function(path) {
+        return domain + "bicitoolsRU/webresources/myresource/" + path;
+    }
+
+    $scope.setCommunicationPath = function(path) {
+        return domain + "bicitoolsco/serviciosRest/" + path;
+    }
+
+    $scope.setDomiciliosPath = function(path) {
+        return domain + "bicitoolsdo/serviciosRest/domicilios/" + path;
+    }
+
+    function invokeService(promise, action){
+        return promise.then(
+            function(response) {
+                console.log('\nData:');
+                console.log(response.data);
+
+                if(response.data.codigo === 0 || response.data.code === 0){
+                    action(response);
+                } else {
+                    console.log('Código diferente a cero - ' + response.descripcion);
+                    //$scope.error = "Error: " + response.data.descripcion;
+                }
+                alert(response.data.descripcion);
+            }, function(response){
+                console.log('SERVICE ERROR');
+                console.log(response);
+                //$scope.error = "Error en la invocación";
+                //window.location.hash = '#body';
+            });
+    }
+
+    $scope.post = function(path, input, action){
+        console.log(path);
+        console.log(input);
+        return invokeService( $http.post(path, input), action );
+    }
+
+    $scope.get = function(path, action){
+        console.log(path);
+        return invokeService( $http.get(path), action );
+    }
+
+    $scope.bodyStyle = 'bg-black-dark-blue';
+    $scope.setBodyStyle = function(style){
+        $scope.bodyStyle = style;
+    }
+
+    $scope.setMock = function(action){
+        $scope.invokeMock = action;
+    };
+}]);
+
 
 app.controller('indexController', ['$scope', '$http', '$state', '$localStorage', function($scope, $http, $state, $localStorage) {
     $scope.$storage = $localStorage;
@@ -800,6 +847,13 @@ app.run(['$rootScope', function ($rootScope) {
 		templateUrl: getTemplateUrl('sg-passwordbox')
 	});
 
+	// ==== Number box ============================
+	$rootScope.numberboxDirective = defaultDirective({
+		scope: formScope,
+		templateUrl: getTemplateUrl('sg-numberbox')
+	});
+
+
 	// ==== Datetime ===============================
 	$rootScope.datetimeDirective = defaultDirective({
 		scope: formScope,
@@ -865,6 +919,10 @@ app.directive('sgCombobox', ['$rootScope', function($rootScope) {
 
 app.directive('sgDatetime', ['$rootScope', function($rootScope) {
     return $rootScope.datetimeDirective;
+}]);
+
+app.directive('sgNumberbox', ['$rootScope', function($rootScope) {
+    return $rootScope.numberboxDirective;
 }]);
 
 app.directive('sgPasswordbox', ['$rootScope', function($rootScope) {
