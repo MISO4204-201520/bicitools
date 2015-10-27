@@ -1,0 +1,712 @@
+[
+    {
+        "name": "Servicios",
+        "url": "servicios",
+        "parent": "Home",
+        "data": {
+            "pageTitle": "Servicios",
+            "barController": "ServiciosIndexController"
+        },
+        "views": {
+            "barraAcciones": {
+                "templateUrl": "/App/Index/Home_Views/BarraAcciones.html"
+            },
+            "contenedorPrincipal": {
+                "templateUrl": "Usuarios/Servicios/Index",
+                "controller": "ServiciosIndexController"
+            }
+        },
+        "params": {
+        }
+    },
+    {
+        "name": "ServiciosDetalles",
+        "url": "servicios/d/:id",
+        "parent": "Home",
+        "data": {
+            "pageTitle": "Servicios",
+            "barController": "ServiciosDetallesController"
+        },
+        "views": {
+            "barraAcciones": {
+                "templateUrl": "/App/Index/Home_Views/BarraAcciones.html"
+            },
+            "contenedorPrincipal": {
+                "templateUrl": "Usuarios/Servicios/Detalles",
+                "controller": "ServiciosDetallesController"
+            }
+        },
+        "params": {
+        }
+    },
+    {
+        "name": "ServiciosCrear",
+        "url": "servicios/c",
+        "parent": "Home",
+        "data": {
+            "pageTitle": "Servicios",
+            "barController": "ServiciosCrearController"
+        },
+        "views": {
+            "barraAcciones": {
+                "templateUrl": "/App/Index/Home_Views/BarraAcciones.html"
+            },
+            "contenedorPrincipal": {
+                "templateUrl": "Usuarios/Servicios/Crear",
+                "controller": "ServiciosCrearController"
+            }
+        },
+        "params": {
+        }
+    },
+    {
+        "name": "ServiciosEditar",
+        "url": "servicios/e/:id",
+        "parent": "Home",
+        "data": {
+            "pageTitle": "Servicios",
+            "barController": "ServiciosEditarController"
+        },
+        "views": {
+            "barraAcciones": {
+                "templateUrl": "/App/Index/Home_Views/BarraAcciones.html"
+            },
+            "contenedorPrincipal": {
+                "templateUrl": "Usuarios/Servicios/Editar",
+                "controller": "ServiciosEditarController"
+            }
+        },
+        "params": {
+        }
+    },
+    {
+        "name": "Usuarios",
+        "url": "usuarios",
+        "parent": "Home",
+        "data": {
+            "pageTitle": "Usuarios",
+            "barController": "UsuariosIndexController"
+        },
+        "views": {
+            "barraAcciones": {
+                "templateUrl": "/App/Index/Home_Views/BarraAcciones.html"
+            },
+            "contenedorPrincipal": {
+                "templateUrl": "Usuarios/Usuarios/Index",
+                "controller": "UsuariosIndexController"
+            }
+        },
+        "params": {
+        }
+    },
+    {
+        "name": "UsuariosDetalles",
+        "url": "usuarios/d/:id",
+        "parent": "Home",
+        "data": {
+            "pageTitle": "Usuarios",
+            "barController": "UsuariosDetallesController"
+        },
+        "views": {
+            "barraAcciones": {
+                "templateUrl": "/App/Index/Home_Views/BarraAcciones.html"
+            },
+            "contenedorPrincipal": {
+                "templateUrl": "Usuarios/Usuarios/Detalles",
+                "controller": "UsuariosDetallesController"
+            }
+        },
+        "params": {
+        }
+    },
+    {
+        "name": "UsuariosCrear",
+        "url": "usuarios/c",
+        "parent": "Home",
+        "data": {
+            "pageTitle": "Usuarios",
+            "barController": "UsuariosCrearController"
+        },
+        "views": {
+            "barraAcciones": {
+                "templateUrl": "/App/Index/Home_Views/BarraAcciones.html"
+            },
+            "contenedorPrincipal": {
+                "templateUrl": "Usuarios/Usuarios/Crear",
+                "controller": "UsuariosCrearController"
+            }
+        },
+        "params": {
+        }
+    },
+    {
+        "name": "UsuariosEditar",
+        "url": "usuarios/e/:id",
+        "parent": "Home",
+        "data": {
+            "pageTitle": "Usuarios",
+            "barController": "UsuariosEditarController"
+        },
+        "views": {
+            "barraAcciones": {
+                "templateUrl": "/App/Index/Home_Views/BarraAcciones.html"
+            },
+            "contenedorPrincipal": {
+                "templateUrl": "Usuarios/Usuarios/Editar",
+                "controller": "UsuariosEditarController"
+            }
+        },
+        "params": {
+        }
+    },
+    {
+        "name": "Home",
+        "url": "/",
+        "parent": "",
+        "data": {
+            "pageTitle": "Página principal",
+            "barController": "HomeIndexController"
+        },
+        "views": {
+            "pagina": {
+                "templateUrl": "Index/Home/Index",
+                "controller": "HomeIndexController"
+            }
+        },
+        "params": {
+        }
+    },
+    {
+        "name": "HomeAbout",
+        "url": "about",
+        "parent": "Home",
+        "data": {
+            "pageTitle": "Acerca de",
+            "barController": "HomeAboutController"
+        },
+        "views": {
+            "barraAcciones": {
+                "templateUrl": "/App/Index/Home_Views/BarraAcciones.html"
+            },
+            "contenedorPrincipal": {
+                "templateUrl": "Index/Home/About",
+                "controller": "HomeAboutController"
+            }
+        },
+        "params": {
+        }
+    },
+    {
+        "name": "HomeContact",
+        "url": "contact",
+        "parent": "Home",
+        "data": {
+            "pageTitle": "Contacto",
+            "barController": "HomeContactController"
+        },
+        "views": {
+            "barraAcciones": {
+                "templateUrl": "/App/Index/Home_Views/BarraAcciones.html"
+            },
+            "contenedorPrincipal": {
+                "templateUrl": "Index/Home/Contact",
+                "controller": "HomeContactController"
+            }
+        },
+        "params": {
+        }
+    },
+    {
+        "name": "Humanos",
+        "url": "humanos",
+        "parent": "Home",
+        "data": {
+            "pageTitle": "Humanos",
+            "barController": "HumanosIndexController"
+        },
+        "views": {
+            "barraAcciones": {
+                "templateUrl": "/App/Index/Home_Views/BarraAcciones.html"
+            },
+            "contenedorPrincipal": {
+                "templateUrl": "Tests/Humanos/Index",
+                "controller": "HumanosIndexController"
+            }
+        },
+        "params": {
+        }
+    },
+    {
+        "name": "Roles",
+        "url": "roles",
+        "parent": "Home",
+        "data": {
+            "pageTitle": "Roles",
+            "barController": "RolesIndexController"
+        },
+        "views": {
+            "barraAcciones": {
+                "templateUrl": "/App/Index/Home_Views/BarraAcciones.html"
+            },
+            "contenedorPrincipal": {
+                "templateUrl": "Usuarios/Roles/Index",
+                "controller": "RolesIndexController"
+            }
+        },
+        "params": {
+        }
+    },
+    {
+        "name": "RolesDetalles",
+        "url": "roles/d/:id",
+        "parent": "Home",
+        "data": {
+            "pageTitle": "Roles",
+            "barController": "RolesDetallesController"
+        },
+        "views": {
+            "barraAcciones": {
+                "templateUrl": "/App/Index/Home_Views/BarraAcciones.html"
+            },
+            "contenedorPrincipal": {
+                "templateUrl": "Usuarios/Roles/Detalles",
+                "controller": "RolesDetallesController"
+            }
+        },
+        "params": {
+        }
+    },
+    {
+        "name": "RolesCrear",
+        "url": "roles/c",
+        "parent": "Home",
+        "data": {
+            "pageTitle": "Roles",
+            "barController": "RolesCrearController"
+        },
+        "views": {
+            "barraAcciones": {
+                "templateUrl": "/App/Index/Home_Views/BarraAcciones.html"
+            },
+            "contenedorPrincipal": {
+                "templateUrl": "Usuarios/Roles/Crear",
+                "controller": "RolesCrearController"
+            }
+        },
+        "params": {
+        }
+    },
+    {
+        "name": "RolesEditar",
+        "url": "roles/e/:id",
+        "parent": "Home",
+        "data": {
+            "pageTitle": "Roles",
+            "barController": "RolesEditarController"
+        },
+        "views": {
+            "barraAcciones": {
+                "templateUrl": "/App/Index/Home_Views/BarraAcciones.html"
+            },
+            "contenedorPrincipal": {
+                "templateUrl": "Usuarios/Roles/Editar",
+                "controller": "RolesEditarController"
+            }
+        },
+        "params": {
+        }
+    },
+    {
+        "name": "AccountLogin",
+        "url": "/login?returnUrl",
+        "parent": "",
+        "data": {
+            "pageTitle": "Account",
+            "barController": "AccountLoginController"
+        },
+        "views": {
+            "pagina": {
+                "templateUrl": "Index/Account/Login",
+                "controller": "AccountLoginController"
+            }
+        },
+        "params": {
+        }
+    },
+    {
+        "name": "AccountUsuarioEstaAutenticado",
+        "url": "",
+        "parent": "Home",
+        "data": {
+            "pageTitle": "Account",
+            "barController": "AccountUsuarioEstaAutenticadoController"
+        },
+        "views": {
+            "barraAcciones": {
+                "templateUrl": "/App/Index/Home_Views/BarraAcciones.html"
+            },
+            "contenedorPrincipal": {
+                "templateUrl": "Index/Account/UsuarioEstaAutenticado",
+                "controller": "AccountUsuarioEstaAutenticadoController"
+            }
+        },
+        "params": {
+        }
+    },
+    {
+        "name": "AccountLogout",
+        "url": "",
+        "parent": "Home",
+        "data": {
+            "pageTitle": "Account",
+            "barController": "AccountLogoutController"
+        },
+        "views": {
+            "barraAcciones": {
+                "templateUrl": "/App/Index/Home_Views/BarraAcciones.html"
+            },
+            "contenedorPrincipal": {
+                "templateUrl": "Index/Account/Logout",
+                "controller": "AccountLogoutController"
+            }
+        },
+        "params": {
+        }
+    },
+    {
+        "name": "AccountRegister",
+        "url": "Index/Account/Register",
+        "parent": "Home",
+        "data": {
+            "pageTitle": "Account",
+            "barController": "AccountRegisterController"
+        },
+        "views": {
+            "barraAcciones": {
+                "templateUrl": "/App/Index/Home_Views/BarraAcciones.html"
+            },
+            "contenedorPrincipal": {
+                "templateUrl": "Index/Account/Register",
+                "controller": "AccountRegisterController"
+            }
+        },
+        "params": {
+        }
+    },
+    {
+        "name": "AccountForgotPassword",
+        "url": "Index/Account/ForgotPassword",
+        "parent": "Home",
+        "data": {
+            "pageTitle": "Account",
+            "barController": "AccountForgotPasswordController"
+        },
+        "views": {
+            "barraAcciones": {
+                "templateUrl": "/App/Index/Home_Views/BarraAcciones.html"
+            },
+            "contenedorPrincipal": {
+                "templateUrl": "Index/Account/ForgotPassword",
+                "controller": "AccountForgotPasswordController"
+            }
+        },
+        "params": {
+        }
+    },
+    {
+        "name": "AccountForgotPasswordConfirmation",
+        "url": "Index/Account/ForgotPasswordConfirmation",
+        "parent": "Home",
+        "data": {
+            "pageTitle": "Account",
+            "barController": "AccountForgotPasswordConfirmationController"
+        },
+        "views": {
+            "barraAcciones": {
+                "templateUrl": "/App/Index/Home_Views/BarraAcciones.html"
+            },
+            "contenedorPrincipal": {
+                "templateUrl": "Index/Account/ForgotPasswordConfirmation",
+                "controller": "AccountForgotPasswordConfirmationController"
+            }
+        },
+        "params": {
+        }
+    },
+    {
+        "name": "AccountResetPassword",
+        "url": "Index/Account/ResetPassword/:code",
+        "parent": "Home",
+        "data": {
+            "pageTitle": "Account",
+            "barController": "AccountResetPasswordController"
+        },
+        "views": {
+            "barraAcciones": {
+                "templateUrl": "/App/Index/Home_Views/BarraAcciones.html"
+            },
+            "contenedorPrincipal": {
+                "controller": "AccountResetPasswordController"
+            }
+        },
+        "params": {
+        }
+    },
+    {
+        "name": "Manage",
+        "url": "Tests/Manage/Index/:message",
+        "parent": "Home",
+        "data": {
+            "pageTitle": "Manage",
+            "barController": "ManageIndexController"
+        },
+        "views": {
+            "barraAcciones": {
+                "templateUrl": "/App/Index/Home_Views/BarraAcciones.html"
+            },
+            "contenedorPrincipal": {
+                "controller": "ManageIndexController"
+            }
+        },
+        "params": {
+        }
+    },
+    {
+        "name": "ManageRemoveLogin",
+        "url": "Tests/Manage/RemoveLogin",
+        "parent": "Home",
+        "data": {
+            "pageTitle": "Manage",
+            "barController": "ManageRemoveLoginController"
+        },
+        "views": {
+            "barraAcciones": {
+                "templateUrl": "/App/Index/Home_Views/BarraAcciones.html"
+            },
+            "contenedorPrincipal": {
+                "templateUrl": "Tests/Manage/RemoveLogin",
+                "controller": "ManageRemoveLoginController"
+            }
+        },
+        "params": {
+        }
+    },
+    {
+        "name": "ManageAddPhoneNumber",
+        "url": "Tests/Manage/AddPhoneNumber",
+        "parent": "Home",
+        "data": {
+            "pageTitle": "Manage",
+            "barController": "ManageAddPhoneNumberController"
+        },
+        "views": {
+            "barraAcciones": {
+                "templateUrl": "/App/Index/Home_Views/BarraAcciones.html"
+            },
+            "contenedorPrincipal": {
+                "templateUrl": "Tests/Manage/AddPhoneNumber",
+                "controller": "ManageAddPhoneNumberController"
+            }
+        },
+        "params": {
+        }
+    },
+    {
+        "name": "ManageRememberBrowser",
+        "url": "",
+        "parent": "Home",
+        "data": {
+            "pageTitle": "Manage",
+            "barController": "ManageRememberBrowserController"
+        },
+        "views": {
+            "barraAcciones": {
+                "templateUrl": "/App/Index/Home_Views/BarraAcciones.html"
+            },
+            "contenedorPrincipal": {
+                "templateUrl": "Tests/Manage/RememberBrowser",
+                "controller": "ManageRememberBrowserController"
+            }
+        },
+        "params": {
+        }
+    },
+    {
+        "name": "ManageForgetBrowser",
+        "url": "",
+        "parent": "Home",
+        "data": {
+            "pageTitle": "Manage",
+            "barController": "ManageForgetBrowserController"
+        },
+        "views": {
+            "barraAcciones": {
+                "templateUrl": "/App/Index/Home_Views/BarraAcciones.html"
+            },
+            "contenedorPrincipal": {
+                "templateUrl": "Tests/Manage/ForgetBrowser",
+                "controller": "ManageForgetBrowserController"
+            }
+        },
+        "params": {
+        }
+    },
+    {
+        "name": "ManageEnableTFA",
+        "url": "",
+        "parent": "Home",
+        "data": {
+            "pageTitle": "Manage",
+            "barController": "ManageEnableTFAController"
+        },
+        "views": {
+            "barraAcciones": {
+                "templateUrl": "/App/Index/Home_Views/BarraAcciones.html"
+            },
+            "contenedorPrincipal": {
+                "templateUrl": "Tests/Manage/EnableTFA",
+                "controller": "ManageEnableTFAController"
+            }
+        },
+        "params": {
+        }
+    },
+    {
+        "name": "ManageDisableTFA",
+        "url": "",
+        "parent": "Home",
+        "data": {
+            "pageTitle": "Manage",
+            "barController": "ManageDisableTFAController"
+        },
+        "views": {
+            "barraAcciones": {
+                "templateUrl": "/App/Index/Home_Views/BarraAcciones.html"
+            },
+            "contenedorPrincipal": {
+                "templateUrl": "Tests/Manage/DisableTFA",
+                "controller": "ManageDisableTFAController"
+            }
+        },
+        "params": {
+        }
+    },
+    {
+        "name": "ManageVerifyPhoneNumber",
+        "url": "Tests/Manage/VerifyPhoneNumber/:phoneNumber",
+        "parent": "Home",
+        "data": {
+            "pageTitle": "Manage",
+            "barController": "ManageVerifyPhoneNumberController"
+        },
+        "views": {
+            "barraAcciones": {
+                "templateUrl": "/App/Index/Home_Views/BarraAcciones.html"
+            },
+            "contenedorPrincipal": {
+                "controller": "ManageVerifyPhoneNumberController"
+            }
+        },
+        "params": {
+        }
+    },
+    {
+        "name": "ManageRemovePhoneNumber",
+        "url": "Tests/Manage/RemovePhoneNumber",
+        "parent": "Home",
+        "data": {
+            "pageTitle": "Manage",
+            "barController": "ManageRemovePhoneNumberController"
+        },
+        "views": {
+            "barraAcciones": {
+                "templateUrl": "/App/Index/Home_Views/BarraAcciones.html"
+            },
+            "contenedorPrincipal": {
+                "templateUrl": "Tests/Manage/RemovePhoneNumber",
+                "controller": "ManageRemovePhoneNumberController"
+            }
+        },
+        "params": {
+        }
+    },
+    {
+        "name": "ManageChangePassword",
+        "url": "Tests/Manage/ChangePassword",
+        "parent": "Home",
+        "data": {
+            "pageTitle": "Manage",
+            "barController": "ManageChangePasswordController"
+        },
+        "views": {
+            "barraAcciones": {
+                "templateUrl": "/App/Index/Home_Views/BarraAcciones.html"
+            },
+            "contenedorPrincipal": {
+                "templateUrl": "Tests/Manage/ChangePassword",
+                "controller": "ManageChangePasswordController"
+            }
+        },
+        "params": {
+        }
+    },
+    {
+        "name": "ManageSetPassword",
+        "url": "Tests/Manage/SetPassword",
+        "parent": "Home",
+        "data": {
+            "pageTitle": "Manage",
+            "barController": "ManageSetPasswordController"
+        },
+        "views": {
+            "barraAcciones": {
+                "templateUrl": "/App/Index/Home_Views/BarraAcciones.html"
+            },
+            "contenedorPrincipal": {
+                "templateUrl": "Tests/Manage/SetPassword",
+                "controller": "ManageSetPasswordController"
+            }
+        },
+        "params": {
+        }
+    },
+    {
+        "name": "ManageManageLogins",
+        "url": "Tests/Manage/ManageLogins/:message",
+        "parent": "Home",
+        "data": {
+            "pageTitle": "Manage",
+            "barController": "ManageManageLoginsController"
+        },
+        "views": {
+            "barraAcciones": {
+                "templateUrl": "/App/Index/Home_Views/BarraAcciones.html"
+            },
+            "contenedorPrincipal": {
+                "controller": "ManageManageLoginsController"
+            }
+        },
+        "params": {
+        }
+    },
+    {
+        "name": "ManageLinkLoginCallback",
+        "url": "Tests/Manage/LinkLoginCallback",
+        "parent": "Home",
+        "data": {
+            "pageTitle": "Manage",
+            "barController": "ManageLinkLoginCallbackController"
+        },
+        "views": {
+            "barraAcciones": {
+                "templateUrl": "/App/Index/Home_Views/BarraAcciones.html"
+            },
+            "contenedorPrincipal": {
+                "templateUrl": "Tests/Manage/LinkLoginCallback",
+                "controller": "ManageLinkLoginCallbackController"
+            }
+        },
+        "params": {
+        }
+    }
+]

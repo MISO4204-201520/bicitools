@@ -1,0 +1,24 @@
+<div class="container" ng-controller="invitarARutaController">
+	<div class="row">
+		<div class="col-sm-offset-4 col-sm-4">
+
+			<h2>Invitar a ruta</h2>
+			<form name="form" ng-submit="form.$valid && submit()" novalidate>
+				<div class="form-group" ng-repeat="u in users track by $index">
+					<input type="text" class="form-control" ng-model="u" required>
+				</div>
+				<div class="clearfix">
+					<div class=" pull-right">
+						<button type="button" class="btn btn-success " ng-click="addUser()">Adicionar</button>
+					</div>	
+				</div>
+				
+				<hr>
+				<div class="form-group pull-right">
+					<button type="button" class="btn btn-default" ui-sref="consultar-rutas">Cancelar</button>
+					<button type="submit" class="btn btn-primary">Invitar</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>

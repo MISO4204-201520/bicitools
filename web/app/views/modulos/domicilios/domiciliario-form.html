@@ -1,0 +1,61 @@
+<div class="container" ng-controller="domiciliarioController">
+	<form name="form" ng-submit="form.$valid && submit()" novalidate>
+		<div class="row">
+			<div class="col-sm-offset-2 col-sm-8">
+				<h2>Inscribir domiciliario</h2>
+				<br>
+			</div>
+		</div>
+
+
+		<div class="col-sm-offset-4 col-sm-4">
+			<zx-textbox  model="d.usuario" label="Usuario" required></zx-textbox>
+			<zx-textbox  model="d.direccion" label="Dirección" required></zx-textbox>
+			<zx-textbox  model="d.email" label="Dirección de E-mail" required></zx-textbox>
+		</div>
+
+		<div class="row">
+			<div class="col-sm-offset-2 col-sm-8">
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th>Días de la semana</th>
+							<th>Hora de apertura</th>
+							<th>Hora de cierre</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="h in d.horario">
+							<td>
+								<label class="checkbox-inline" ng-repeat="dia in days">
+									<input type="checkbox" ng-model="h.dia[dia.value]" value="dia.value">  {{dia.name}}
+								</label>
+							</td>
+							<td class="tdcentered">
+								<select class="form-control" ng-options="o as o for o in hours" ng-model="h.inicio" required></select>
+							</td>
+							<td class="tdcentered">
+								<select class="form-control" ng-options="o as o for o in hours" ng-model="h.fin" required></select>
+							</td>
+							<td>
+								<button type="button" class="btn btn-danger btn-close" ng-click="removeSchedule($index)">
+									<i class="fa fa-times"></i>
+								</button>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<button type="button" class="btn btn-success pull-right" ng-click="addSchedule()">Adicionar</button>
+				<br>
+				<br>
+				<hr>
+			</div>
+		</div>
+
+		<div class="row">
+			<button type="button" class="col-sm-offset-4 col-sm-2 btn btn-default" ui-sref="domicilios">Cancelar</button>
+			<button type="submit" class="col-sm-2 btn btn-primary">Crear cuenta</button>
+		</div>
+	</form>
+</div>

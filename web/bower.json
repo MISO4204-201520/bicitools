@@ -1,0 +1,30 @@
+{
+  "name": "Bicitools-Web",
+  "version": "1.0.0",
+  "description": "",
+  "main": "",
+  "moduleType": [
+    "node"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "devDependencies": {
+    "bootstrap": "~3.3.5",
+    "angular": "~1.4.7",
+    "angular-bootstrap": "~0.14.1",
+    "angular-ui-router": "~0.2.15",
+    "modernizr": "~3.1.0",
+    "angular-loading-bar": "~0.8.0",
+    "components-font-awesome": "~4.4.0",
+    "bootstrap-social": "~4.10.1",
+    "ngstorage": "~0.3.9"
+  }
+}

@@ -1,0 +1,6 @@
+<div class="form-group">
+	<label ng-class="{'required': required === '' && return !== 'hideRequired'}">
+		{{label}}
+	</label>
+	<input type="text" class="form-control" ng-model="model" ng-required="{{required === ''}}">
+</div>

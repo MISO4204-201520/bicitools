@@ -1,0 +1,7 @@
+<div class="form-group" ng-class="{'has-error': (f.$submitted && f.n{{$id}}.$invalid) || (f.n{{$id}}.$invalid && f.n{{$id}}.$touched && f.n{{$id}}.$dirty)  }">
+	<label class="control-label" for="i{{$id}}" ng-if="label" ng-class="{'required': required === '' && labelType !== 'hideRequired'}" ng-bind="label"></label>
+	<input id="i{{$id}}" type="text" class="form-control" name='n{{$id}}' ng-model="model" ng-required="{{required === ''}}" ng-disabled="disabled">
+	<div ng-show="(f.$submitted && f.n{{$id}}.$invalid) || (f.n{{$id}}.$invalid && f.n{{$id}}.$touched && f.n{{$id}}.$dirty)">
+		<span class="help-block" ng-show="f.n{{$id}}.$error.required">Este campo es requerido</span>
+	</div>
+</div>

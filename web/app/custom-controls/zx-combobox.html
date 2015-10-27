@@ -1,0 +1,8 @@
+<div class="form-group">
+	<label ng-class="{'required': required === ''}">
+		{{label}}
+	</label>
+	<select class="form-control" 
+	ng-options="o.id as o.value for o in list" 
+	ng-model="model" ng-required="{{required === ''}}"></select>	
+</div>

@@ -1,0 +1,44 @@
+<div class="container"  ng-controller="calcularRutaController">
+	<form name="form" ng-submit="form.$valid && submit()" novalidate>
+		<div class="row">
+			<h2>Calcular mejor ruta</h2>
+		</div>
+		<div class="row">
+			<div class="col-sm-5">
+				<br>
+				<zx-textbox  model="origen.sitioDireccion" label="Lugar de origen" required></zx-textbox>
+				<zx-textbox  model="destino.sitioDireccion" label="Lugar de destino" required></zx-textbox>
+				<div class="form-group pull-right">
+					<button type="button" class="btn btn-default" ui-sref="recorridos">Cancelar</button>
+					<button type="submit" class="btn btn-primary">Calcular</button>
+				</div>
+				<br>
+				<br>
+				<table class="table">
+					<tr>
+						<td>Tiempo</td>
+						<td>{{tiempo}}</td>
+					</tr>
+					<tr>
+						<td>Distancia</td>
+						<td>{{distancia}}</td>
+					</tr>
+				</table>
+				<br>
+				<br>
+				<div id="no-more-tables">
+					<table class="table table-responsive" >
+						<tr ng-repeat="dir in directions">
+							<td data-title="Distancia">{{dir.distance}}</td>
+							<td data-title="Tiempo">{{dir.time}}</td>
+							<td data-title="Acción">{{dir.details}}</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+			<div class="col-sm-7">
+				<div id="map" class="map"></div>
+			</div>
+		</div>
+	</form>
+</div>

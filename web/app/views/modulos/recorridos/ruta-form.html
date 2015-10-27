@@ -1,0 +1,46 @@
+<div class="container"  ng-controller="crearRutaController">
+	<form name="form" ng-submit="form.$valid && submit()" novalidate>
+		<div class="row">
+			<h2>Crear ruta</h2>
+		</div>
+		<div class="row">
+			<div class="col-sm-5">
+				<br>
+				<zx-textbox  model="r.usuario" label="Usuario" required></zx-textbox>
+				<zx-textbox  model="r.nombre" label="Nombre" required></zx-textbox>
+
+				<br>
+				<br>
+				<table class="table table-coordinates">
+					<tr>
+						<th>Latitud</th>
+						<th>Longitud</th>
+						<th></th>
+					</tr>
+					<tr ng-repeat="c in coordinates">
+						<td><input type="text" ng-model="c.latitudOrigen"></td>
+						<td><input type="text" ng-model="c.longitudOrigen"></td>
+						<td>
+							<button type="button" class="btn btn-danger btn-close" ng-click="removeCoordinate($index)">
+								<i class="fa fa-times"></i>
+							</button>
+						</td>
+
+					</tr>
+				</table>
+				<button type="button" class="btn btn-success pull-right" ng-click="addCoordinate()">Adicionar</button>
+				<br>
+				<br>
+				<hr>
+				<div class="form-group pull-right">
+					<button type="button" class="btn btn-default" ui-sref="consultar-rutas">Cancelar</button>
+					<button type="submit" class="btn btn-primary">Crear</button>
+				</div>
+
+			</div>
+			<div class="col-sm-7">
+				<div id="map" class="map"></div>
+			</div>
+		</div>
+	</form>
+</div>

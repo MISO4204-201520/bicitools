@@ -1,0 +1,17 @@
+<div class="container" ng-controller="aceptarServicioController">
+	<div class="row">
+		<div class="col-sm-offset-4 col-sm-4">
+			<h2 class="text-center">Aceptar servicio</h2>
+			<br>
+			<form name="form" ng-submit="form.$valid && submit()" novalidate>
+				<zx-textbox model="s.usuario" label="Nombre de usuario" required></zx-textbox>
+				<zx-textbox model="s.idServicio" label="Id del servicio" required></zx-textbox>
+				<zx-textbox model="s.estimado" label="Estimado" required></zx-textbox>
+				<br>
+
+				<button type="button" class="col-sm-offset-2 col-sm-4 btn btn-default" ui-sref="domicilios">Cancelar</button>
+				<button type="submit" class="col-sm-4 btn btn-primary">Pedir</button>
+			</form>
+		</div>
+	</div>
+</div>

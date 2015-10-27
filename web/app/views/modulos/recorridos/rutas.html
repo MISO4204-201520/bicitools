@@ -1,0 +1,29 @@
+<div class="container" ng-controller="consultarRutasController">
+	<h2 class="text-center">Rutas</h2>
+	<div class="row">
+		<div class="col-sm-offset-2 col-sm-8">
+			<button type="button" class="btn btn-success pull-right" ui-sref="crear-ruta">Crear ruta</button>
+		</div>
+	</div>
+	<div class="row">
+
+		<div class="col-sm-offset-4 col-sm-4">
+			<br>
+
+			<table class="table">
+				<tr>
+					<th>Nombre</th>
+					<th>Invitar</th>
+				</tr>
+				<tr ng-repeat="r in routes">
+					<td>{{r.nombre}}</td>
+					<td>
+						<button type="button" class="btn btn-default" ui-sref="ruta-invitar" >
+							Invitar
+						</button>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+</div>

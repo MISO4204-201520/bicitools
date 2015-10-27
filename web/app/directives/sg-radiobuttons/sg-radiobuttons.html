@@ -1,0 +1,11 @@
+<div class="form-group" ng-class="{'has-error': (f.$submitted && f.n{{$id}}.$invalid) || (f.n{{$id}}.$invalid && f.n{{$id}}.$touched && f.n{{$id}}.$dirty)  }">
+    <label class="control-label" for="i{{$id}}" ng-if="label" ng-class="{'required': required === '' && labelType !== 'hideRequired'}" ng-bind="label"></label>
+    <div>
+        <label class="radio-inline" ng-repeat="r in list">
+            <input type="radio" name="n{{$parent.$id}}" ng-value="r.value" ng-model="$parent.model"  ng-disabled="$parent.disabled" required> {{r.label}}
+        </label>
+    </div>
+    <div ng-show="(f.$submitted && f.n{{$id}}.$invalid) || (f.n{{$id}}.$invalid && f.n{{$id}}.$touched && f.n{{$id}}.$dirty)">
+		<span class="help-block" ng-show="f.n{{$id}}.$error.required">Seleccione al menos una opción</span>
+	</div>
+</div>

@@ -1,0 +1,43 @@
+<div class="home-container container">
+
+	<div class="row">
+		<div class="col-xs-12">
+			<p class="text-center title">Bici<span class="bicitools-color">tools</span></p>
+		</div>
+	</div>
+	<div class="row" ng-controller="registrarController">
+		<form name="form" class="col-sm-offset-4 col-sm-4" ng-submit="form.$valid && submit()" novalidate>
+			<h2>Regístrese a Bicitools</h2>
+			<br>
+			<fieldset>
+				<sg-textbox  model="u.numeroIdentificacion" label="Número de identificación" required></sg-textbox>
+				<sg-combobox model="u.tipoIdentificacion" label="Tipo de identificación" list="tiposIdentificacion" required></sg-combobox>
+				<sg-combobox model="u.tipoPerfil" label="Tipo de perfil" list="tiposPerfil" required></sg-combobox>
+				<sg-radiobuttons model="u.genero" label="Género" list="generos" required></sg-radiobuttons>
+				<sg-textbox  model="u.nombres" label="Nombres" required></sg-textbox>
+				<sg-textbox  model="u.apellidos" label="Apellidos" required></sg-textbox>
+				<sg-textbox  model="u.correo" label="Dirección de E-mail" required></sg-textbox>
+				<div class="form-group" ng-class="{'has-error': (form.$submitted && form.n{{$id}}.$invalid) || (form.n{{$id}}.$invalid && form.n{{$id}}.$touched && form.n{{$id}}.$dirty)  }">
+					<label class="control-label" for="i{{$id}}" class="required">Fecha de nacimiento</label>
+					<div class="input-group date">
+						<input id="i{{$id}}" type="text" class="form-control" name='n{{$id}}' ng-model="u.fechaNacimiento" required>
+						<span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+					</div>
+					<div ng-show="(form.$submitted && form.n{{$id}}.$invalid) || (form.n{{$id}}.$invalid && form.n{{$id}}.$touched && form.n{{$id}}.$dirty)">
+						<span class="help-block" ng-show="form.n{{$id}}.$error.required">Este campo es requerido</span>
+					</div>
+				</div>
+				<sg-textbox  model="u.direccionCasa" label="Dirección de residencia" required></sg-textbox>
+				<sg-textbox  model="u.direccionTrabajo" label="Dirección de trabajo"></sg-textbox>
+				<sg-textbox  model="u.telefonoFijo" label="Teléfono fijo"></sg-textbox>
+				<sg-textbox  model="u.telefonoMovil" label="Teléfono móvil" required></sg-textbox>
+				<sg-textbox  model="u.facebookUser" label="Usuario Facebook"></sg-textbox>
+				<sg-textbox  model="u.twitterUser" label="Usuario Twitter"></sg-textbox>
+				<sg-textbox  model="u.usuario" label="Nombre de usuario" required></sg-textbox>
+				<sg-passwordbox  model="u.contrasenia" label="Clave" required></sg-passwordbox>
+				<!-- <zx-textbox  model="u.foto" label="Foto de perfil"></zx-textbox> -->
+				<button type="submit" class="col-xs-12 btn btn-lg btn-primary">Crear cuenta</button>
+			</fieldset>
+		</form>
+	</div>
+</div>
