@@ -38,12 +38,12 @@ Una vez instalado Node.js, Bower y Gulp proceda con estos pasos:
 2. Clonarlo
   
   ```bash
-  $ git clone https://github.com/Levaneng/Bicitools-Web.git
+  $ git clone https://github.com/MISO4204-201520/bicitools.git
   ```
 3. Ir a la carpeta descargada
 
   ```bash
-  $ cd Bicitools-Web/
+  $ cd bicitools/web
   ```
 4. Instalar los paquetes de Node.js
   
@@ -83,7 +83,7 @@ $ bower install --save-dev <paquete>
 ```
 
 ## Recomendaciones
-* Las hojas de estilo solamente se editan desde la carpeta `src/sass`, los arhivos css se generan automáticamente mediante el watcher de gulp.
+* Las hojas de estilo se generan automáticamente mediante el watcher de gulp.
 * Si al ejecutar `$ git add <archivos>` les aparece este mensaje:
 
 > warning: LF will be replaced by CRLF in bower.json.
@@ -93,27 +93,3 @@ No es nada de qué preocuparse. Pueden ignorar la advertencia con el siguiente c
   ```bash
   $ git config core.autocrlf false
   ```
-
-
-## Util
-
-http://157.253.214.72:8080/
-
-
-Usuario:      bicitoolsgu
-Recorridos:   bicitoolsre
-Domicilios:   bicitoolsdo
-Comunicación: bicitoolsco
-
-
-
-
-"1,2,3"
-["1","2","3"]
-public String arrayToString(string[] arr)
-{
-  String dias = arr[0];
-  for(int i = 1; i < arr.length; i++)
-    dias += "," + arr[i];
-  return dias; 
-}
