@@ -292,6 +292,7 @@ app.controller('pedirServicioController', ['$scope', '$http', '$state', function
 	});
 
 	$scope.submit = function(){
+		$scope.s.usuario = $scope.$storage.user.user;
 		$scope.post($scope.setDomiciliosPath('pedirServicioDomicilio'), $scope.s, function(response){
 			$state.go('domicilios');
 		});
@@ -308,6 +309,7 @@ function($scope, $http, $state) {
 	});
 
 	$scope.submit = function(){
+		$scope.s.usuario = $scope.$storage.user.user;
 		$scope.post($scope.setDomiciliosPath('aceptaServicioDomicilio'), $scope.s, function(response){
 			$state.go('domicilios');
 		});
@@ -323,6 +325,7 @@ function($scope, $http, $state) {
 	});
 
 	$scope.submit = function(){
+		$scope.s.usuario = $scope.$storage.user.user;
 		$scope.post($scope.setDomiciliosPath('registrarServicioDomicilio'), $scope.s, function(response){
 			$state.go('domicilios');
 		});
@@ -332,7 +335,7 @@ function($scope, $http, $state) {
 app.controller('indexController', ['$scope', '$http', '$state', '$localStorage', function($scope, $http, $state, $localStorage) {
     $scope.$storage = $localStorage;
 
-    var domain = "http://192.168.0.11:8080/"; //"http://localhost:8080/";
+    var domain = "http://localhost:8080/";  //"http://192.168.0.11:8080/"; //
 
     $scope.setUsersPath = function(path) {
         return domain + "bicitoolsgu/webresources/gestionusuario/" + path;
@@ -393,67 +396,14 @@ app.controller('indexController', ['$scope', '$http', '$state', '$localStorage',
 }]);
 
 
-app.controller('indexController', ['$scope', '$http', '$state', '$localStorage', function($scope, $http, $state, $localStorage) {
-    $scope.$storage = $localStorage;
-
-    var domain = "http://192.168.0.11:8080/"; //"http://localhost:8080/";
-
-    $scope.setUsersPath = function(path) {
-        return domain + "bicitoolsgu/webresources/gestionusuario/" + path;
+app.controller('MenuController', ['$scope', '$http', '$state', function($scope, $http, $state) {
+    console.log($scope.$storage.user);
+    var input = {
+        id_usuario: $scope.$storage.user.id
     }
-
-    $scope.setRoutesPath = function(path) {
-        return domain + "bicitoolsRU/webresources/myresource/" + path;
-    }
-
-    $scope.setCommunicationPath = function(path) {
-        return domain + "bicitoolsco/serviciosRest/" + path;
-    }
-
-    $scope.setDomiciliosPath = function(path) {
-        return domain + "bicitoolsdo/serviciosRest/domicilios/" + path;
-    }
-
-    function invokeService(promise, action){
-        return promise.then(
-            function(response) {
-                console.log('\nData:');
-                console.log(response.data);
-
-                if(response.data.codigo === 0 || response.data.code === 0){
-                    action(response);
-                } else {
-                    console.log('Código diferente a cero - ' + response.descripcion);
-                    //$scope.error = "Error: " + response.data.descripcion;
-                }
-                alert(response.data.descripcion);
-            }, function(response){
-                console.log('SERVICE ERROR');
-                console.log(response);
-                //$scope.error = "Error en la invocación";
-                //window.location.hash = '#body';
-            });
-    }
-
-    $scope.post = function(path, input, action){
-        console.log(path);
-        console.log(input);
-        return invokeService( $http.post(path, input), action );
-    }
-
-    $scope.get = function(path, action){
-        console.log(path);
-        return invokeService( $http.get(path), action );
-    }
-
-    $scope.bodyStyle = 'bg-black-dark-blue';
-    $scope.setBodyStyle = function(style){
-        $scope.bodyStyle = style;
-    }
-
-    $scope.setMock = function(action){
-        $scope.invokeMock = action;
-    };
+    $scope.post( $scope.setUsersPath('obtenerDetallesUsuario'), input, function(response){
+        $scope.u = response.data.datos;
+    });
 }]);
 
 app.controller('calcularRutaController', ['$scope', '$http', '$state', function($scope, $http, $state) {
@@ -752,7 +702,9 @@ function($scope, $http, $state) {
 	//$scope.u = $scope.setMock('http://www.mocky.io/v2/56258bb0100000fb5323eb32');
 
 	$scope.submit = function(){
+		$scope.$storage.user = $scope.u;
 		$scope.post( $scope.setUsersPath('loginUsuario'), $scope.u, function(response){
+			$scope.$storage.user.id = response.data.datos[0];
 			$state.go('home');
 		});
 	}
@@ -799,9 +751,6 @@ function($scope, $http, $state) {
 	$scope.tiposPerfil.track = function(o){ return o.id; };
 
 	$scope.submit = function(){
-		$scope.u.foto = "";
-		console.log('LOREM');
-		console.log($scope.u);
 		$scope.$storage.user = $scope.u;
 		$scope.post( $scope.setUsersPath('registrarUsuario'), $scope.u, function(response){
 			$state.go('home');
