@@ -9,7 +9,9 @@ function($scope, $http, $state) {
 	//$scope.u = $scope.setMock('http://www.mocky.io/v2/56258bb0100000fb5323eb32');
 
 	$scope.submit = function(){
+		$scope.$storage.user = $scope.u;
 		$scope.post( $scope.setUsersPath('loginUsuario'), $scope.u, function(response){
+			$scope.$storage.user.id = response.data.datos[0];
 			$state.go('home');
 		});
 	}
@@ -56,9 +58,6 @@ function($scope, $http, $state) {
 	$scope.tiposPerfil.track = function(o){ return o.id; };
 
 	$scope.submit = function(){
-		$scope.u.foto = "";
-		console.log('LOREM');
-		console.log($scope.u);
 		$scope.$storage.user = $scope.u;
 		$scope.post( $scope.setUsersPath('registrarUsuario'), $scope.u, function(response){
 			$state.go('home');

@@ -72,6 +72,7 @@ app.controller('pedirServicioController', ['$scope', '$http', '$state', function
 	});
 
 	$scope.submit = function(){
+		$scope.s.usuario = $scope.$storage.user.user;
 		$scope.post($scope.setDomiciliosPath('pedirServicioDomicilio'), $scope.s, function(response){
 			$state.go('domicilios');
 		});
@@ -88,6 +89,7 @@ function($scope, $http, $state) {
 	});
 
 	$scope.submit = function(){
+		$scope.s.usuario = $scope.$storage.user.user;
 		$scope.post($scope.setDomiciliosPath('aceptaServicioDomicilio'), $scope.s, function(response){
 			$state.go('domicilios');
 		});
@@ -103,6 +105,7 @@ function($scope, $http, $state) {
 	});
 
 	$scope.submit = function(){
+		$scope.s.usuario = $scope.$storage.user.user;
 		$scope.post($scope.setDomiciliosPath('registrarServicioDomicilio'), $scope.s, function(response){
 			$state.go('domicilios');
 		});
