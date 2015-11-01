@@ -1,6 +1,8 @@
 // SET UP =======================================
 var express = require('express');
 var cors = require('cors');
+var gulp = require('gulp');
+require('./gulpfile.js');
 var app = express();
 
 // VARIABLES =======================================
@@ -13,6 +15,7 @@ function setFile(response, path){
 }
 
 // CONFIGURATION ================================
+gulp.start('default');
 app.use(express.static(src));
 app.listen(port);
 console.log('Bicitools en ejecución (Puerto ' + port + ')');
@@ -24,24 +27,6 @@ app.all('/*', function(request, response, next) {
 	setFile(response, 'index');
 });
 
-
-// CORS =========================================
-
-app.use(cors());
-
-app.use(function(req, res, next) {
-	res.header("Access-Control-Allow-Origin", "*");
-	res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-	next();
-});
-
-app.get('/', function(req, res, next) {
-  	// Handle the get for this route
-});
-
-app.post('/', function(req, res, next) {
- 	// Handle the post for this route
-});
 
 
 

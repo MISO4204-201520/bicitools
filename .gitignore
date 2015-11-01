@@ -33,3 +33,8 @@ bower_components
 
 # Webstorm
 .idea
+
+
+# auto
+#web/app/styles/auto
+#web/app/scripts/auto
