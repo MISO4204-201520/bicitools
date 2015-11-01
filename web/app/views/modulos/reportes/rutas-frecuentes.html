@@ -1,4 +1,4 @@
-<div class="container" ng-controller="pedirServicioController">
+<div class="container">
     <h2 class="text-center">Rutas frecuentes</h2>
     <p>Selccione el perido de tiempo a consultar</p>
     <br>
@@ -47,18 +47,17 @@
                         <th>Mapa</th>
                     </tr>
                     <tr ng-repeat="d in datos">
-                        <td ng-bind="d.nombre"></td>
                         <td ng-bind="d.fechaHora"></td>
-                        <td ng-bind="d.distancia"></td>
+                        <td ng-bind="d.nombre"></td>
                         <td ng-bind="d.tiempo"></td>
+                        <td ng-bind="d.distancia"></td>
                         <td><button type="button" ng-click="verMapa($index)">Ver mapa</button></td>
                     </tr>
                 </table>
             </div>
             <div class="row">
                 <div class="col-sm-offset-4 col-sm-4">
-                    <button type="button" class="col-sm-offset-2 col-sm-4 btn btn-default" ui-sref="reportes">Volver</button>
-                    <button type="button" class="col-sm-4 btn btn-primary">Descargar</button>
+                    <button type="button" class="btn btn-primary btn-block" ng-click="descargar()">Descargar</button>
                 </div>
             </div>
         </div>

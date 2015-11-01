@@ -7,65 +7,25 @@ app.controller('ReportesActividadController', function($scope, $http, $state) {
 });
 
 app.controller('ReportesRutasFrecuentesController', function($scope, $http, $state) {
+    $scope.r = {};
+    $scope.r.usuario = "toroj"; //$scope.$storage.user.usuario; //
+    console.log($scope.r);
 
     $('.input-group.date.d-inicio').datepicker({
         format: "yyyy-mm-dd",
-        startDate: "today",
         clearBtn: true,
         //language: "es",
         orientation: "bottom auto"
     });
     $('.input-group.date.d-fin').datepicker({
         format: "yyyy-mm-dd",
-        startDate: "today",
+        endDate: "today",
         clearBtn: true,
         //language: "es",
         orientation: "bottom auto"
     });
 
     $scope.map = { center: { latitude: 4.603063, longitude:-74.064863 }, zoom: 15 };
-    // $scope.datos = [
-    //     {
-    //         nombre: "casa trabajo",
-    //         fechaHora: "Tue Oct 27 21:35:16 COT 2015",
-    //         distancia: "13.9 km",
-    //         tiempo: "33 mins",
-    //         lugares: [
-    //             {
-    //                 latitud: "4.634992",
-    //                 longitud: "-74.080758"
-    //             },
-    //             {
-    //                 latitud: "4.56113",
-    //                 longitud: "-74.080858"
-    //             },
-    //             {
-    //                 latitud: "4.56113",
-    //                 longitud: "-74.080966"
-    //             }
-    //         ]
-    //     },
-    //     {
-    //         nombre: "casa trabajo",
-    //         fechaHora: "Tue Oct 27 21:35:16 COT 2015",
-    //         distancia: "13.9 km",
-    //         tiempo: "33 mins",
-    //         lugares: [
-    //             {
-    //                 latitud: "4.734992",
-    //                 longitud: "-74.080758"
-    //             },
-    //             {
-    //                 latitud: "4.56113",
-    //                 longitud: "-74.080858"
-    //             },
-    //             {
-    //                 latitud: "4.56113",
-    //                 longitud: "-74.080966"
-    //             }
-    //         ]
-    //     }
-    // ]
 
     $scope.verMapa = function(i){
         $scope.mapa = true;
@@ -88,10 +48,20 @@ app.controller('ReportesRutasFrecuentesController', function($scope, $http, $sta
         });
         //$('#myModal').modal();
     };
+    $scope.descargar = function(){
+        $scope.d = $scope.r;
+        $scope.d.tipoArchivo = "1";
+        $scope.d.tipoReporte = "1";
+        $scope.d.rutaArchivo = "C:\\Users\\Jorge\\Downloads";
+
+        $scope.post($scope.setReportsPath('reporteLocal'), $scope.d, function(response){
+            console.log(response);
+        });
+    };
     $scope.submit = function(){
-        // $scope.post($scope.setDomiciliosPath('inscribirDomiciliario'), $scope.d, function(response){
-        // 	$state.go('domicilios');
-        // });
+        $scope.post($scope.setReportsPath('consultarRutasFrecuentes'), $scope.r, function(response){
+            $scope.datos = response.data.datos;
+        });
     };
 });
 

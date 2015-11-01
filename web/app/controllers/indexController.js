@@ -8,6 +8,10 @@ app.controller('indexController', ['$scope', '$http', '$state', '$localStorage',
         return domain + "bicitoolsgu/webresources/gestionusuario/" + path;
     }
 
+    $scope.setReportsPath = function(path) {
+        return domain + "bicitoolsRe/serviciosRest/reportes/" + path;
+    }
+
     $scope.setRoutesPath = function(path) {
         return domain + "bicitoolsRU/webresources/myresource/" + path;
     }
