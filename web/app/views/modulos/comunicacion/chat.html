@@ -1,1 +1,157 @@
-<h1>Chat</h1>
+<div class="container">
+    <h2>Chat</h2>
+    <div class="row">
+        <div class="col-sm-5 col-md-4">
+            <div class="row">
+                <div class="col-xs-12">
+                    <button type="button" class="btn btn-default pull-right" ng-click="modalCrearChat()"><i class="fa fa-plus"></i> Crear chat</button>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="list-group chat-contacts">
+                        <a href="#" class="list-group-item" ng-repeat="chat in chats" ng-click="abrirChat(chat.chatId)" ng-class="{'active': chat.chatId == activeChat}">
+                            <div class="media">
+                                <div class="media-left">
+                                    <img class="thumb-md img-circle bx-s" src="../images/user1.jpg" alt="">
+                                </div>
+                                <div class="media-body">
+                                    <h5 class="media-heading"><strong ng-bind="chat.nombre"></strong><small class="pull-right">{{chat.fechaUltimoMensaje | date:'yyyy-MM-dd'}}</small></h5>
+                                    <span class="ultimo-mensaje" ng-bind="chat.ultimoMensaje"></span>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-7 col-md-8" ng-if="activeChat">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <div class="pull-left">
+                        <span class="chat-title" ng-bind="chat.nombreChat"></span>
+                    </div>
+                    <div class="pull-right">
+                        <button type="button" class="btn btn-info" ng-click="verDetalles()"><i class="fa fa-info"></i></button>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+
+                <div class="panel-body chat-bubbles">
+                    <div ng-repeat="mensaje in chat.mensajes">
+                        <div class="col-xs-8" ng-if="mensaje.nombreUsuario !== $storage.user.usuario">
+                            <div class="pull-left alert alert-success bubble">
+                                <strong ng-bind="mensaje.nombreUsuario"></strong>
+                                <br>
+                                <span class="text-left" ng-bind="mensaje.texto"></span>
+                                <br>
+                                <small class="pull-right">{{mensaje.fecha  | date:'yyyy-MM-dd HH:mm'}}</small>
+                            </div>
+                        </div>
+                        <div class="col-xs-offset-4 col-xs-8" ng-if="mensaje.nombreUsuario === $storage.user.usuario">
+                            <div class="pull-right alert alert-info bubble">
+                                <span class="text-right" ng-bind="mensaje.texto"></span>
+                                <br>
+                                <small class="pull-right">{{mensaje.fecha  | date:'yyyy-MM-dd HH:mm'}}</small>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="panel-footer">
+                    <div class="input-group">
+                        <input type="text" class="form-control" ng-model="m.mensaje" placeholder="Escribe un mensaje...">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="button" ng-click="enviarMensaje()"><i class="fa fa-paper-plane-o"></i></button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- <div class="row">
+    <div class="col-sm-4">
+    <div class="panel">
+    <div class="panel-body p-t-10">
+    <button class="btn btn-default">
+    <div class="media-main">
+    <div class="pull-left">
+    <img class="thumb-md img-circle bx-s" src="http://coderthemes.com/velonic/admin/img/avatar-2.jpg" alt="">
+</div>
+<div class="info">
+<span>Jonathan Smith</span>
+<span>Graphics Designer</span>
+</div>
+</div>
+</button>
+
+<div class="clearfix"></div>
+</div>
+</div>
+</div>
+</div> -->
+</div>
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <sg-form submit="crearChat()">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Crear chat</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            Digite los nombres de usuario separados por comas
+                        </div>
+                        <div class="col-xs-offset-3 col-xs-6">
+                            <sg-textbox model="nuevochat.nombre" label="Nombre" labelType="hideRequired" disabled="documentoIngresado" required></sg-textbox>
+                            <div class="form-group">
+                                <label class="required" for="">Usuarios</label>
+                                <input class="form-control" name="namesInput" ng-model="nuevochat.usuarios" ng-list required>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary pull-right">Aceptar</button>
+                </div>
+            </sg-form>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modalChatDetalles" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Detalles de {{chat.nombreChat}}</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <span>Usuarios en esta conversación</span>
+                        <br>
+                    </div>
+                    <br>
+                    <div class="col-xs-offset-3 col-xs-6">
+                        <br>
+                        <div class="form-group" ng-repeat="u in chat.usuarios">
+                            <input type="text" class="form-control" readonly="readonly" value="{{u.nickname}}">
+                        </div>
+                        <!-- <sg-textbox model="nuevochat.nombre" label="Nombre" labelType="hideRequired" disabled="documentoIngresado" required></sg-textbox>
+                        <div class="form-group">
+                        <label class="required" for="">Usuarios</label>
+                        <input class="form-control" name="namesInput" ng-model="nuevochat.usuarios" ng-list required>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+        <!-- <div class="modal-footer">
+        <button type="submit" class="btn btn-primary pull-right">Aceptar</button>
+    </div> -->
+</div>
+</div>
+</div>

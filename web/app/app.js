@@ -1,4 +1,4 @@
-var app = angular.module('bicitools', ['ui.router', 'angular-loading-bar', 'ngStorage']);
+var app = angular.module('bicitools', ['ui.router', 'angular-loading-bar', 'ngStorage', 'uiGmapgoogle-maps']);
 
 // It's very handy to add references to $state and $stateParams to the $rootScope
 // so that you can access them from any scope within your applications.
@@ -57,7 +57,7 @@ app.run(["$q", "$rootScope", "$state", "$http", "$urlRouter", function ($q, $roo
         {
             name: "home",
             parent: 'menu-footer',
-            controller: "HomeController"
+            controller: "HomeController",
             url: "home",
             templateUrl : "views/home.html"
         },
@@ -86,6 +86,7 @@ app.run(["$q", "$rootScope", "$state", "$http", "$urlRouter", function ($q, $roo
             name: "perfil",
             parent: 'menu-footer',
             url: "perfil",
+            controller: "perfilController",
             templateUrl : "views/modulos/usuarios/perfil.html"
         },
         // ==== Comunicación ========================================
@@ -93,12 +94,25 @@ app.run(["$q", "$rootScope", "$state", "$http", "$urlRouter", function ($q, $roo
             name: "amigos",
             parent: 'menu-footer',
             url: "amigos",
-            templateUrl : "views/modulos/comunicacion/amigos.html"
+            templateUrl : "views/modulos/comunicacion/menu-amigos.html"
+        },
+        {
+            name: "listaAmigos",
+            parent: 'menu-footer',
+            url: "amigos/lista",
+            templateUrl : "views/modulos/comunicacion/lista-amigos.html"
+        },
+        {
+            name: "encontrarAmigos",
+            parent: 'menu-footer',
+            url: "amigos/buscador",
+            templateUrl : "views/modulos/comunicacion/encontrar-amigos.html"
         },
         {
             name: "chat",
-            parent: 'menu',
+            parent: 'menu-footer',
             url: "chat",
+            controller: 'chatController',
             templateUrl : "views/modulos/comunicacion/chat.html"
         },
         {
@@ -113,6 +127,27 @@ app.run(["$q", "$rootScope", "$state", "$http", "$urlRouter", function ($q, $roo
             parent: 'menu-footer',
             url: "reportes",
             templateUrl : "views/modulos/reportes/reportes.html"
+        },
+        {
+            name: "reportes-actividad",
+            parent: 'menu-footer',
+            url: "reportes/actividad",
+            controller: "ReportesActividadController",
+            templateUrl : "views/modulos/reportes/actividad.html"
+        },
+        {
+            name: "reportes-rutas-frecuentes",
+            parent: 'menu-footer',
+            url: "reportes/rutasfrecuentes",
+            controller: "ReportesRutasFrecuentesController",
+            templateUrl : "views/modulos/reportes/rutas-frecuentes.html"
+        },
+        {
+            name: "reportes-notificaciones",
+            parent: 'menu-footer',
+            url: "reportes/notificaciones",
+            controller: "ReportesNotificacionesController",
+            templateUrl : "views/modulos/reportes/notificaciones.html"
         },
         // ==== Configurador de bicicletas ==========================
         {

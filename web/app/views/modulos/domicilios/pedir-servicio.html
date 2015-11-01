@@ -1,17 +1,29 @@
-<div class="container" ng-controller="pedirServicioController">
-	<div class="row">
-		<div class="col-sm-offset-4 col-sm-4">
-			<h2 class="text-center">Pedir servicio</h2>
-			<br>
-			<form name="form" ng-submit="form.$valid && submit()" novalidate>
-				<!-- <zx-textbox model="s.usuario" label="Nombre de usuario" required></zx-textbox> -->
-				<zx-textbox model="s.origen" label="Origen" required></zx-textbox>
-				<zx-textbox model="s.destino" label="Destino" required></zx-textbox>
-				<br>
-
-				<button type="button" class="col-sm-offset-2 col-sm-4 btn btn-default" ui-sref="domicilios">Cancelar</button>
-				<button type="submit" class="col-sm-4 btn btn-primary">Pedir</button>
-			</form>
-		</div>
+<div ng-controller="pedirServicioController">
+	<div class="container">
+		<h2 class="text-center">Pedir servicio</h2>
+		<p class="text-center">Haga clic en el mapa para indicar el lugar de origen y luego el de destino</p>
 	</div>
+	<ui-gmap-google-map center='map.center' zoom='map.zoom' draggable="true" events="map.events">
+		<ui-gmap-marker ng-repeat="m in map.markers" coords="m.coords" icon="m.icon" idkey="m.id"></ui-gmap-marker>
+	</ui-gmap-google-map>
+	<div class="container">
+		<br>
+		<form name="form" ng-submit="form.$valid && submit()" novalidate>
+			<div class="row">
+				<div class="col-sm-offset-2 col-sm-4">
+					<sg-textbox model="map.markers[0].address" label="Origen" required></sg-textbox>
+				</div>
+				<div class="col-sm-4">
+					<sg-textbox model="map.markers[1].address" label="Destino" required></sg-textbox>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-offset-4 col-sm-4">
+					<button type="button" class="col-sm-offset-2 col-sm-4 btn btn-default" ui-sref="domicilios">Cancelar</button>
+					<button type="submit" class="col-sm-4 btn btn-primary">Pedir</button>
+				</div>
+			</div>
+		</form>
+	</div>
+
 </div>

@@ -12,18 +12,15 @@
 		<div id="navbar" class="navbar-collapse collapse">
 			<ul class="nav navbar-nav">
 				<li><a ui-sref="recorridos">Recorridos</a></li>
-				<li><a ui-sref="chat">Chat</a></li>
 				<li class="dropdown">
-					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Reportes <span class="caret"></span></a>
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Comunicación<span class="caret"></span></a>
 					<ul class="dropdown-menu">
-						<li><a href="#">Mi posición</a></li>
-						<li><a href="#">Mejor ruta</a></li>
+						<li><a ui-sref="amigos">Amigos</a></li>
 						<li role="separator" class="divider"></li>
-						<li class="dropdown-header">Desplazamiento</li>
-						<li><a href="#">Grupal</a></li>
-						<li><a href="#">Individual</a></li>
+						<li><a ui-sref="chat">Chat</a></li>
 					</ul>
 				</li>
+				<li><a ui-sref="reportes">Reportes</a></li>
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Arma tu Bici <span class="caret"></span></a>
 					<ul class="dropdown-menu">
@@ -47,7 +44,7 @@
 						{{$storage.user.nombres + ' ' + $storage.user.apellidos}}<span class="caret"></span>
 					</a>
 					<ul class="dropdown-menu">
-						<li><a href="#">Perfil</a></li>
+						<li><a ui-sref="perfil">Perfil</a></li>
 						<li role="separator" class="divider"></li>
 						<li><a ui-sref="intro">Cerrar sesión</a></li>
 					</ul>
@@ -57,7 +54,7 @@
 	</div>
 </nav>
 <div class="main-container">
-	<div ng-if="error !== undefined" class="container">
+	<!-- <div ng-if="error !== undefined" class="container">
 		<div class="row">
 			<div class="col-xs-offset-3 col-xs-6">
 				<div  class="alert alert-danger" role="alert">
@@ -68,7 +65,7 @@
 				</div>
 			</div>
 		</div>
-	</div>
+	</div> -->
 
 	<ui-view class="main-content"></ui-view>
 </div>

@@ -1,4 +1,4 @@
-var app = angular.module('bicitools', ['ui.router', 'angular-loading-bar', 'ngStorage']);
+var app = angular.module('bicitools', ['ui.router', 'angular-loading-bar', 'ngStorage', 'uiGmapgoogle-maps']);
 
 // It's very handy to add references to $state and $stateParams to the $rootScope
 // so that you can access them from any scope within your applications.
@@ -57,7 +57,7 @@ app.run(["$q", "$rootScope", "$state", "$http", "$urlRouter", function ($q, $roo
         {
             name: "home",
             parent: 'menu-footer',
-            controller: "HomeController"
+            controller: "HomeController",
             url: "home",
             templateUrl : "views/home.html"
         },
@@ -86,6 +86,7 @@ app.run(["$q", "$rootScope", "$state", "$http", "$urlRouter", function ($q, $roo
             name: "perfil",
             parent: 'menu-footer',
             url: "perfil",
+            controller: "perfilController",
             templateUrl : "views/modulos/usuarios/perfil.html"
         },
         // ==== Comunicación ========================================
@@ -93,12 +94,25 @@ app.run(["$q", "$rootScope", "$state", "$http", "$urlRouter", function ($q, $roo
             name: "amigos",
             parent: 'menu-footer',
             url: "amigos",
-            templateUrl : "views/modulos/comunicacion/amigos.html"
+            templateUrl : "views/modulos/comunicacion/menu-amigos.html"
+        },
+        {
+            name: "listaAmigos",
+            parent: 'menu-footer',
+            url: "amigos/lista",
+            templateUrl : "views/modulos/comunicacion/lista-amigos.html"
+        },
+        {
+            name: "encontrarAmigos",
+            parent: 'menu-footer',
+            url: "amigos/buscador",
+            templateUrl : "views/modulos/comunicacion/encontrar-amigos.html"
         },
         {
             name: "chat",
-            parent: 'menu',
+            parent: 'menu-footer',
             url: "chat",
+            controller: 'chatController',
             templateUrl : "views/modulos/comunicacion/chat.html"
         },
         {
@@ -113,6 +127,27 @@ app.run(["$q", "$rootScope", "$state", "$http", "$urlRouter", function ($q, $roo
             parent: 'menu-footer',
             url: "reportes",
             templateUrl : "views/modulos/reportes/reportes.html"
+        },
+        {
+            name: "reportes-actividad",
+            parent: 'menu-footer',
+            url: "reportes/actividad",
+            controller: "ReportesActividadController",
+            templateUrl : "views/modulos/reportes/actividad.html"
+        },
+        {
+            name: "reportes-rutas-frecuentes",
+            parent: 'menu-footer',
+            url: "reportes/rutasfrecuentes",
+            controller: "ReportesRutasFrecuentesController",
+            templateUrl : "views/modulos/reportes/rutas-frecuentes.html"
+        },
+        {
+            name: "reportes-notificaciones",
+            parent: 'menu-footer',
+            url: "reportes/notificaciones",
+            controller: "ReportesNotificacionesController",
+            templateUrl : "views/modulos/reportes/notificaciones.html"
         },
         // ==== Configurador de bicicletas ==========================
         {
@@ -217,6 +252,54 @@ app.filter('num', function() {
     };
 });
 
+app.controller('chatController', function($scope, $http, $state) {
+
+    $scope.nuevochat = {};
+    $scope.m = {};
+    $scope.m.usuario = $scope.$storage.user.usuario;
+
+    $scope.obtenerChats = function(){
+        $scope.get( $scope.setCommunicationPath('obtenerChatsUsuario/ivan'), function(response){
+            $scope.chats = response.data.datos;
+        });
+    }
+    $scope.obtenerChats();
+
+    $scope.modalCrearChat = function(){
+        $('#myModal').modal();
+    };
+    $scope.crearChat = function(){
+        $scope.post( $scope.setCommunicationPath('crearChat'), $scope.nuevochat, function(response){
+            $scope.obtenerChats();
+            $('#myModal').modal('hide');
+        });
+    };
+    $scope.verDetalles = function(){
+        $('#modalChatDetalles').modal();
+    }
+    $scope.abrirChat = function(chatId){
+        $scope.activeChat = chatId;
+        $scope.m.idChat = chatId;
+        $scope.get( $scope.setCommunicationPath('obtenerChatPorId/' + chatId), function(response){
+            $scope.chat = response.data.datos[0];
+            console.log($scope.chat);
+            console.log($scope.chat.mensajes);
+        });
+    };
+    $scope.enviarMensaje = function(){
+        $scope.post( $scope.setCommunicationPath('enviarMensaje'), $scope.m, function(response){
+            console.log(response.data);
+            var mensaje = {
+                fecha: Date.now(),
+                nombreUsuario: $scope.m.usuario,
+                texto: $scope.m.mensaje
+            };
+
+            $scope.chat.mensajes.push(mensaje);
+            $scope.m.mensaje = "";
+        });
+    }
+});
 
 app.controller('domiciliarioController', ['$scope', '$http', '$state',
 function($scope, $http, $state) {
@@ -284,6 +367,66 @@ function($scope, $http, $state) {
 }]);
 
 app.controller('pedirServicioController', ['$scope', '$http', '$state', function($scope, $http, $state) {
+	//$scope.map = { center: { latitude: 45, longitude: -73 }, zoom: 8 };
+
+	angular.extend($scope, {
+		map: {
+			center: {
+				latitude: 4.603063,
+				longitude:-74.064863
+			},
+			zoom: 15,
+			markers: [],
+			events: {
+				click: function (map, eventName, originalEventArgs) {
+					var e = originalEventArgs[0];
+					var lat = e.latLng.lat();
+					var lon = e.latLng.lng();
+					var address = '';
+
+					var geocoder = new google.maps.Geocoder();
+					var latlng = new google.maps.LatLng(lat, lon);
+
+					geocoder.geocode({ 'latLng': latlng }, function (results, status) {
+						if (status == google.maps.GeocoderStatus.OK) {
+							if (results[1]) {
+								console.log(results[1]);
+								address = results[1].formatted_address;
+							} else {
+								console.log('Location not found');
+							}
+						} else {
+							console.log('Geocoder failed due to: ' + status);
+						}
+
+						var marker = {
+							id: Date.now(),
+							coords: {
+								latitude: lat,
+								longitude: lon
+							},
+							address: address
+						};
+
+						if($scope.map.markers.length >= 2){
+							$scope.map.markers = [];
+						}
+						$scope.map.markers.push(marker);
+
+
+						console.log($scope.map.markers);
+						$scope.$apply();
+					});
+				}
+			}
+		}
+	});
+
+
+
+
+
+
 
 	$scope.setMock(function(){
 		$http.get('http://www.mocky.io/v2/5625adc32500003a06ccb2d9').then(function(response){
@@ -293,6 +436,8 @@ app.controller('pedirServicioController', ['$scope', '$http', '$state', function
 
 	$scope.submit = function(){
 		$scope.s.usuario = $scope.$storage.user.user;
+
+		$scope.s.destino = $scope.map.markers[1].address;
 		$scope.post($scope.setDomiciliosPath('pedirServicioDomicilio'), $scope.s, function(response){
 			$state.go('domicilios');
 		});
@@ -334,8 +479,9 @@ function($scope, $http, $state) {
 
 app.controller('indexController', ['$scope', '$http', '$state', '$localStorage', function($scope, $http, $state, $localStorage) {
     $scope.$storage = $localStorage;
+    $('#alerta').hide();
 
-    var domain = "http://localhost:8080/";  //"http://192.168.0.11:8080/"; //
+    var domain = "http://192.168.0.5:8080/";  //"http://192.168.0.11:8080/"; //
 
     $scope.setUsersPath = function(path) {
         return domain + "bicitoolsgu/webresources/gestionusuario/" + path;
@@ -346,7 +492,7 @@ app.controller('indexController', ['$scope', '$http', '$state', '$localStorage',
     }
 
     $scope.setCommunicationPath = function(path) {
-        return domain + "bicitoolsco/serviciosRest/" + path;
+        return domain + "bicitoolsco/serviciosRest/comunicacion/" + path;
     }
 
     $scope.setDomiciliosPath = function(path) {
@@ -361,16 +507,35 @@ app.controller('indexController', ['$scope', '$http', '$state', '$localStorage',
 
                 if(response.data.codigo === 0 || response.data.code === 0){
                     action(response);
+                    $scope.alert = {
+                        tipo: 'alert-success',
+                        mensaje: response.data.descripcion
+                    }
                 } else {
                     console.log('Código diferente a cero - ' + response.descripcion);
-                    //$scope.error = "Error: " + response.data.descripcion;
+                    $scope.alert = {
+                        tipo: 'alert-warning',
+                        mensaje: response.descripcion
+                    }
                 }
-                alert(response.data.descripcion);
+                $('#alerta').show();
+                $('#alerta').fadeTo(2000, 500).slideUp(500, function(){
+                    $('#alerta').hide();
+                });
             }, function(response){
                 console.log('SERVICE ERROR');
                 console.log(response);
                 //$scope.error = "Error en la invocación";
                 //window.location.hash = '#body';
+                $scope.alert = {
+                    tipo: 'alert-danger',
+                    mensaje: "Error en la invocación"
+                };
+                $('#alerta').show();
+                $('#alerta').fadeTo(2000, 500).slideUp(500, function(){
+                    $('#alerta').hide();
+                    //$('#alerta').alert('close');
+                });
             });
     }
 
@@ -395,16 +560,51 @@ app.controller('indexController', ['$scope', '$http', '$state', '$localStorage',
     };
 }]);
 
-
-app.controller('MenuController', ['$scope', '$http', '$state', function($scope, $http, $state) {
-    console.log($scope.$storage.user);
+app.controller('HomeController', function($scope, $http, $state, uiGmapGoogleMapApi) {
     var input = {
-        id_usuario: $scope.$storage.user.id
-    }
+		id_usuario: $scope.$storage.user.id
+	}
     $scope.post( $scope.setUsersPath('obtenerDetallesUsuario'), input, function(response){
-        $scope.u = response.data.datos;
-    });
-}]);
+		var r = response.data.datos;
+
+		var tipoIdentificacion = 'Pasaporte';
+		if(r[1] === '1'){
+			tipoIdentificacion = 'Cédula de ciudadanía';
+		} else if(r[1] === '2'){
+			tipoIdentificacion = 'Tarjeta de identidad';
+		} else if(r[1] === '3'){
+			tipoIdentificacion = 'Cédula de extranjería';
+		}
+
+		var tipoPerfil = 'Ciclista recurrente';
+		if(r[1] === '1'){
+			tipoPerfil = 'Ciclista domiciliario';
+		} else if(r[1] === '2'){
+			tipoPerfil = 'Vendedor';
+		}
+
+		$scope.u = {
+            id: $scope.$storage.user.id,
+			numeroIdentificacion: r[0],
+			tipoIdentificacion: tipoIdentificacion,
+			tipoPerfil: tipoPerfil,
+			genero: (r[3] === '1' ? 'Hombre' : 'Mujer'),
+			nombres: r[4],
+			apellidos: r[5],
+			foto: r[0],
+			correo: r[7],
+			fechaNacimiento: r[8],
+			direccionCasa: r[9],
+			direccionTrabajo: r[10],
+			telefonoFijo: r[11],
+			telefonoMovil: r[12],
+			facebookUser: r[13],
+			twitterUser: r[14],
+			usuario: r[15]
+		};
+        $scope.$storage.user = $scope.u;
+	});
+});
 
 app.controller('calcularRutaController', ['$scope', '$http', '$state', function($scope, $http, $state) {
 	google.maps.event.addDomListener(window, 'load', initialize);
@@ -585,6 +785,111 @@ app.controller('miPosicionController', ['$scope', '$http', '$state',
 function($scope, $http, $state) {
 }]);
 
+app.controller('ReportesActividadController', function($scope, $http, $state) {
+    $scope.submit = function(){
+        // $scope.post($scope.setDomiciliosPath('inscribirDomiciliario'), $scope.d, function(response){
+        // 	$state.go('domicilios');
+        // });
+    };
+});
+
+app.controller('ReportesRutasFrecuentesController', function($scope, $http, $state) {
+
+    $('.input-group.date.d-inicio').datepicker({
+        format: "yyyy-mm-dd",
+        startDate: "today",
+        clearBtn: true,
+        //language: "es",
+        orientation: "bottom auto"
+    });
+    $('.input-group.date.d-fin').datepicker({
+        format: "yyyy-mm-dd",
+        startDate: "today",
+        clearBtn: true,
+        //language: "es",
+        orientation: "bottom auto"
+    });
+
+    $scope.map = { center: { latitude: 4.603063, longitude:-74.064863 }, zoom: 15 };
+    // $scope.datos = [
+    //     {
+    //         nombre: "casa trabajo",
+    //         fechaHora: "Tue Oct 27 21:35:16 COT 2015",
+    //         distancia: "13.9 km",
+    //         tiempo: "33 mins",
+    //         lugares: [
+    //             {
+    //                 latitud: "4.634992",
+    //                 longitud: "-74.080758"
+    //             },
+    //             {
+    //                 latitud: "4.56113",
+    //                 longitud: "-74.080858"
+    //             },
+    //             {
+    //                 latitud: "4.56113",
+    //                 longitud: "-74.080966"
+    //             }
+    //         ]
+    //     },
+    //     {
+    //         nombre: "casa trabajo",
+    //         fechaHora: "Tue Oct 27 21:35:16 COT 2015",
+    //         distancia: "13.9 km",
+    //         tiempo: "33 mins",
+    //         lugares: [
+    //             {
+    //                 latitud: "4.734992",
+    //                 longitud: "-74.080758"
+    //             },
+    //             {
+    //                 latitud: "4.56113",
+    //                 longitud: "-74.080858"
+    //             },
+    //             {
+    //                 latitud: "4.56113",
+    //                 longitud: "-74.080966"
+    //             }
+    //         ]
+    //     }
+    // ]
+
+    $scope.verMapa = function(i){
+        $scope.mapa = true;
+        $scope.map.center =  {
+            latitude: $scope.datos[i].lugares[0].latitud,
+            longitude: $scope.datos[i].lugares[0].longitud
+        };
+
+        $scope.map.markers = [];
+
+        $scope.datos[i].lugares.forEach(function(e){
+            var marker = {
+                id: Date.now(),
+                coords: {
+                    latitude: e.latitud,
+                    longitude: e.longitud
+                }
+            };
+            $scope.map.markers.push(marker);
+        });
+        //$('#myModal').modal();
+    };
+    $scope.submit = function(){
+        // $scope.post($scope.setDomiciliosPath('inscribirDomiciliario'), $scope.d, function(response){
+        // 	$state.go('domicilios');
+        // });
+    };
+});
+
+app.controller('ReportesNotificacionesController', function($scope, $http, $state) {
+    $scope.submit = function(){
+        // $scope.post($scope.setDomiciliosPath('inscribirDomiciliario'), $scope.d, function(response){
+        // 	$state.go('domicilios');
+        // });
+    };
+});
+
 app.controller('serviciosController', ['$scope', '$http', '$state',
 	function($scope, $http, $state) {
 		$scope.routes = [
@@ -757,6 +1062,52 @@ function($scope, $http, $state) {
 		});
 	}
 }]);
+
+
+app.controller('perfilController', function($scope, $http, $state) {
+	console.log($scope.$storage.user);
+	var input = {
+		id_usuario: $scope.$storage.user.id
+	}
+	$scope.post( $scope.setUsersPath('obtenerDetallesUsuario'), input, function(response){
+		var r = response.data.datos;
+
+		var tipoIdentificacion = 'Pasaporte';
+		if(r[1] === '1'){
+			tipoIdentificacion = 'Cédula de ciudadanía';
+		} else if(r[1] === '2'){
+			tipoIdentificacion = 'Tarjeta de identidad';
+		} else if(r[1] === '3'){
+			tipoIdentificacion = 'Cédula de extranjería';
+		}
+
+		var tipoPerfil = 'Ciclista recurrente';
+		if(r[1] === '1'){
+			tipoPerfil = 'Ciclista domiciliario';
+		} else if(r[1] === '2'){
+			tipoPerfil = 'Vendedor';
+		}
+
+		$scope.u = {
+			numeroIdentificacion: r[0],
+			tipoIdentificacion: tipoIdentificacion,
+			tipoPerfil: tipoPerfil,
+			genero: (r[3] === '1' ? 'Hombre' : 'Mujer'),
+			nombres: r[4],
+			apellidos: r[5],
+			foto: r[0],
+			correo: r[7],
+			fechaNacimiento: r[8],
+			direccionCasa: r[9],
+			direccionTrabajo: r[10],
+			telefonoFijo: r[11],
+			telefonoMovil: r[12],
+			facebookUser: r[13],
+			twitterUser: r[14],
+			usuario: r[15]
+		};
+	});
+});
 
 app.run(['$rootScope', function ($rootScope) {
 	function getTemplateUrl(name){

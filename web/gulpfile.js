@@ -68,9 +68,12 @@ gulp.task(vendorStyles, function () {
 
 gulp.task(vendorScripts, function () {
     var files = [
+        'bower_components/lodash/lodash.js',
         'bower_components/jquery/dist/jquery.js',
         'bower_components/bootstrap/dist/js/bootstrap.js',
         'bower_components/angular/angular.js',
+        'bower_components/angular-simple-logger/dist/angular-simple-logger.js',
+        'bower_components/angular-google-maps/dist/angular-google-maps.js',
         'bower_components/angular-loading-bar/build/loading-bar.js',
         //'bower_components/angular-bootstrap/ui-bootstrap.js',
         'bower_components/angular-ui-router/release/angular-ui-router.js',

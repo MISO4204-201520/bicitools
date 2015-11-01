@@ -1,7 +1,8 @@
 app.controller('indexController', ['$scope', '$http', '$state', '$localStorage', function($scope, $http, $state, $localStorage) {
     $scope.$storage = $localStorage;
+    $('#alerta').hide();
 
-    var domain = "http://localhost:8080/";  //"http://192.168.0.11:8080/"; //
+    var domain = "http://192.168.0.5:8080/";  //"http://192.168.0.11:8080/"; //
 
     $scope.setUsersPath = function(path) {
         return domain + "bicitoolsgu/webresources/gestionusuario/" + path;
@@ -12,7 +13,7 @@ app.controller('indexController', ['$scope', '$http', '$state', '$localStorage',
     }
 
     $scope.setCommunicationPath = function(path) {
-        return domain + "bicitoolsco/serviciosRest/" + path;
+        return domain + "bicitoolsco/serviciosRest/comunicacion/" + path;
     }
 
     $scope.setDomiciliosPath = function(path) {
@@ -27,16 +28,35 @@ app.controller('indexController', ['$scope', '$http', '$state', '$localStorage',
 
                 if(response.data.codigo === 0 || response.data.code === 0){
                     action(response);
+                    $scope.alert = {
+                        tipo: 'alert-success',
+                        mensaje: response.data.descripcion
+                    }
                 } else {
                     console.log('Código diferente a cero - ' + response.descripcion);
-                    //$scope.error = "Error: " + response.data.descripcion;
+                    $scope.alert = {
+                        tipo: 'alert-warning',
+                        mensaje: response.descripcion
+                    }
                 }
-                alert(response.data.descripcion);
+                $('#alerta').show();
+                $('#alerta').fadeTo(2000, 500).slideUp(500, function(){
+                    $('#alerta').hide();
+                });
             }, function(response){
                 console.log('SERVICE ERROR');
                 console.log(response);
                 //$scope.error = "Error en la invocación";
                 //window.location.hash = '#body';
+                $scope.alert = {
+                    tipo: 'alert-danger',
+                    mensaje: "Error en la invocación"
+                };
+                $('#alerta').show();
+                $('#alerta').fadeTo(2000, 500).slideUp(500, function(){
+                    $('#alerta').hide();
+                    //$('#alerta').alert('close');
+                });
             });
     }
 
@@ -61,13 +81,48 @@ app.controller('indexController', ['$scope', '$http', '$state', '$localStorage',
     };
 }]);
 
-
-app.controller('MenuController', ['$scope', '$http', '$state', function($scope, $http, $state) {
-    console.log($scope.$storage.user);
+app.controller('HomeController', function($scope, $http, $state, uiGmapGoogleMapApi) {
     var input = {
-        id_usuario: $scope.$storage.user.id
-    }
+		id_usuario: $scope.$storage.user.id
+	}
     $scope.post( $scope.setUsersPath('obtenerDetallesUsuario'), input, function(response){
-        $scope.u = response.data.datos;
-    });
-}]);
+		var r = response.data.datos;
+
+		var tipoIdentificacion = 'Pasaporte';
+		if(r[1] === '1'){
+			tipoIdentificacion = 'Cédula de ciudadanía';
+		} else if(r[1] === '2'){
+			tipoIdentificacion = 'Tarjeta de identidad';
+		} else if(r[1] === '3'){
+			tipoIdentificacion = 'Cédula de extranjería';
+		}
+
+		var tipoPerfil = 'Ciclista recurrente';
+		if(r[1] === '1'){
+			tipoPerfil = 'Ciclista domiciliario';
+		} else if(r[1] === '2'){
+			tipoPerfil = 'Vendedor';
+		}
+
+		$scope.u = {
+            id: $scope.$storage.user.id,
+			numeroIdentificacion: r[0],
+			tipoIdentificacion: tipoIdentificacion,
+			tipoPerfil: tipoPerfil,
+			genero: (r[3] === '1' ? 'Hombre' : 'Mujer'),
+			nombres: r[4],
+			apellidos: r[5],
+			foto: r[0],
+			correo: r[7],
+			fechaNacimiento: r[8],
+			direccionCasa: r[9],
+			direccionTrabajo: r[10],
+			telefonoFijo: r[11],
+			telefonoMovil: r[12],
+			facebookUser: r[13],
+			twitterUser: r[14],
+			usuario: r[15]
+		};
+        $scope.$storage.user = $scope.u;
+	});
+});

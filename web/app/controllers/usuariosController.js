@@ -64,3 +64,49 @@ function($scope, $http, $state) {
 		});
 	}
 }]);
+
+
+app.controller('perfilController', function($scope, $http, $state) {
+	console.log($scope.$storage.user);
+	var input = {
+		id_usuario: $scope.$storage.user.id
+	}
+	$scope.post( $scope.setUsersPath('obtenerDetallesUsuario'), input, function(response){
+		var r = response.data.datos;
+
+		var tipoIdentificacion = 'Pasaporte';
+		if(r[1] === '1'){
+			tipoIdentificacion = 'Cédula de ciudadanía';
+		} else if(r[1] === '2'){
+			tipoIdentificacion = 'Tarjeta de identidad';
+		} else if(r[1] === '3'){
+			tipoIdentificacion = 'Cédula de extranjería';
+		}
+
+		var tipoPerfil = 'Ciclista recurrente';
+		if(r[1] === '1'){
+			tipoPerfil = 'Ciclista domiciliario';
+		} else if(r[1] === '2'){
+			tipoPerfil = 'Vendedor';
+		}
+
+		$scope.u = {
+			numeroIdentificacion: r[0],
+			tipoIdentificacion: tipoIdentificacion,
+			tipoPerfil: tipoPerfil,
+			genero: (r[3] === '1' ? 'Hombre' : 'Mujer'),
+			nombres: r[4],
+			apellidos: r[5],
+			foto: r[0],
+			correo: r[7],
+			fechaNacimiento: r[8],
+			direccionCasa: r[9],
+			direccionTrabajo: r[10],
+			telefonoFijo: r[11],
+			telefonoMovil: r[12],
+			facebookUser: r[13],
+			twitterUser: r[14],
+			usuario: r[15]
+		};
+	});
+});

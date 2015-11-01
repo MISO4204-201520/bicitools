@@ -64,6 +64,66 @@ function($scope, $http, $state) {
 }]);
 
 app.controller('pedirServicioController', ['$scope', '$http', '$state', function($scope, $http, $state) {
+	//$scope.map = { center: { latitude: 45, longitude: -73 }, zoom: 8 };
+
+	angular.extend($scope, {
+		map: {
+			center: {
+				latitude: 4.603063,
+				longitude:-74.064863
+			},
+			zoom: 15,
+			markers: [],
+			events: {
+				click: function (map, eventName, originalEventArgs) {
+					var e = originalEventArgs[0];
+					var lat = e.latLng.lat();
+					var lon = e.latLng.lng();
+					var address = '';
+
+					var geocoder = new google.maps.Geocoder();
+					var latlng = new google.maps.LatLng(lat, lon);
+
+					geocoder.geocode({ 'latLng': latlng }, function (results, status) {
+						if (status == google.maps.GeocoderStatus.OK) {
+							if (results[1]) {
+								console.log(results[1]);
+								address = results[1].formatted_address;
+							} else {
+								console.log('Location not found');
+							}
+						} else {
+							console.log('Geocoder failed due to: ' + status);
+						}
+
+						var marker = {
+							id: Date.now(),
+							coords: {
+								latitude: lat,
+								longitude: lon
+							},
+							address: address
+						};
+
+						if($scope.map.markers.length >= 2){
+							$scope.map.markers = [];
+						}
+						$scope.map.markers.push(marker);
+
+
+						console.log($scope.map.markers);
+						$scope.$apply();
+					});
+				}
+			}
+		}
+	});
+
+
+
+
+
+
 
 	$scope.setMock(function(){
 		$http.get('http://www.mocky.io/v2/5625adc32500003a06ccb2d9').then(function(response){
@@ -73,6 +133,8 @@ app.controller('pedirServicioController', ['$scope', '$http', '$state', function
 
 	$scope.submit = function(){
 		$scope.s.usuario = $scope.$storage.user.user;
+
+		$scope.s.destino = $scope.map.markers[1].address;
 		$scope.post($scope.setDomiciliosPath('pedirServicioDomicilio'), $scope.s, function(response){
 			$state.go('domicilios');
 		});

@@ -252,3 +252,44 @@ a.navbar-brand{
 	// top: 130px;
 	// width: 500px;
 }
+
+
+.angular-google-map-container { height: 500px; }
+
+
+.alert-fixed {
+	position: fixed;
+	top: 70px;
+	width:50%;
+	margin: 0 0 0 -25%;
+	left:50%;
+}
+
+// ui-view{
+// 	> div{
+// 		margin-top: 30px;
+// 	}
+// }
+
+
+
+// ==== CHAT ======================
+.bubble{
+	padding: 5px 10px;
+}
+.chat-bubbles{
+	height: 450px;
+	overflow-y: auto;
+}
+.chat-contacts{
+	height: 450px;
+	overflow-y: auto;
+}
+.chat-title{
+	font-size: 18px;
+}
+.ultimo-mensaje{
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}

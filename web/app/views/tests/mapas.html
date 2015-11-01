@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style type="text/css">
+html, body { height: 100%; margin: 0; padding: 0; }
+#map { height: 50%;
+    width: 50%;
+}
+</style>
+</head>
+<body>
+
+    <div id="map"></div>
+    <div>
+        <p id="demo"></p>
+        <br>
+        Latitud clic mapa<br>
+        <input type="text" id="latitud">
+        <br>
+        Longitud clic mapa<br>
+        <input type="text" id="longitud">
+        <br>
+        Direccion clic mapa<br>
+        <input type="text" id="direccion">
+    </div>
+
+    <script type="text/javascript">
+
+    var map;
+    var x = document.getElementById("demo");
+    var latIput =document.getElementById("latitud");
+    var longInput=document.getElementById("longitud");
+    var direccionInput=document.getElementById("direccion");
+    var latCoodenadaCurrent=0;
+    var longCoodenadaCurrent=0;
+    function getLocation() {
+        if (navigator.geolocation) {
+            navigator.geolocation.watchPosition(showPosition);
+        } else {
+            x.innerHTML = "Geolocation is not supported by this browser.";
+        }
+    }
+    function initMap() {
+        var myLatLng = {lat: latCoodenadaCurrent, lng: longCoodenadaCurrent};
+
+        map = new google.maps.Map(document.getElementById('map'), {
+            center: myLatLng,
+            zoom: 14
+        });
+        var marker = new google.maps.Marker({
+            position: myLatLng,
+            map: map,
+            title: 'Im Here!'
+        });
+        google.maps.event.addListener(map, 'click', function(event) {
+
+            marker.setMap(null);
+            marker = new google.maps.Marker({position: event.latLng, map: map});
+            var geocoder = geocoder = new google.maps.Geocoder();
+
+            geocoder.geocode({ 'latLng': event.latLng }, function (results, status) {
+                if (status == google.maps.GeocoderStatus.OK) {
+                    if (results[1]) {
+                        direccionInput.value=results[1].formatted_address;
+                    }
+                }
+            });
+            latIput.value=event.latLng.lat();
+            longInput.value=event.latLng.lng();
+
+        });
+    }
+    function showPosition(position) {
+        x.innerHTML = "Latitude actual: " + position.coords.latitude +
+        "<br>Longitude actual: " + position.coords.longitude;
+        latCoodenadaCurrent=position.coords.latitude;
+        longCoodenadaCurrent=position.coords.longitude;
+        initMap();
+    }
+
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCCbQjjroqiaMd_6MB7xGo1OPhc3WTXRx8&callback=getLocation">
+    </script>
+
+</body>

@@ -17,3 +17,54 @@
 * Dibujar en el mapa la linea o ruta de las dos direcciones especificadas.
 * Darle click al mapa y agregar los puntos para obtener las coordenadas.
 * Mostrar el mapa y habilitar la posición con Javascript.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+- Endpoint para Reportes
+- Datos de prueba
+-  Hoja 1 vs. Reportes
