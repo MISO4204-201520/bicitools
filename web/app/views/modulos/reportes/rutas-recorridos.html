@@ -1,0 +1,86 @@
+<div class="container">
+    <h2 class="text-center">Recorridos por ruta</h2>
+    <p>Selccione el perido de tiempo a consultar</p>
+    <br>
+    <form name="form" ng-submit="form.$valid && submit()" novalidate>
+        <div class="row">
+            <div class="col-sm-offset-2 col-sm-4">
+                <div class="form-group" ng-class="{'has-error': (form.$submitted && form.n{{$id}}.$invalid) || (form.n{{$id}}.$invalid && form.n{{$id}}.$touched && form.n{{$id}}.$dirty)  }">
+                    <label class="control-label" for="d-inicio" class="required">Inicio</label>
+                    <div class="input-group date d-inicio">
+                        <input id="d-inicio" type="text" class="form-control" name='n{{$id}}' ng-model="r.inicio" required>
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+                    </div>
+                    <div ng-show="(form.$submitted && form.n{{$id}}.$invalid) || (form.n{{$id}}.$invalid && form.n{{$id}}.$touched && form.n{{$id}}.$dirty)">
+                        <span class="help-block" ng-show="form.n{{$id}}.$error.required">Este campo es requerido</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="form-group" ng-class="{'has-error': (form.$submitted && form.n{{$id}}.$invalid) || (form.n{{$id}}.$invalid && form.n{{$id}}.$touched && form.n{{$id}}.$dirty)  }">
+                    <label class="control-label" for="d-fin" class="required">Fin</label>
+                    <div class="input-group date d-fin">
+                        <input id="d-fin" type="text" class="form-control" name='n{{$id}}' ng-model="r.fin" required>
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+                    </div>
+                    <div ng-show="(form.$submitted && form.n{{$id}}.$invalid) || (form.n{{$id}}.$invalid && form.n{{$id}}.$touched && form.n{{$id}}.$dirty)">
+                        <span class="help-block" ng-show="form.n{{$id}}.$error.required">Este campo es requerido</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-offset-4 col-sm-4">
+                <button type="button" class="col-sm-offset-2 col-sm-4 btn btn-default" ui-sref="reportes">Volver</button>
+                <button type="submit" class="col-sm-4 btn btn-primary">Consular</button>
+            </div>
+        </div>
+        <br>
+        <div ng-if="recorridos">
+            <div class="row" ng-repeat="r in recorridos">
+                <hr>
+                <div class="col-sm-4">
+                    <table class="table">
+                        <tr>
+                            <th>Nombre</th>
+                            <td ng-bind="r.nombre"></td>
+                        </tr>
+                        <tr>
+                            <th>Distancia calculada</th>
+                            <td ng-bind="r.distancia"></td>
+                        </tr>
+                        <tr>
+                            <th>Tiempo estimado</th>
+                            <td ng-bind="r.tiempo"></td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="col-sm-12" ng-if="r.recorridos[0]">
+                    <br>
+                    <h5><strong>Recorridos</strong></h5>
+                    <table class="table">
+                        <tr>
+                            <th>Fecha</th>
+                            <th>Distancia estimada</th>
+                            <th>Tiempo estimado</th>
+                        </tr>
+                        <tr ng-repeat="d in r.recorridos[0]">
+                            <td ng-bind="d.fechaHora"></td>
+                            <td ng-bind="d.distancia"></td>
+                            <td ng-bind="d.tiempo"></td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="col-sm-12" ng-hide="r.recorridos[0]">
+                    <br>
+                    <span>No hay recorridos asociados</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-offset-4 col-sm-4">
+                    <button type="button" class="btn btn-primary btn-block" ng-click="descargar()">Descargar</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

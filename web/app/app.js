@@ -129,11 +129,11 @@ app.run(["$q", "$rootScope", "$state", "$http", "$urlRouter", function ($q, $roo
             templateUrl : "views/modulos/reportes/reportes.html"
         },
         {
-            name: "reportes-actividad",
+            name: "reportes-recorridos",
             parent: 'menu-footer',
-            url: "reportes/actividad",
-            controller: "ReportesActividadController",
-            templateUrl : "views/modulos/reportes/actividad.html"
+            url: "reportes/recorridos",
+            controller: "ReporteRecorridosController",
+            templateUrl : "views/modulos/reportes/recorridos.html"
         },
         {
             name: "reportes-rutas-frecuentes",
@@ -143,11 +143,11 @@ app.run(["$q", "$rootScope", "$state", "$http", "$urlRouter", function ($q, $roo
             templateUrl : "views/modulos/reportes/rutas-frecuentes.html"
         },
         {
-            name: "reportes-notificaciones",
+            name: "reportes-rutasrecorridos",
             parent: 'menu-footer',
-            url: "reportes/notificaciones",
-            controller: "ReportesNotificacionesController",
-            templateUrl : "views/modulos/reportes/notificaciones.html"
+            url: "reportes/rutas-recorridos",
+            controller: "ReporteRutasRecorridosController",
+            templateUrl : "views/modulos/reportes/rutas-recorridos.html"
         },
         // ==== Configurador de bicicletas ==========================
         {
