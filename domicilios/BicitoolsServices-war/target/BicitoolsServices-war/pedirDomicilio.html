@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="css/skel.css" />
+        <link rel="stylesheet" href="css/style.css" />
+        <link rel="stylesheet" href="css/style-xlarge.css" />
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+        <script src="js/usuario.js"></script>
+        <script>
+            $(function () {
+                $("#includedContent").load("cabeza.html");
+
+            });
+        </script>
+
+        <style type="text/css">
+            html, body { height: 100%; margin: 0; padding: 0; }
+
+            #map { height: 70%; 
+                   width: 55%;
+                   float: left;
+                   margin: 10px; 
+
+            }
+
+            #dato { height: 100%; 
+                    width: 40%;
+                    float: right;
+                    margin: 0px; 
+
+
+
+            }
+            #divBo {
+                text-align: center;
+
+            }
+        </style>
+    </head>
+    <body onload="tomaUsuario();">
+        <header id="header">
+            <div id="includedContent"></div>
+        </header>
+
+
+        <div id="map"></div>
+
+        <div id="dato">
+
+
+
+            <header class="major">
+                <h2>Ruta</h2>
+            </header>
+
+            Dirección Origen
+
+            <input type="text" id="direccion" required />
+
+            Dirección Destino
+
+            <input type="text" id="direccion_destino" >
+
+
+            <br>
+            <div id="divBo">
+                <a href="#" class="button" onClick="pedirDomicilio();" >Pedir</a>
+
+
+            </div>
+            <div id="divBo">
+                <h6><font color="#FF0000"><output id="error" ></output> </font></h6>
+                <h2><font color="#0011FF"><output id="listo" ></output> </font></h2>
+            </div>
+            <input type="hidden" id="latitud">
+            <input type="hidden" id="longitud">
+
+            <input type="hidden" id="latitud_destino">
+            <input type="hidden" id="longitud_destino">
+            <input type="hidden" id="usuarioL">
+
+
+
+
+        </div>
+
+
+        <script type="text/javascript">
+            var flightPath;
+            var markersData = [];
+            var markesPoint = [];
+            var temporal;
+            var marker2;
+            var map;
+            var latCoodenadaCurrent = 0;
+            var longCoodenadaCurrent = 0;
+            function getLocation() {
+                if (navigator.geolocation) {
+                    navigator.geolocation.watchPosition(showPosition);
+                } else {
+                    document.getElementById("demo").innerHTML = "Geolocation is not supported by this browser.";
+                }
+            }
+            function initMap() {
+                var myLatLng = {lat: latCoodenadaCurrent, lng: longCoodenadaCurrent};
+
+                map = new google.maps.Map(document.getElementById('map'), {
+                    center: myLatLng,
+                    zoom: 14
+                });
+                var marker = new google.maps.Marker({
+                    position: myLatLng,
+                    map: map,
+                    title: 'Im Here!'
+                });
+                google.maps.event.addListener(map, 'click', function (event) {
+
+                    marker.setMap(null);
+                    if (markersData.length <= 1) {
+                        //alert(markersData.length);
+                        marker2 = new google.maps.Marker({position: event.latLng, map: map});
+                        markesPoint.push(marker2);
+                        var geocoder = geocoder = new google.maps.Geocoder();
+
+                        geocoder.geocode({'latLng': event.latLng}, function (results, status) {
+                            if (status == google.maps.GeocoderStatus.OK) {
+                                if (results[1]) {
+                                    temporal = {lat: event.latLng.lat(), lng: event.latLng.lng(), dir: results[1].formatted_address};
+                                    if (markersData.length == 0) {
+                                        markersData.push(temporal);
+
+                                        document.getElementById("direccion").value = results[1].formatted_address;
+                                        document.getElementById("latitud").value = event.latLng.lat();
+                                        document.getElementById("longitud").value = event.latLng.lng();
+                                    }
+                                    else {
+                                        markersData.push(temporal);
+                                        document.getElementById("direccion_destino").value = results[1].formatted_address;
+                                        document.getElementById("latitud_destino").value = event.latLng.lat();
+                                        document.getElementById("longitud_destino").value = event.latLng.lng();
+                                        var flightPlanCoordinates = [
+                                            {lat: parseFloat(document.getElementById("latitud").value), lng: parseFloat(document.getElementById("longitud").value)},
+                                            {lat: parseFloat(document.getElementById("latitud_destino").value), lng: parseFloat(document.getElementById("longitud_destino").value)}
+                                        ];
+                                        flightPath = new google.maps.Polyline({
+                                            path: flightPlanCoordinates,
+                                            geodesic: true,
+                                            strokeColor: '#FF0000',
+                                            strokeOpacity: 1.0,
+                                            strokeWeight: 2
+                                        });
+
+                                        flightPath.setMap(map);
+
+
+                                    }
+
+                                }
+                            }
+                        });
+                    } else {
+                        document.getElementById("direccion").value = "";
+                        document.getElementById("latitud").value = "";
+                        document.getElementById("longitud").value = "";
+                        document.getElementById("direccion_destino").value = "";
+                        document.getElementById("latitud_destino").value = "";
+                        document.getElementById("longitud_destino").value = "";
+                        markersData.length = 0;
+                        for (i = 0; i < markesPoint.length; i++) {
+                            markesPoint[i].setMap(null);
+                        }
+                        flightPath.setMap(null)
+                    }
+
+
+                });
+
+
+            }
+            function showPosition(position) {
+
+                latCoodenadaCurrent = position.coords.latitude;
+                longCoodenadaCurrent = position.coords.longitude;
+                initMap();
+            }
+
+
+
+
+            function pedirDomicilio() {
+                var value1 = daUsuario();
+                var siga = "";
+                if (value1 == "")
+                    siga = "No hay usuario registrado";
+                if (document.getElementById("direccion").value == "")
+                    siga = "El Campo Dirección Origen es requerido";
+                if (document.getElementById("direccion_destino").value == "")
+                    siga = "El Campo Dirección Destino es requerido";
+
+                if (siga == "") {
+                         jQuery.ajax({
+                                 type: "POST",
+                                 url: "http://localhost:8080/bicitoolsdo/serviciosRest/domicilios/pedirServicioDomicilio",
+                                data: "{\"usuario\":\"" + value1 + "\", \"origen\":\"" + document.getElementById("direccion").value + "\", \"destino\":\"" + document.getElementById("direccion_destino").value + "\"}",
+                                contentType: "application/json; charset=utf-8",
+                                dataType: "json",
+                                success: function (data) {
+                            if (data.codigo == "0") {
+                                document.getElementById("listo").value = "Su Servicio Será Atendido por uno de Nuestros Domiciliarios en Breve";
+                                document.getElementById("error").value = "";
+                            }
+                            else
+                                document.getElementById("listo").value = data.descripcion;
+                        },
+                                error: function () {
+                            document.getElementById("error").value = "La plataforma Experimenta Problemas. Intente por favor más tarde";
+                        }
+
+
+                         	});
+                }
+                else {
+                    document.getElementById("error").value = siga;
+                }
+            }
+
+        </script>
+        <script async defer
+                src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCCbQjjroqiaMd_6MB7xGo1OPhc3WTXRx8&callback=getLocation">
+        </script>
+
+    </body>
+</html>

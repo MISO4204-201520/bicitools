@@ -1,0 +1,15 @@
+com\bicitools\mjson\CalificacionServicioJson.class
+com\bicitools\mjson\validator\ValidadorCampos.class
+com\bicitools\mjson\RespuestaJson.class
+com\bicitools\mjson\UsuarioJson.class
+com\bicitools\common\ConstruyeRespuesta.class
+com\bicitools\mjson\DatosSalidaServicioJson.class
+com\bicitools\mjson\TemporalJson.class
+com\bicitools\mjson\InfoDomiciliarioJson.class
+com\bicitools\mjson\CalificacionUsuarioServicioJson.class
+com\bicitools\common\MessagesBicitools.class
+com\bicitools\mjson\ServicioJson.class
+com\bicitools\mjson\DatosEntradaServicioJson.class
+com\bicitools\mjson\DatosCalificacionServicioJson.class
+com\bicitools\mjson\InfoHorarioJson.class
+com\bicitools\mjson\InfoEntregaJson.class
