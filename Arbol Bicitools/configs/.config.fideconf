@@ -1,0 +1,34 @@
+# Lists all features from the model with manual (first digit) and automatic (second digit) selection
+# 0 = deselected, 1 = selected, 2 = undefined
+21ProyectoBicicletas
+21Recorridos
+21Sitios
+21Alquileres
+21MejorRuta
+21Mapas
+21Posicion
+21Desplazamiento
+21Individual
+21Grupal
+21Metricas
+21HistorialViajes
+21GestionUsuario
+21Seguridad
+21ManejoPerfiles
+21RedesSociales
+21Twitter
+21Facebook
+21Comunicacion
+12CompartirRedesSociales
+21GestionAmigos
+21Mensaje
+21Notificaciones
+21Reportes
+21ReporteMetricas
+21ReporteRutas
+21ReporteHistorialViajes
+11ConfiguradorBicicletas
+21FrontEnd
+21Movil
+21Web
+21Domicilios

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+	<featureModel chosenLayoutAlgorithm="4">
+		<struct>
+			<and abstract="true" mandatory="true" name="ProyectoBicicletas">
+				<and mandatory="true" name="Recorridos">
+					<feature mandatory="true" name="Sitios"/>
+					<feature name="Alquileres"/>
+					<feature mandatory="true" name="MejorRuta"/>
+					<and mandatory="true" name="Mapas">
+						<feature mandatory="true" name="Posicion"/>
+					</and>
+					<and mandatory="true" name="Desplazamiento">
+						<feature mandatory="true" name="Individual"/>
+						<feature name="Grupal"/>
+					</and>
+					<feature mandatory="true" name="Metricas"/>
+					<feature mandatory="true" name="HistorialViajes"/>
+				</and>
+				<and mandatory="true" name="GestionUsuario">
+					<feature mandatory="true" name="Seguridad"/>
+					<feature mandatory="true" name="ManejoPerfiles"/>
+					<and name="RedesSociales">
+						<feature mandatory="true" name="Twitter"/>
+						<feature mandatory="true" name="Facebook"/>
+					</and>
+				</and>
+				<and mandatory="true" name="Comunicacion">
+					<feature name="CompartirRedesSociales"/>
+					<feature mandatory="true" name="GestionAmigos"/>
+					<feature mandatory="true" name="Mensaje"/>
+					<feature name="Notificaciones"/>
+				</and>
+				<and mandatory="true" name="Reportes">
+					<feature mandatory="true" name="ReporteMetricas"/>
+					<feature mandatory="true" name="ReporteRutas"/>
+					<feature mandatory="true" name="ReporteHistorialViajes"/>
+				</and>
+				<feature name="ConfiguradorBicicletas"/>
+				<and mandatory="true" name="FrontEnd">
+					<feature mandatory="true" name="Movil"/>
+					<feature mandatory="true" name="Web"/>
+				</and>
+				<feature mandatory="true" name="Domicilios"/>
+			</and>
+		</struct>
+		<constraints>
+			<rule>
+				<imp>
+					<var>Grupal</var>
+					<var>CompartirRedesSociales</var>
+				</imp>
+			</rule>
+			<rule>
+				<imp>
+					<var>Notificaciones</var>
+					<var>Alquileres</var>
+				</imp>
+			</rule>
+			<rule>
+				<imp>
+					<var>Alquileres</var>
+					<var>Notificaciones</var>
+				</imp>
+			</rule>
+			<rule>
+				<imp>
+					<var>RedesSociales</var>
+					<var>CompartirRedesSociales</var>
+				</imp>
+			</rule>
+			<rule>
+				<imp>
+					<var>CompartirRedesSociales</var>
+					<var>RedesSociales</var>
+				</imp>
+			</rule>
+			<rule>
+				<imp>
+					<var>RedesSociales</var>
+					<var>Notificaciones</var>
+				</imp>
+			</rule>
+			<rule>
+				<imp>
+					<var>Alquileres</var>
+					<var>ConfiguradorBicicletas</var>
+				</imp>
+			</rule>
+			<rule>
+				<imp>
+					<var>ConfiguradorBicicletas</var>
+					<var>Notificaciones</var>
+				</imp>
+			</rule>
+			<rule>
+				<imp>
+					<var>CompartirRedesSociales</var>
+					<var>Grupal</var>
+				</imp>
+			</rule>
+			<rule>
+				<imp>
+					<var>RedesSociales</var>
+					<var>Notificaciones</var>
+				</imp>
+			</rule>
+		</constraints>
+		<calculations Auto="false" Constraints="true" Features="true" Redundant="true" Tautology="true"/>
+		<comments/>
+		<featureOrder userDefined="false"/>
+	</featureModel>
