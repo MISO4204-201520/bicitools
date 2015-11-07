@@ -1,0 +1,15 @@
+com\bicitools\entity\Mensajeschat_.class
+com\bicitools\entity\Amigosredes.class
+com\bicitools\dao\AmigosRedesDAOLocal.class
+com\bicitools\entity\Chat.class
+com\bicitools\entity\Usuarioschat.class
+com\bicitools\entity\Mensajesusuariof.class
+com\bicitools\entity\Amigosredes_.class
+com\bicitools\dao\ChatsDAOLocal.class
+com\bicitools\entity\Usuarioschat_.class
+com\bicitools\entity\Chat_.class
+com\bicitools\dao\ChatsDAO.class
+com\bicitools\dao\AmigosRedesDAO.class
+com\bicitools\entity\Mensajeschat.class
+com\bicitools\cliente\ConsumeServicios.class
+com\bicitools\entity\Mensajesusuariof_.class

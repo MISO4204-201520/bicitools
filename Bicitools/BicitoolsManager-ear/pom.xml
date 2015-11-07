@@ -18,7 +18,7 @@
     </properties>
   
     <build>
-         <finalName>${artifactId}</finalName>
+         <finalName>bicitoolsManager_mibici</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -41,7 +41,7 @@
                             <artifactId>BicitoolsServices-war</artifactId>
                             <groupId>${project.groupId}</groupId>
                             <bundleFileName>BicitoolsServices-war.war</bundleFileName>
-                            <contextRoot>/bicitools</contextRoot>                         
+                            <contextRoot>/bicitoolsMi</contextRoot>                         
                         </webModule>
     <!--                    <jarModule>
                             <artifactId>BicitoolsCommon-jar</artifactId>
