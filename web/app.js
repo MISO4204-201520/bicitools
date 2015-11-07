@@ -1,6 +1,5 @@
 // SET UP =======================================
 var express = require('express');
-var cors = require('cors');
 var gulp = require('gulp');
 require('./gulpfile.js');
 var app = express();
