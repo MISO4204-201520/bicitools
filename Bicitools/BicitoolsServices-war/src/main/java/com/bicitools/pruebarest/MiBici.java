@@ -10,6 +10,7 @@ import com.bicitools.common.MessagesBicitools;
 import com.bicitools.dao.PartesDAOLocal;
 import com.bicitools.dao.ProveedoresDAOLocal;
 import com.bicitools.mibici.general.*;
+import com.bicitools.mjson.InfoConfigMiBiciJson;
 import com.bicitools.mjson.InfoConsultaPartesJson;
 import com.bicitools.mjson.InfoInsertaProvJson;
 import com.bicitools.mjson.InfoRolProveedorJson;
@@ -113,18 +114,7 @@ public class MiBici {
             mensaje =  NullValidator.validarCampos(info);
             if(mensaje == null)
             {
-                
-            }
-
-            /*if (!ValidaEntradaJson.esFechaHoraValida(datoIni)) {
-             mensaje = MessagesBicitools.getMessage("erCampoInicio");
-             }
-             if (!ValidaInfoReportesJson.esFechaHoraValida(datoFin)) {
-             mensaje = MessagesBicitools.getMessage("erCampoFin");
-             }*/
-            if (mensaje == null) {
-                res = new RespuestaJson();
-                //res = domiciliario.creaDomiciliario(info);
+                res = parteDAO.obtenerPartesPorTipo(info);
 
             } else {
                 res = ConstruyeRespuesta.construyeRespuestaFalla(mensaje);

@@ -6,6 +6,7 @@
 package com.bicitools.dao;
 
 import com.bicitools.mibici.general.InfoInsertaProductoJson;
+import com.bicitools.mjson.InfoConsultaPartesJson;
 import com.bicitools.mjson.RespuestaJson;
 import javax.ejb.Local;
 
@@ -17,5 +18,7 @@ import javax.ejb.Local;
 public interface PartesDAOLocal {
 
     RespuestaJson crearParte(InfoInsertaProductoJson data);
+    
+    public RespuestaJson obtenerPartesPorTipo (InfoConsultaPartesJson info);
     
 }
