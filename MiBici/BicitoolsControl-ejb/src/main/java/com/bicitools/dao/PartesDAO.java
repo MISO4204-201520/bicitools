@@ -72,6 +72,8 @@ public class PartesDAO implements PartesDAOLocal {
         }
 
         parte.setValor(info.getPrecio());
+        
+        parte.setImagen(info.getImagen());
 
         try {
             em.persist(parte);
@@ -107,7 +109,7 @@ public class PartesDAO implements PartesDAOLocal {
                     parteSalida.setIdParte(miParte.getIdParte().toString());
                     parteSalida.setNombre(miParte.getNombre());
                     parteSalida.setDescripcion(miParte.getDescripcion());
-                    parteSalida.setImagen(null);
+                    parteSalida.setImagen(miParte.getImagen());
                     parteSalida.setValor(miParte.getValor());
                     arr.add(parteSalida);
                 }

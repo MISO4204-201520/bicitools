@@ -7,9 +7,11 @@ package com.bicitools.dao;
 
 import com.bicitools.common.ConstruyeRespuesta;
 import com.bicitools.entity.Proveedores;
+import com.bicitools.mjson.DatosSalidaProveedorJson;
 import com.bicitools.mjson.InfoInsertaProvJson;
 import com.bicitools.mjson.InfoRolProveedorJson;
 import com.bicitools.mjson.RespuestaJson;
+import java.util.ArrayList;
 import java.util.Vector;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -53,17 +55,23 @@ public class ProveedoresDAO implements ProveedoresDAOLocal {
     public RespuestaJson verificarProveedor(InfoRolProveedorJson info) {
         
         RespuestaJson res;
+        ArrayList salida=new ArrayList();
         Proveedores proveedor = new Proveedores();
-        
+        DatosSalidaProveedorJson valido= new DatosSalidaProveedorJson();
         int idRes = obtenerIdProveedor(info.getUsuario());
         
         if (idRes != -1) {
             res = ConstruyeRespuesta.construyeRespuestaOk();
+            valido.setEsProveedor("true");
+            salida.add(valido);
+            res.setDatos(salida);
         } else {
-            res = ConstruyeRespuesta.construyeRespuestaFalla("No es un Proveedor de Bicitools");
+            res = ConstruyeRespuesta.construyeRespuestaOk();
+            valido.setEsProveedor("false");
+            salida.add(valido);
+            res.setDatos(salida);
+            //res = ConstruyeRespuesta.construyeRespuestaFalla("No es un Proveedor de Bicitools");
         }
-
-
         return res;
     }
     
