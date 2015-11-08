@@ -1,20 +1,25 @@
-<div class="container">
+<div class="container" ng-controller="menuConfiguracionController">
+	<div class="row">
+		<h2 class="text-center">Configuración de bicicletas</h2>
+	</div>
 	<div class="row">
 		<div class="col-sm-offset-4 col-sm-4">
-			<h2 class="text-center">Configuración de bicicletas</h2>
-			<br>
+			<h3>Ciclista</h3>
 			<div class="form-group">
 				<button type="button" class="btn btn-default btn-lg col-xs-12" ui-sref="armar-bici">Armar bici</button>
 			</div>
 			<div class="form-group">
 				<button type="button" class="btn btn-default btn-lg col-xs-12" ui-sref="ordenes-configuracion">Ver mis ordenes</button>
 			</div>
+		</div>
+	</div>
+	<div class="row" ng-if="val">
+		<div class="col-sm-offset-4 col-sm-4">
+			<hr>
+			<h3>Proveedor</h3>
 			<div class="form-group">
 				<button type="button" class="btn btn-default btn-lg col-xs-12" ui-sref="parte-bici">Ingresar nueva parte</button>
 			</div>
-            <!-- <div class="form-group">
-				<button type="button" class="btn btn-default btn-lg col-xs-12" ui-sref="">Proveedores</button>
-			</div> -->
 		</div>
 	</div>
 </div>

@@ -154,6 +154,7 @@ app.run(["$q", "$rootScope", "$state", "$http", "$urlRouter", function ($q, $roo
             name: "configurador",
             parent: 'menu-footer',
             url: "configurador",
+            //controller: "menuConfiguracionController",
             templateUrl : "views/modulos/configuracion-bicicletas/configuracion.html"
         },
         {

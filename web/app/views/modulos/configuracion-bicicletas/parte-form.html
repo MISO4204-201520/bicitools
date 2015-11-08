@@ -1,1 +1,24 @@
-<h1>Parte form</h1>
+<div class="home-container container">
+
+	<div class="row">
+		<div class="col-xs-12">
+			<p class="text-center title">Bici<span class="bicitools-color">tools</span></p>
+		</div>
+	</div>
+	<div class="row">
+		<form name="form" class="col-sm-offset-4 col-sm-4" ng-submit="form.$valid && submit()" novalidate>
+			<h2>Ingresar nuevo producto</h2>
+			<br>
+			<fieldset>
+				<sg-combobox model="u.tipoParte" label="Tipo" list="tiposParte" required></sg-combobox>
+				<sg-textbox  model="u.nombre" label="Nombre" required></sg-textbox>
+				<sg-textbox  model="u.precio" label="Precio" required></sg-textbox>
+				<sg-textbox  model="u.cantidad" label="Unidades" required></sg-textbox>
+				<sg-textbox  model="u.descripcion" label="Descripción"></sg-textbox>
+				<sg-textbox  model="u.imagen" label="Imagen"></sg-textbox>
+				<!-- <zx-textbox  model="u.foto" label="Foto de perfil"></zx-textbox> -->
+				<button type="submit" class="col-xs-12 btn btn-lg btn-primary">Guardar</button>
+			</fieldset>
+		</form>
+	</div>
+</div>

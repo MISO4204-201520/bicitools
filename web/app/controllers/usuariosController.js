@@ -17,8 +17,7 @@ function($scope, $http, $state) {
 	}
 }]);
 
-app.controller('registrarController', ['$scope', '$http', '$state',
-function($scope, $http, $state) {
+app.controller('registrarController', ['$scope', '$http', '$state', function($scope, $http, $state) {
 
 	$scope.generos = [
 		{ value: "1", label: "Hombre" },

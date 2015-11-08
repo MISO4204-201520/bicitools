@@ -25,7 +25,7 @@ app.controller('indexController', ['$scope', '$http', '$state', '$localStorage',
     }
 
     $scope.setBikeConfPath = function(path) {
-        return domain + "bicitoolsco/serviciosRest/configuracion/" + path;
+        return domain + "bicitoolsMi/serviciosRest/miBici/" + path;
     }
 
     $scope.showSuccessAlert = function(mensaje){
@@ -34,7 +34,7 @@ app.controller('indexController', ['$scope', '$http', '$state', '$localStorage',
             mensaje: mensaje
         };
         $('#alerta').show();
-        $('#alerta').fadeTo(2000, 500).slideUp(500, function(){
+        $('#alerta').fadeTo(3250, 500).slideUp(500, function(){
             $('#alerta').hide();
         });
     }

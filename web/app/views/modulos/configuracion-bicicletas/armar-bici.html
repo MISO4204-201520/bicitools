@@ -1,9 +1,17 @@
 <div class="container">
     <h2>Arma tu bici</h2>
     <div class="row">
-        <div class="col-xs-12">
-            <p>Selecciona las partes que deseas agregar a la bici</p>
+        <div class="col-xs-8">
+            <p>Selecciona las partes que deseas agregar a la bici.</p>
         </div>
+        <div class="col-xs-4">
+            <button class="btn btn-default pull-right" data-toggle="modal" data-target="#modal-bici">¿Cuáles son las partes de la bici?</button>
+        </div>
+        <div class="clerfix"></div>
+        
+    </div>
+    <br><br>
+    <div class="row">
         <div ng-repeat="parte in partes">
             <div class="col-sm-4" >
                 <div class="panel panel-default">
@@ -91,6 +99,25 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-lg fa-fw fa-times"></i> Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modal-bici" data-backdrop="static"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fa fa-times"></i></span></button>
+                <h4 class="modal-title" id="myModalLabel">Partes de una bicicleta</h4>
+            </div>
+            <div class="modal-body">
+                <img src="https://sites.google.com/site/labicicletaenelcole/_/rsrc/1262895411944/para-los-alumnos-as/partes-de-la-bicicleta/partes%20de%20la%20bici%20en%20espa%C3%B1ol.png" style="width: 560px;">
+                <br>
+                <br>
+                <br>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Aceptar</button>
             </div>
         </div>
     </div>

@@ -1,1 +1,59 @@
-<h1>Ordenes</h1>
+<div class="container">
+    <h2 class="text-center">Ordenes</h2>
+    <br>
+    <div class="row">
+        <div class="col-xs-12">
+            <table class="table">
+                <tr>
+                    <th>Fecha</th>
+                    <th>Precio</th>
+                    <th>Estado</th>
+                    <th>Detalles</th>
+                </tr>
+                <tr ng-repeat="d in datos">
+                    <td ng-bind="d.fechaHora"></td>
+                    <td ng-bind="'$' + d.valor"></td>
+                    <td ng-bind="d.estado"></td>
+                    <td><button type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-detalles" ng-click="verDetalles(d.idOrden)">Ver detalles</button></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <button type="button" class="col-sm-offset-4 col-sm-2 btn btn-primary" ui-sref="configurador">Aceptar</button>
+    </div>
+</div>
+
+<div class="modal fade" id="modal-detalles" data-backdrop="static"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fa fa-times"></i></span></button>
+                <h4 class="modal-title" id="myModalLabel">Detalles</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <table class="table">
+                            <tr>
+                                <th>Tipo</th>
+                                <th>Parte</th>
+                                <th>Precio</th>
+                                <th>Descripción</th>
+                            </tr>
+                            <tr ng-repeat="d in detalles">
+                                <td ng-bind="d.tipoParte"></td>
+                                <td ng-bind="d.nombre"></td>
+                                <td ng-bind="'$' + d.valor"></td>
+                                <td ng-bind="d.descripcion"></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Aceptar</button>
+            </div>
+        </div>
+    </div>
+</div>
