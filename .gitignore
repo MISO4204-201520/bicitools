@@ -38,3 +38,15 @@ bower_components
 # auto
 web/app/styles/auto
 web/app/scripts/auto
+
+*.class
+
+*.properties
+
+*.properties
+
+*.lst
+
+Bicitools/BicitoolsControl-ejb/target/classes/com/bicitools/dao/PartesDAOLocal.class
+
+Bicitools/BicitoolsControl-ejb/target/classes/com/bicitools/dao/PartesDAO.class
