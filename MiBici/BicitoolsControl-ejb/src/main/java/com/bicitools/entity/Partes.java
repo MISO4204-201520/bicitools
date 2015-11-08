@@ -33,7 +33,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Partes.findByDescripcion", query = "SELECT p FROM Partes p WHERE p.descripcion = :descripcion"),
     @NamedQuery(name = "Partes.findByIdProveedor", query = "SELECT p FROM Partes p WHERE p.idProveedor = :idProveedor"),
     @NamedQuery(name = "Partes.findByValor", query = "SELECT p FROM Partes p WHERE p.valor = :valor"),
-    @NamedQuery(name = "Partes.findByCantidad", query = "SELECT p FROM Partes p WHERE p.cantidad = :cantidad")})
+    @NamedQuery(name = "Partes.findByCantidad", query = "SELECT p FROM Partes p WHERE p.cantidad = :cantidad"),
+    @NamedQuery(name = "Partes.findByImagen", query = "SELECT p FROM Partes p WHERE p.imagen = :imagen")})
 public class Partes implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -56,6 +57,9 @@ public class Partes implements Serializable {
     private String valor;
     @Column(name = "cantidad")
     private Integer cantidad;
+    @Size(max = 200)
+    @Column(name = "imagen")
+    private String imagen;
 
     public Partes() {
     }
@@ -118,6 +122,14 @@ public class Partes implements Serializable {
 
     public void setCantidad(Integer cantidad) {
         this.cantidad = cantidad;
+    }
+
+    public String getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
     }
 
     @Override
