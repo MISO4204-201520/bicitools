@@ -15,6 +15,7 @@ function setFile(response, path){
 
 // CONFIGURATION ================================
 gulp.start('default');
+gulp.start('watch');
 app.use(express.static(src));
 app.listen(port);
 console.log('Bicitools en ejecución (Puerto ' + port + ')');

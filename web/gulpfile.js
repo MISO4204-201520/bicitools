@@ -101,6 +101,7 @@ gulp.task('watch', function () {
         styleSheetsPath
     ];
     gulp.watch(styleSheetsFiles, [styles]);
+    console.log('Watch iniciado');
 });
 
 gulp.task('default', [vendorStyles, vendorScripts, styles, scripts]);

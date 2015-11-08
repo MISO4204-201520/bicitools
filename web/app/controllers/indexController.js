@@ -24,6 +24,21 @@ app.controller('indexController', ['$scope', '$http', '$state', '$localStorage',
         return domain + "bicitoolsdo/serviciosRest/domicilios/" + path;
     }
 
+    $scope.setBikeConfPath = function(path) {
+        return domain + "bicitoolsco/serviciosRest/configuracion/" + path;
+    }
+
+    $scope.showSuccessAlert = function(mensaje){
+        $scope.alert = {
+            tipo: 'alert-success',
+            mensaje: mensaje
+        };
+        $('#alerta').show();
+        $('#alerta').fadeTo(2000, 500).slideUp(500, function(){
+            $('#alerta').hide();
+        });
+    }
+
     function invokeService(promise, action){
         return promise.then(
             function(response) {
@@ -32,10 +47,10 @@ app.controller('indexController', ['$scope', '$http', '$state', '$localStorage',
 
                 if(response.data.codigo === 0 || response.data.code === 0){
                     action(response);
-                    $scope.alert = {
-                        tipo: 'alert-success',
-                        mensaje: response.data.descripcion
-                    }
+                    // $scope.alert = {
+                    //     tipo: 'alert-success',
+                    //     mensaje: response.data.descripcion
+                    // }
                 } else {
                     console.log('Código diferente a cero - ' + response.descripcion);
                     $scope.alert = {

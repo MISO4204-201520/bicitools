@@ -156,6 +156,27 @@ app.run(["$q", "$rootScope", "$state", "$http", "$urlRouter", function ($q, $roo
             url: "configurador",
             templateUrl : "views/modulos/configuracion-bicicletas/configuracion.html"
         },
+        {
+            name: "armar-bici",
+            parent: 'menu-footer',
+            url: "configurador/armatubici",
+            controller: "armarBiciController",
+            templateUrl : "views/modulos/configuracion-bicicletas/armar-bici.html"
+        },
+        {
+            name: "ordenes-configuracion",
+            parent: 'menu-footer',
+            url: "configurador/ordenes",
+            controller: "ordenesController",
+            templateUrl : "views/modulos/configuracion-bicicletas/ordenes.html"
+        },
+        {
+            name: "parte-bici",
+            parent: 'menu-footer',
+            url: "configurador/parte",
+            controller: "parteBiciController",
+            templateUrl : "views/modulos/configuracion-bicicletas/parte-form.html"
+        },
         // ==== Recorridos ==========================================
         {
             name: 'recorridos',
