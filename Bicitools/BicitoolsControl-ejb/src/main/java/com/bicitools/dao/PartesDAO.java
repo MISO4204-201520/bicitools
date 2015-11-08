@@ -10,7 +10,9 @@ import com.bicitools.entity.Partes;
 import com.bicitools.entity.Proveedores;
 import com.bicitools.mibici.general.InfoInsertaProductoJson;
 import com.bicitools.mjson.InfoConsultaPartesJson;
+import com.bicitools.mjson.InfoRespuestaPartesJson;
 import com.bicitools.mjson.RespuestaJson;
+import java.util.ArrayList;
 import java.util.Vector;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -68,9 +70,9 @@ public class PartesDAO implements PartesDAOLocal {
         } else {
             parte.setIdTipo(0);
         }
-        
+
         parte.setValor(info.getPrecio());
-        
+
         try {
             em.persist(parte);
             res = ConstruyeRespuesta.construyeRespuestaOk();
@@ -80,31 +82,47 @@ public class PartesDAO implements PartesDAOLocal {
 
         return res;
     }
-    
-    public RespuestaJson obtenerPartesporTipo (InfoConsultaPartesJson info){
-        
+
+    @Override
+    public RespuestaJson obtenerPartesPorTipo(InfoConsultaPartesJson info) {
+
         int idTipoParte;
-        Query query = em.createNamedQuery("Partes.findByIdTipo");
+        RespuestaJson res = null;
         
+        Query query = em.createNamedQuery("Partes.findByIdTipo");
+
         idTipoParte = tipoPartesDAO.obtenerIdTipoParte(info.getTipoParte());
         if (idTipoParte != -1) {
-        query.setParameter("idTipo", idTipoParte);
-        Vector qresul = (Vector) query.getResultList();
+            query.setParameter("idTipo", idTipoParte);
+            Vector qresul = (Vector) query.getResultList();
+            
+            ArrayList arr = new ArrayList();
 
-        if (qresul.size() > 0) {
-            for(int i=0;i<qresul.size();i++){
-                Partes miParte = (Partes) qresul.get(0);
-                
+            if (qresul.size() > 0) {
+
+                for (int i = 0; i < qresul.size(); i++) {
+                    Partes miParte = (Partes) qresul.get(i);
+                    InfoRespuestaPartesJson parteSalida = new InfoRespuestaPartesJson();
+
+                    parteSalida.setIdParte(miParte.getIdParte());
+                    parteSalida.setNombre(miParte.getNombre());
+                    parteSalida.setDescripcion(miParte.getDescripcion());
+                    parteSalida.setImagen(null);
+                    parteSalida.setValor(miParte.getValor());
+                    arr.add(parteSalida);
+                }
+                res = ConstruyeRespuesta.construyeRespuestaOk();
+                res.setDatos(arr);
+
+            //int idRes = miUsuario.getIdProveedor();
+            } else {
+                res = ConstruyeRespuesta.construyeRespuestaFalla("no hay partes para este tipo");
             }
-            
-            idRes = miUsuario.getIdProveedor();
-            
-        }
         } else {
-         //   parte.setIdTipo(0);
+            res = ConstruyeRespuesta.construyeRespuestaFalla("tipo incorrecto");
         }
-        
-        return null;
+
+        return res;
     }
 
     // Add business logic below. (Right-click in editor and choose
