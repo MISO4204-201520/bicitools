@@ -2,7 +2,7 @@ app.controller('indexController', ['$scope', '$http', '$state', '$localStorage',
     $scope.$storage = $localStorage;
     $('#alerta').hide();
 
-    var domain = "http://192.168.0.5:8080/";  //"http://192.168.0.11:8080/"; //
+    var domain = "http://192.168.0.6:8080/";  //"http://192.168.0.11:8080/"; //
 
     $scope.setUsersPath = function(path) {
         return domain + "bicitoolsgu/webresources/gestionusuario/" + path;

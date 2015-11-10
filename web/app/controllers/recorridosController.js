@@ -1,5 +1,49 @@
-app.controller('calcularRutaController', ['$scope', '$http', '$state', function($scope, $http, $state) {
-	google.maps.event.addDomListener(window, 'load', initialize);
+app.controller('calcularRutaController', function($scope, $http, $state, $sce) {
+	//google.maps.event.addDomListener(window, 'load', initialize);
+
+	angular.extend($scope, {
+		map: {
+			center: { latitude: 4.603063, longitude:-74.064863 },
+			zoom: 15,
+			markers: [],
+			events: {
+				click: function (map, eventName, originalEventArgs) {
+					var e = originalEventArgs[0];
+					var lat = e.latLng.lat();
+					var lon = e.latLng.lng();
+					var address = '';
+
+					var geocoder = new google.maps.Geocoder();
+					var latlng = new google.maps.LatLng(lat, lon);
+
+					geocoder.geocode({ 'latLng': latlng }, function (results, status) {
+						if (status == google.maps.GeocoderStatus.OK) {
+							if (results[0]) {
+								address = results[0].formatted_address;
+							} else {
+								console.log('Location not found');
+							}
+						} else {
+							console.log('Geocoder failed due to: ' + status);
+						}
+
+						var marker = {
+							id: Date.now(),
+							coords: { latitude: lat, longitude: lon },
+							address: address
+						};
+
+						if($scope.map.markers.length >= 2){
+							$scope.map.markers = [];
+						}
+						$scope.map.markers.push(marker);
+						$scope.$apply();
+					});
+				}
+			}
+		}
+	});
+
 
 	$scope.d = {};
 	$scope.setMock(function(){
@@ -30,15 +74,18 @@ app.controller('calcularRutaController', ['$scope', '$http', '$state', function(
 
 	$scope.submit = function(){
 		$scope.coordenadas = {};
+		console.log($scope.map.markers[0].address);
+		var json = { sitioDireccion: $scope.map.markers[0].address }
 		//$scope.post($scope.setRoutesPath('ObtenerCoordenadasPorSitioDireccion'), $scope.origen,
-		$http.post($scope.setRoutesPath('ObtenerCoordenadasPorSitioDireccion'), $scope.origen).then( function(responseOrigen){
+		$http.post($scope.setRoutesPath('ObtenerCoordenadasPorSitioDireccion'), json).then( function(responseOrigen){
 			console.log('\nOrigen');
 			console.log(responseOrigen.data);
 			$scope.coordenadas.latitudOrigen = responseOrigen.data.lat;
 			$scope.coordenadas.longitudOrigen = responseOrigen.data.lng;
 
+			json = { sitioDireccion: $scope.map.markers[1].address }
 			//$scope.post($scope.setRoutesPath('ObtenerCoordenadasPorSitioDireccion'), $scope.destino,
-			$http.post($scope.setRoutesPath('ObtenerCoordenadasPorSitioDireccion'), $scope.destino).then(function(responseDestino){
+			$http.post($scope.setRoutesPath('ObtenerCoordenadasPorSitioDireccion'), json).then(function(responseDestino){
 				console.log('\nDestino');
 				console.log(responseDestino.data);
 				$scope.coordenadas.latitudDestino = responseDestino.data.lat;
@@ -61,7 +108,7 @@ app.controller('calcularRutaController', ['$scope', '$http', '$state', function(
 						var direction = {
 							distance: e.distance.text,
 							time: e.duration.text,
-							details: e.html_instructions
+							details: $sce.trustAsHtml(e.html_instructions)
 						};
 						$scope.directions.push(direction);
 					}); // forEach
@@ -69,7 +116,7 @@ app.controller('calcularRutaController', ['$scope', '$http', '$state', function(
 			});
 		}); // ObtenerCoordenadasPorSitioDireccion
 	};
-}]); // Controller
+}); // Controller
 
 app.controller('crearRutaController', ['$scope', '$http', '$state',
 function($scope, $http, $state) {
@@ -144,10 +191,10 @@ function($scope, $http, $state) {
 			nombre: 'La Candelaria - Municipio de Suba'
 		}
 	];
-	// $scope.get('obtenerRutasUsuario', function(response1){
-	// 	$scope.routes = response1.data;
-	// 	console.log(response1.data);
-	// });
+	$scope.get('obtenerRutasUsuario', function(response1){
+		$scope.routes = response1.data;
+		console.log(response1.data);
+	});
 }]);
 
 app.controller('invitarARutaController', ['$scope', '$http', '$state',

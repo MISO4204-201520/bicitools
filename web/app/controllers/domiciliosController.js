@@ -1,5 +1,4 @@
-app.controller('domiciliarioController', ['$scope', '$http', '$state',
-function($scope, $http, $state) {
+app.controller('domiciliarioController', ['$scope', '$http', '$state', function($scope, $http, $state) {
 	$scope.setMock(function(){
 		$http.get('http://www.mocky.io/v2/5625a1ee250000c603ccb2cc').then(function(response){
 			$scope.d = response.data;
@@ -86,9 +85,8 @@ app.controller('pedirServicioController', ['$scope', '$http', '$state', function
 
 					geocoder.geocode({ 'latLng': latlng }, function (results, status) {
 						if (status == google.maps.GeocoderStatus.OK) {
-							if (results[1]) {
-								console.log(results[1]);
-								address = results[1].formatted_address;
+							if (results[0]) {
+								address = results[0].formatted_address;
 							} else {
 								console.log('Location not found');
 							}
