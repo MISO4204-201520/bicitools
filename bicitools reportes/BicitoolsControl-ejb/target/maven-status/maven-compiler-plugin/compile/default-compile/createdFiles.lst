@@ -1,4 +1,5 @@
 com/bicitools/dao/TemporalDAOLocal.class
+com/bicitools/dao/RutasDAODecorador.class
 com/bicitools/entity/Horariodomiciliario.class
 com/bicitools/entity/LogUsuarioPK.class
 com/bicitools/dao/ServicioDomicilioDAO$autentificadorSMTP.class
@@ -6,6 +7,7 @@ com/bicitools/entity/UsuarioRuta.class
 com/bicitools/ws/TiempoDistanciaInfo.class
 com/bicitools/entity/Notificaciones_.class
 com/bicitools/entity/RutaPunto.class
+com/bicitools/dao/RutasAbstractDAO.class
 com/bicitools/entity/UsuarioRutaPK.class
 com/bicitools/dao/RutasDAO.class
 com/bicitools/entity/Notificaciones.class
