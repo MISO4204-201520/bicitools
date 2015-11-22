@@ -104,3 +104,5 @@ Bicitools/BicitoolsControl-ejb/target/maven-archiver/pom.properties
 bicitools reportes/BicitoolsManager-ear/target/bicitoolsManager_reportes/gfv3ee6.dpf
 
 bicitools reportes/BicitoolsManager-ear/target/gfdeploy/BicitoolsManager-ear/gfv3ee6.dpf
+/derivador/Deriva/nbproject/private/
+/derivador/Deriva/build/
