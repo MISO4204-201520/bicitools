@@ -100,3 +100,7 @@ Bicitools/BicitoolsControl-ejb/target/generated-sources/annotations/com/bicitool
 Bicitools/BicitoolsControl-ejb/target/generated-sources/annotations/com/bicitools/entity/UsuarioRutaPK_.java
 
 Bicitools/BicitoolsControl-ejb/target/maven-archiver/pom.properties
+
+bicitools reportes/BicitoolsManager-ear/target/bicitoolsManager_reportes/gfv3ee6.dpf
+
+bicitools reportes/BicitoolsManager-ear/target/gfdeploy/BicitoolsManager-ear/gfv3ee6.dpf

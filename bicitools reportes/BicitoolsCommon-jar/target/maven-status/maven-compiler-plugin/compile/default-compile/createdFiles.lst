@@ -14,7 +14,6 @@ com/bicitools/mjson/MetricasUsuario.class
 com/bicitools/mibici/general/InfoInsertaProductoJson.class
 com/bicitools/common/ConstruyeRespuesta.class
 com/bicitools/mjson/UsuarioJson.class
-com/bicitools/mibici/general/ValidaEntradaJson.class
 com/bicitools/mjson/DatosMetricasReportesJson.class
 com/bicitools/mjson/ServicioJson.class
 com/bicitools/mjson/InfoHorarioJson.class
