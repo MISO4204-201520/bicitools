@@ -6,46 +6,33 @@ package com.bicitools.pruebarest;
  * and open the template in the editor.
  */
 import com.bicitools.common.ConstruyeRespuesta;
-import com.bicitools.common.MessagesBicitools;
 import com.bicitools.dao.NotificacionesDAOLocal;
 import com.bicitools.dao.RutasDAO;
 import com.bicitools.dao.RutasDAODecorador;
 import com.bicitools.dao.RutasDAOLocal;
 import com.bicitools.mjson.RespuestaJson;
 import com.bicitools.mjson.validator.NullValidator;
-import com.bicitools.entity.Ruta;
-import com.bicitools.mjson.DatosRutasReportesJson;
 import com.bicitools.mjson.InfoRepoCantNotificaJson;
 import com.bicitools.mjson.InfoRepoExportarJson;
 import com.bicitools.mjson.InfoRepoGenJson;
-import com.bicitools.mjson.ValidaInfoReportesJson;
-import com.bicitools.mjson.DatosLugaresJson;
-import com.bicitools.mjson.DatosMetricasReportesJson;
-import com.bicitools.mjson.DatosMetricasUsuarioJson;
-import com.bicitools.mjson.DatosNotificacionesReportesJson;
 import com.bicitools.mjson.DatosNuevaNotificacionJson;
-import com.bicitools.mjson.MetricasUsuario;
 import com.bicitools.mjson.RutasUsuarioJson;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.time.Instant;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.Properties;
+import java.util.ResourceBundle;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.MediaType;
-import org.codehaus.jackson.annotate.JsonIgnore;
 
 /**
  * REST Web Service
@@ -149,7 +136,7 @@ public class Reportes {
                         if (datoFin == "") {
                             datoFin = new Date().toString();
                         }
-                        if (readProperties("historial")) 
+                        if (readProperties("historialdeviajes")) 
                         {
                             RutasDAOLocal ruta = new RutasDAODecorador(new RutasDAO());
                             res = ruta.obtenerRecorridosUsuarioFechas(usuario, datoIni, datoFin);
@@ -388,7 +375,7 @@ public class Reportes {
             if (mensaje == null) {
                 RutasDAOLocal ruta = new RutasDAODecorador(new RutasDAO());
                 if ("1".equals(info.getTipoReporte())) {
-                    if (!readProperties("exportar"))
+                    if (!readProperties("reportes"))
                         res = rutasSesion.exportarRutasUsuario(info.getUsuario(),
                                 info.getInicio(),
                                 info.getFin(),
@@ -400,7 +387,7 @@ public class Reportes {
                                 info.getRutaArchivo());
                 }
                 else if("2".equals(info.getTipoReporte())){
-                    if (!readProperties("exportar"))
+                    if (!readProperties("reportes"))
                         res = rutasSesion.exportarRecorridosUsuario(info.getUsuario(),
                                 info.getInicio(),
                                 info.getFin(),
@@ -412,7 +399,7 @@ public class Reportes {
                                 info.getRutaArchivo());
                 }
                 else if ("3".equals(info.getTipoReporte())){
-                    if (!readProperties("exportar"))
+                    if (!readProperties("reportes"))
                         res = rutasSesion.exportarRecorridosRuta(info.getUsuario(),
                                 info.getInicio(),
                                 info.getFin(),
@@ -423,7 +410,7 @@ public class Reportes {
                                 info.getFin(),
                                 info.getRutaArchivo());
                 }
-                else if ("4".equals(info.getTipoReporte()))
+                /*else if ("4".equals(info.getTipoReporte()))
                 {
                     if (!readProperties("exportar"))
                         res = rutasSesion.exportarReporteMetricasUsuario(info.getUsuario(),
@@ -435,7 +422,7 @@ public class Reportes {
                                 info.getInicio(),
                                 info.getFin(),
                                 info.getRutaArchivo());
-                }
+                }*/
 
                 else
                     res = ConstruyeRespuesta.construyeRespuestaFalla(mensaje);
@@ -557,33 +544,15 @@ public class Reportes {
 
     public boolean readProperties(String llave) {
         boolean res = false;
-        try {
-            String path = new File(".").getCanonicalPath();
-            String path2 = System.getProperty("user.dir");
-            File file = new File("/Users/jhony/Documents/Uni Andes/Fabricas/Bicitools/bicitools/bicitools reportes/BicitoolsServices-war/src/main/java/config.properties");
-            
-            FileInputStream fileInput = new FileInputStream(file);
-            Properties properties = new Properties();
-            properties.load(fileInput);
-            fileInput.close();
+        ResourceBundle rb = ResourceBundle.getBundle("prop.general");
+        String propertyValue = rb.getString(llave);
 
-            Enumeration enuKeys = properties.keys();
-            while (enuKeys.hasMoreElements()) {
-                
-                String key = (String) enuKeys.nextElement();
-                String value = properties.getProperty(key);
-                System.out.println(key + ": " + value);
-                
-                if(key.equals(llave)){
-                    if(value.equals("true"))
-                        return true;
-                }
+        if (rb != null) {
+            if (propertyValue.equals("true")) {
+                res = true;
             }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
         }
+
         return res;
     }
 

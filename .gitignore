@@ -104,5 +104,16 @@ Bicitools/BicitoolsControl-ejb/target/maven-archiver/pom.properties
 bicitools reportes/BicitoolsManager-ear/target/bicitoolsManager_reportes/gfv3ee6.dpf
 
 bicitools reportes/BicitoolsManager-ear/target/gfdeploy/BicitoolsManager-ear/gfv3ee6.dpf
+<<<<<<< Updated upstream
 /derivador/Deriva/nbproject/private/
 /derivador/Deriva/build/
+=======
+/BicitoolsMi/BicitoolsCommon-jar/target/
+/BicitoolsMi/BicitoolsControl-ejb/target/
+/BicitoolsMi/BicitoolsManager-ear/target/
+/BicitoolsMi/BicitoolsServices-war/target/
+/bicitoolsRE/BicitoolsCommon-jar/target/
+/bicitoolsRE/BicitoolsControl-ejb/target/
+/bicitoolsRE/BicitoolsManager-ear/target/
+/bicitoolsRE/BicitoolsServices-war/target/
+>>>>>>> Stashed changes
