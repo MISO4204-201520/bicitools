@@ -37,18 +37,15 @@
                     <version>6</version>
                     <defaultLibBundleDir>lib</defaultLibBundleDir>    
                     <modules>
+                        
                         <webModule>
                             <artifactId>BicitoolsServices-war</artifactId>
                             <groupId>${project.groupId}</groupId>
                             <bundleFileName>BicitoolsServices-war.war</bundleFileName>
                             <contextRoot>/bicitoolsgu</contextRoot>                         
                         </webModule>
-                           <webModule>
-                            <artifactId>BicitoolsRedSocial</artifactId>
-                            <groupId>${project.groupId}</groupId>
-                            <bundleFileName>BicitoolsRedSocial.war</bundleFileName>
-                            <contextRoot>/bicitoolsrs</contextRoot>                         
-                        </webModule>
+                        
+                        
                         <jarModule>
                             <artifactId>BicitoolsCommon-jar</artifactId>
                             <groupId>${project.groupId}</groupId>
@@ -78,18 +75,16 @@
             <version>1.0-SNAPSHOT</version>
             <type>ejb</type>
         </dependency>
+        
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>BicitoolsServices-war</artifactId>
             <version>1.0-SNAPSHOT</version>
             <type>war</type>
         </dependency>
-         <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>BicitoolsRedSocial</artifactId>
-            <version>1.0-SNAPSHOT</version>
-            <type>war</type>
-        </dependency>
+        
+         
+        
         
     </dependencies>
 </project>

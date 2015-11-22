@@ -24,7 +24,7 @@ public interface UsuarioDAOLocal {
         );
      
      public int registrarUsuarioFacebook(
-     Integer numeroIdentificacion,
+             Integer numeroIdentificacion,
              Integer tipoIdentificacion,Integer tipoPerfil, Integer genero,
              String nombres, String apellidos,String foto,String correo,String fechaNacimiento ,
              String direccionCasa, String direccionTrabajo,String telefonoFijo,String telefonoMovil,

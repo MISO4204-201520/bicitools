@@ -8,12 +8,6 @@
     </web>
   </module>
   <module>
-    <web>
-      <web-uri>BicitoolsRedSocial.war</web-uri>
-      <context-root>/bicitoolsrs</context-root>
-    </web>
-  </module>
-  <module>
     <ejb>BicitoolsControl-ejb-1.0-SNAPSHOT.jar</ejb>
   </module>
   <library-directory>lib</library-directory>

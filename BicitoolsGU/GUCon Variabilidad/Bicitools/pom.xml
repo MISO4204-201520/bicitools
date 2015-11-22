@@ -11,6 +11,5 @@
     <module>BicitoolsManager-ear</module>
     <module>BicitoolsServices-war</module>
     <module>BicitoolsCommon-jar</module>
-    <module>BicitoolsRedSocial</module>
   </modules>
 </project>
