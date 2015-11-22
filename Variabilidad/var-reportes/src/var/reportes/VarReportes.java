@@ -23,7 +23,7 @@ public class VarReportes {
         //String[] data = new String[3];
         //data[0]="historialdeviajes,reportes,mas cosas,features";
         System.out.println("salida");
-        File dir = new File("../../bicitoolsRE/BicitoolsCommon-jar/src/main/resources/prop/");
+        File dir = new File("../../../bicitoolsRE/BicitoolsCommon-jar/src/main/resources/prop/");
         dir.mkdirs();
         File tmp = new File(dir, "general.properties");
         tmp.createNewFile();
