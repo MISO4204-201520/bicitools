@@ -119,6 +119,7 @@ public class Deriva {
         String compilacion="";
         String copiar="";
         HashMap h = creaHash();
+        String datos="";
         
 
         try {
@@ -131,6 +132,7 @@ public class Deriva {
             // Lectura del fichero
             String linea;
             while ((linea = br.readLine()) != null) {
+                datos=datos.concat(linea+",");
                 if(h.containsKey(linea)){
                     compilacion=compilacion.concat(escribeCompila((String)h.get(linea)));
                     copiar=copiar.concat(escribeCopia((String)h.get(linea)));
@@ -138,6 +140,8 @@ public class Deriva {
             }
             escribeArchivo("compilacion",compilacion);
             escribeArchivo("copiar",copiar);
+            datos=datos.substring(0, datos.length()-1);
+            System.out.println("esto es datos "+datos);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
