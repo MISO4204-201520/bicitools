@@ -18,8 +18,8 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD) //can use in method only.
 public @interface AnotacionVariabilidad {
-	
-	//should ignore this test?
-	public boolean enabled() default true;
-	
+//por defecto es false, es decir que es obligatorio
+public enum FeatureName {GestionUsuario,Seguridad,ManejoPerfiles,RedesSociales,Twitter,Facebook,Comunicacion,CompartirRedesSociales}
+    FeatureName featureName() default FeatureName.GestionUsuario;
+        boolean variable() default false;
 }

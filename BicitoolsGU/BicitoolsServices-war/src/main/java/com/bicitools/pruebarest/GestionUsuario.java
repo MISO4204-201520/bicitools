@@ -7,7 +7,6 @@ import com.bicitools.entity.Conexiones;
 import com.bicitools.entity.Usuario;
 import com.bicitools.entity.Vendedor;
 import com.bicitools.enviarcorreo.EnviaCorreo;
-import com.bicitools.mjson.TemporalJson;
 import com.bicitools.mjson.gestionusuario.ActualizarPerfilJson;
 import com.bicitools.mjson.gestionusuario.ActualizarPerfilVendedorJson;
 import com.bicitools.mjson.gestionusuario.CerrarSesionJson;
@@ -28,8 +27,8 @@ import com.bicitools.mjson.gestionusuario.RespuestaJson;
 import com.bicitools.mjson.gestionusuario.SetConexionJson;
 import com.bicitools.mjson.gestionusuario.TemporalConexion;
 import com.bicitools.variabilidad.AnotacionVariabilidad;
-import com.bicitools.variabilidad.AnotacionVariabilidadInfo;
-
+import com.bicitools.variabilidad.AnotacionVariabilidad.FeatureName;
+import com.bicitools.variabilidad.LectorProperties;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.text.Format;
@@ -52,24 +51,20 @@ import javax.ws.rs.core.MediaType;
  */
 @Path("/gestionusuario")
 @Stateless
-@AnotacionVariabilidadInfo(
-	priority = AnotacionVariabilidadInfo.Priority.HIGH, 
-	createdBy = "Bicitools"
-	
-)
 public class GestionUsuario {
-
     boolean variableTemporal=true;
     @EJB
     private UsuarioDAOLocal usuarioDAOLocal;
-
     @EJB
     private VendedorDAOLocal vendedorDAOLocal;
-
     @EJB
     private ConexionesDAOLocal conexionesDAOLocal;
 
-    @AnotacionVariabilidad(enabled = true)
+    
+    
+    //Obligatorio, GestionUsuario   
+    
+    @AnotacionVariabilidad (featureName = FeatureName.GestionUsuario)
     @POST
     @Path("/registrarUsuario")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -79,8 +74,6 @@ public class GestionUsuario {
 		throw new RuntimeException("serivicio obligatorio");
         RespuestaJson respuesta = new RespuestaJson();
         ArrayList<Integer> dato = new ArrayList<Integer>();
-        //try{
-        //datos= usuarioDAOLocal.getUsuariobyUsername(usuarioJson.getUsuario());
         try {
             int idUusario = usuarioDAOLocal.registrarUsuario(usuarioJson.getNumeroIdentificacion(), usuarioJson.getTipoIdentificacion(),
                     usuarioJson.getTipoPerfil(), usuarioJson.getGenero(), usuarioJson.getNombres(), usuarioJson.getApellidos(),
@@ -95,133 +88,199 @@ public class GestionUsuario {
             } else {
                 respuesta = ConstruyeRespuesta.construyeRespuestaFalla("Error al insertar", dato);
             }
-      //PostFile file = new PostFile();
-            //file.enviar();
         } catch (Exception e) {
             System.out.println("noguardo");
             dato.add(0);
             respuesta = ConstruyeRespuesta.construyeRespuestaFalla("Error al insertar", dato);
         }
-
-        return respuesta;
+    return respuesta;
     }
-    @AnotacionVariabilidad(enabled = true)
+
+    //Obligatorio, Seguridad
+@AnotacionVariabilidad (featureName = FeatureName.Seguridad)
     @POST
-    @Path("/registrarPerfilVendedor")
+    @Path("/loginUsuario")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public RespuestaJson registrarPerfilVendedor(RegistrarPerfilVendedorJson vendedorJson) {
-      if (true)
+    public RespuestaJson loginUsuario(LoginUsuarioJson usuarioJson) {
+       if (true)
 		throw new RuntimeException("serivicio obligatorio");
         RespuestaJson respuesta = new RespuestaJson();
-
+        ArrayList<Integer> datos = new ArrayList<Integer>();
         try {
-            String res = vendedorDAOLocal.registrarPerfilVendedor(vendedorJson.getId_usuario(),
-                    vendedorJson.getNombre_establecimiento(), vendedorJson.getDireccion_establecimiento(), vendedorJson.getTelefono_establecimiento(),
-                    vendedorJson.getCelular_establecimiento(), vendedorJson.getCorreo_establecimiento(), vendedorJson.getNit_establecimiento(),
-                    vendedorJson.getFoto_establecimiento());
-            if (res.equals("ok")) {
-
+            int id_usuario = usuarioDAOLocal.loginUsuario(usuarioJson.getUser(), usuarioJson.getContrasenia());
+            if (id_usuario != 0) {
+                datos.add(id_usuario);
                 respuesta.setCodigo(0);
                 respuesta.setValor("info");
-                respuesta.setDescripcion("Perfil de vendedor registrado correctamente");
+                respuesta.setDescripcion("Inicio Correctamente");
+                respuesta.setDatos(datos);
             } else {
                 respuesta.setCodigo(101);
                 respuesta.setValor("error");
-                respuesta.setDescripcion("Error al registrar perfil");
+                respuesta.setDescripcion("Error de acceso");
+                respuesta.setDatos(datos);
             }
         } catch (Exception e) {
             System.out.println("noguardo");
-
             respuesta.setCodigo(101);
             respuesta.setValor("error");
-            respuesta.setDescripcion("Error al registrar perfil");
+            respuesta.setDescripcion("Error de acceso");
+            respuesta.setDatos(datos);
         }
-
         return respuesta;
     }
 
-    @AnotacionVariabilidad(enabled = true)
+    //Obligatorio, GestionUsuario
+    @AnotacionVariabilidad (featureName = FeatureName.GestionUsuario)
     @POST
-    @Path("/actualizarPerfil")
+    @Path("/getUsuariobyUsername")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public RespuestaJson actualizarPerfil(ActualizarPerfilJson actualizarPerfilJson) {
-  if (true)
-		throw new RuntimeException("serivicio obligatorio");
-        RespuestaJson respuesta = new RespuestaJson();
-
-        try {
-
-            String res = usuarioDAOLocal.actualizarPerfil(actualizarPerfilJson.getId_usuario(), actualizarPerfilJson.getNumeroIdentificacion(),
-                    actualizarPerfilJson.getTipoIdentificacion(), actualizarPerfilJson.getTipoPerfil(),
-                    actualizarPerfilJson.getGenero(), actualizarPerfilJson.getNombres(), actualizarPerfilJson.getApellidos(),
-                    actualizarPerfilJson.getFoto(), actualizarPerfilJson.getCorreo(),
-                    actualizarPerfilJson.getFechaNacimiento(), actualizarPerfilJson.getDireccionCasa(), actualizarPerfilJson.getDireccionTrabajo(),
-                    actualizarPerfilJson.getTelefonoFijo(), actualizarPerfilJson.getTelefonoMovil(), actualizarPerfilJson.getContrasenia()
-            );
-
-            if (res.equals("ok")) {
-
-                respuesta.setCodigo(0);
-                respuesta.setValor("info");
-                respuesta.setDescripcion("Perfil actualizado");
-            } else {
-                respuesta.setCodigo(101);
-                respuesta.setValor("error");
-                respuesta.setDescripcion("Error al actualizar perfil");
-            }
-        } catch (Exception e) {
-            System.out.println("noguardo");
-
-            respuesta.setCodigo(101);
-            respuesta.setValor("error");
-            respuesta.setDescripcion("Error al actualizar perfil");
-        }
-
-        return respuesta;
-    }
-
-    @AnotacionVariabilidad(enabled = true)
-    @POST
-    @Path("/actualizarPerfilVendedor")
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public RespuestaJson actualizarPerfilVendedor(ActualizarPerfilVendedorJson vendedorJson) {
-      
+    public RespuestaJson getUsuariobyUsername(GetUsuariobyUsernameJson usuarioJson) {
         if (true)
 		throw new RuntimeException("serivicio obligatorio");
         RespuestaJson respuesta = new RespuestaJson();
-
+        ArrayList datos = new ArrayList();
         try {
-
-            String res = vendedorDAOLocal.actualizarPerfilVendedor(vendedorJson.getId_usuario(),
-                    vendedorJson.getNombre_establecimiento(), vendedorJson.getDireccion_establecimiento(), vendedorJson.getTelefono_establecimiento(),
-                    vendedorJson.getCelular_establecimiento(), vendedorJson.getCorreo_establecimiento(), vendedorJson.getNit_establecimiento(),
-                    vendedorJson.getFoto_establecimiento());
-
-            if (res.equals("ok")) {
-
+            datos = usuarioDAOLocal.getUsuariobyUsername(usuarioJson.getUsuario());
+            if (datos != null) {
                 respuesta.setCodigo(0);
                 respuesta.setValor("info");
-                respuesta.setDescripcion("Perfil vendedor actualizado");
+                respuesta.setDescripcion("ok");
+                respuesta.setDatos(datos);
             } else {
                 respuesta.setCodigo(101);
                 respuesta.setValor("error");
-                respuesta.setDescripcion("Error al actualizar perfil vendedor");
+                respuesta.setDescripcion("Error mostrar datos de usuario");
             }
         } catch (Exception e) {
             System.out.println("noguardo");
-
             respuesta.setCodigo(101);
             respuesta.setValor("error");
-            respuesta.setDescripcion("Error al actualizar perfil vendedor");
+            respuesta.setDescripcion("Error mostrar datos de usuario");
         }
 
         return respuesta;
     }
 
-    @AnotacionVariabilidad(enabled = true)
+    //Obligatorio, Seguridad
+    @AnotacionVariabilidad (featureName = FeatureName.Seguridad)
+    @POST
+    @Path("/recuperarClave")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public RespuestaJson recuperarClave(RecuperarClaveJson usuarioJson) {
+        if (true)
+		throw new RuntimeException("serivicio obligatorio");
+        RespuestaJson respuesta = new RespuestaJson();
+        ArrayList<String> datos = new ArrayList<String>();
+
+        try {
+            String clave = usuarioDAOLocal.recuperarClave(usuarioJson.getCorreo());
+            if (!clave.equals("error")) {
+                // datos.add(clave);
+                respuesta.setCodigo(0);
+                respuesta.setValor("info");
+                respuesta.setDescripcion("Correo con clave enviado");
+                respuesta.setDatos(datos);
+                System.out.print("antesenvio");
+                EnviaCorreo e = new EnviaCorreo();
+                e.enviarCorreo(usuarioJson.getCorreo(), clave);
+                System.out.print("despuesenvio");
+            } else {
+                respuesta.setCodigo(101);
+                respuesta.setValor("error");
+                respuesta.setDescripcion("usuario no encontrado");
+                respuesta.setDatos(datos);
+            }
+        } catch (Exception e) {
+            System.out.println("noguardo");
+            respuesta.setCodigo(101);
+            respuesta.setValor("error");
+            respuesta.setDescripcion("usuario no encontrado");
+            respuesta.setDatos(datos);
+        }
+
+        return respuesta;
+    }
+
+
+    //Obligatorio, Seguridad
+    @AnotacionVariabilidad (featureName = FeatureName.Seguridad)
+    @POST
+    @Path("/setConexion")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public RespuestaJson setConexion(SetConexionJson conexionJson) {
+      if (true)
+		throw new RuntimeException("serivicio obligatorio");
+        RespuestaJson respuesta = new RespuestaJson();
+        try {
+            String res = conexionesDAOLocal.setConexion(conexionJson.getId_usuario(), new Date(), conexionJson.getTipoConexion());
+            if (res.equals("ok")) {
+                respuesta.setCodigo(0);
+                respuesta.setValor("info");
+                respuesta.setDescripcion("Conexion establecida");
+            } else {
+                respuesta.setCodigo(101);
+                respuesta.setValor("error");
+                respuesta.setDescripcion("Error de conexion");
+            }
+        } catch (Exception e) {
+            System.out.println("noguardo");
+            respuesta.setCodigo(101);
+            respuesta.setValor("error");
+            respuesta.setDescripcion("Error de conexion");
+        }
+
+        return respuesta;
+    }
+
+
+    //Obligatorio, Seguridad
+    @AnotacionVariabilidad (featureName = FeatureName.Seguridad)
+    @POST
+    @Path("/getConexion")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public RespuestaJson getConexion(GetConexionJson conexionJson) {
+       if (true)
+		throw new RuntimeException("serivicio obligatorio");
+        RespuestaJson respuesta = new RespuestaJson();
+        ArrayList<Conexiones> datos = new ArrayList<Conexiones>();
+        ArrayList datosEnviar = new ArrayList();
+        try {
+            datos = conexionesDAOLocal.getConexion(conexionJson.getId_usuario());
+            if (datos != null) {
+                Format formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                for (int i = 0; i < datos.size(); i++) {
+                    String s = formatter.format(datos.get(i).getFechaConexion());
+                    TemporalConexion tc = new TemporalConexion(datos.get(i).getIdConexion(), datos.get(i).getIdUsuario(), s, datos.get(i).getTipoConexion());
+                    datosEnviar.add(tc);
+                }
+                respuesta.setCodigo(0);
+                respuesta.setValor("info");
+                respuesta.setDescripcion("Lista de conexiones");
+                respuesta.setDatos(datosEnviar);
+            } else {
+                respuesta.setCodigo(101);
+                respuesta.setValor("error");
+                respuesta.setDescripcion("Error de acceso");
+                respuesta.setDatos(datos);
+            }
+        } catch (Exception e) {
+            System.out.println("noguardo");
+            respuesta.setCodigo(101);
+            respuesta.setValor("error");
+            respuesta.setDescripcion("Error de acceso");
+            respuesta.setDatos(datos);
+        }
+        return respuesta;
+    }
+
+    //Oblogatorio, GestionUsuario
+    @AnotacionVariabilidad (featureName = FeatureName.GestionUsuario)    
     @POST
     @Path("/obtenerDetallesUsuario")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -275,7 +334,160 @@ public class GestionUsuario {
         return respuesta;
     }
 
-    @AnotacionVariabilidad(enabled = true)
+
+    //Obligatorio, Seguridad
+    @AnotacionVariabilidad (featureName = FeatureName.Seguridad)
+    @POST
+    @Path("/cerrarSesion")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public RespuestaJson cerrarSesion(CerrarSesionJson cerrarSesionJson) {
+       if (true)
+		throw new RuntimeException("serivicio obligatorio");
+        RespuestaJson respuesta = new RespuestaJson();
+        try {
+            String res = conexionesDAOLocal.setConexion(cerrarSesionJson.getId_usuario(), new Date(), cerrarSesionJson.getTipoConexion());
+            if (res.equals("ok")) {
+                respuesta.setCodigo(0);
+                respuesta.setValor("info");
+                respuesta.setDescripcion("Cerro sesion correctamente");
+            } else {
+                respuesta.setCodigo(101);
+                respuesta.setValor("error");
+                respuesta.setDescripcion("Error de logout");
+            }
+        } catch (Exception e) {
+            System.out.println("noguardo");
+            respuesta.setCodigo(101);
+            respuesta.setValor("error");
+            respuesta.setDescripcion("Error de logout");
+        }
+
+        return respuesta;
+    }
+    
+    //Variable, ManejoPerfiles
+    @AnotacionVariabilidad (featureName = FeatureName.ManejoPerfiles)
+    @POST
+    @Path("/registrarPerfilVendedor")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public RespuestaJson registrarPerfilVendedor(RegistrarPerfilVendedorJson vendedorJson) {
+      if (true)
+		throw new RuntimeException("serivicio obligatorio");
+        RespuestaJson respuesta = new RespuestaJson();
+
+        try {
+            String res = vendedorDAOLocal.registrarPerfilVendedor(vendedorJson.getId_usuario(),
+                    vendedorJson.getNombre_establecimiento(), vendedorJson.getDireccion_establecimiento(), vendedorJson.getTelefono_establecimiento(),
+                    vendedorJson.getCelular_establecimiento(), vendedorJson.getCorreo_establecimiento(), vendedorJson.getNit_establecimiento(),
+                    vendedorJson.getFoto_establecimiento());
+            if (res.equals("ok")) {
+
+                respuesta.setCodigo(0);
+                respuesta.setValor("info");
+                respuesta.setDescripcion("Perfil de vendedor registrado correctamente");
+            } else {
+                respuesta.setCodigo(101);
+                respuesta.setValor("error");
+                respuesta.setDescripcion("Error al registrar perfil");
+            }
+        } catch (Exception e) {
+            System.out.println("noguardo");
+
+            respuesta.setCodigo(101);
+            respuesta.setValor("error");
+            respuesta.setDescripcion("Error al registrar perfil");
+        }
+
+        return respuesta;
+    }
+
+    
+    //Variable, ManejoPerfiles
+    @AnotacionVariabilidad (featureName = FeatureName.ManejoPerfiles)
+    @POST
+    @Path("/actualizarPerfil")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public RespuestaJson actualizarPerfil(ActualizarPerfilJson actualizarPerfilJson) {
+  
+        
+        RespuestaJson respuesta = new RespuestaJson();
+
+        try {
+
+            String res = usuarioDAOLocal.actualizarPerfil(actualizarPerfilJson.getId_usuario(), actualizarPerfilJson.getNumeroIdentificacion(),
+                    actualizarPerfilJson.getTipoIdentificacion(), actualizarPerfilJson.getTipoPerfil(),
+                    actualizarPerfilJson.getGenero(), actualizarPerfilJson.getNombres(), actualizarPerfilJson.getApellidos(),
+                    actualizarPerfilJson.getFoto(), actualizarPerfilJson.getCorreo(),
+                    actualizarPerfilJson.getFechaNacimiento(), actualizarPerfilJson.getDireccionCasa(), actualizarPerfilJson.getDireccionTrabajo(),
+                    actualizarPerfilJson.getTelefonoFijo(), actualizarPerfilJson.getTelefonoMovil(), actualizarPerfilJson.getContrasenia()
+            );
+
+            if (res.equals("ok")) {
+
+                respuesta.setCodigo(0);
+                respuesta.setValor("info");
+                respuesta.setDescripcion("Perfil actualizado");
+            } else {
+                respuesta.setCodigo(101);
+                respuesta.setValor("error");
+                respuesta.setDescripcion("Error al actualizar perfil");
+            }
+        } catch (Exception e) {
+            System.out.println("noguardo");
+
+            respuesta.setCodigo(101);
+            respuesta.setValor("error");
+            respuesta.setDescripcion("Error al actualizar perfil");
+        }
+
+        return respuesta;
+    }
+
+    //Variable, ManejoPerfiles
+    @AnotacionVariabilidad (featureName = FeatureName.ManejoPerfiles)
+    @POST
+    @Path("/actualizarPerfilVendedor")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public RespuestaJson actualizarPerfilVendedor(ActualizarPerfilVendedorJson vendedorJson) {
+      
+        if (true)
+		throw new RuntimeException("serivicio obligatorio");
+        RespuestaJson respuesta = new RespuestaJson();
+
+        try {
+
+            String res = vendedorDAOLocal.actualizarPerfilVendedor(vendedorJson.getId_usuario(),
+                    vendedorJson.getNombre_establecimiento(), vendedorJson.getDireccion_establecimiento(), vendedorJson.getTelefono_establecimiento(),
+                    vendedorJson.getCelular_establecimiento(), vendedorJson.getCorreo_establecimiento(), vendedorJson.getNit_establecimiento(),
+                    vendedorJson.getFoto_establecimiento());
+
+            if (res.equals("ok")) {
+
+                respuesta.setCodigo(0);
+                respuesta.setValor("info");
+                respuesta.setDescripcion("Perfil vendedor actualizado");
+            } else {
+                respuesta.setCodigo(101);
+                respuesta.setValor("error");
+                respuesta.setDescripcion("Error al actualizar perfil vendedor");
+            }
+        } catch (Exception e) {
+            System.out.println("noguardo");
+
+            respuesta.setCodigo(101);
+            respuesta.setValor("error");
+            respuesta.setDescripcion("Error al actualizar perfil vendedor");
+        }
+
+        return respuesta;
+    }
+
+    //Opcional, ManejoPerfiles
+    @AnotacionVariabilidad (featureName = FeatureName.ManejoPerfiles)
     @POST
     @Path("/obtenerDetallePerfilVendedor")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -321,247 +533,9 @@ public class GestionUsuario {
 
         return respuesta;
     }
-
-    @AnotacionVariabilidad(enabled = true)
-    @POST
-    @Path("/loginUsuario")
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public RespuestaJson loginUsuario(LoginUsuarioJson usuarioJson) {
-       if (true)
-		throw new RuntimeException("serivicio obligatorio");
-        RespuestaJson respuesta = new RespuestaJson();
-        ArrayList<Integer> datos = new ArrayList<Integer>();
-        try {
-            int id_usuario = usuarioDAOLocal.loginUsuario(usuarioJson.getUser(), usuarioJson.getContrasenia());
-
-            if (id_usuario != 0) {
-
-                datos.add(id_usuario);
-                respuesta.setCodigo(0);
-                respuesta.setValor("info");
-                respuesta.setDescripcion("Inicio Correctamente");
-                respuesta.setDatos(datos);
-            } else {
-
-                respuesta.setCodigo(101);
-                respuesta.setValor("error");
-                respuesta.setDescripcion("Error de acceso");
-                respuesta.setDatos(datos);
-
-            }
-        } catch (Exception e) {
-            System.out.println("noguardo");
-
-            respuesta.setCodigo(101);
-            respuesta.setValor("error");
-            respuesta.setDescripcion("Error de acceso");
-            respuesta.setDatos(datos);
-        }
-
-        return respuesta;
-    }
-    @AnotacionVariabilidad(enabled = true)
-    @POST
-    @Path("/getUsuariobyUsername")
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public RespuestaJson getUsuariobyUsername(GetUsuariobyUsernameJson usuarioJson) {
-        if (true)
-		throw new RuntimeException("serivicio obligatorio");
-        RespuestaJson respuesta = new RespuestaJson();
-        ArrayList datos = new ArrayList();
-        try {
-            datos = usuarioDAOLocal.getUsuariobyUsername(usuarioJson.getUsuario());
-
-            if (datos != null) {
-
-                respuesta.setCodigo(0);
-                respuesta.setValor("info");
-                respuesta.setDescripcion("ok");
-
-                respuesta.setDatos(datos);
-            } else {
-                respuesta.setCodigo(101);
-                respuesta.setValor("error");
-                respuesta.setDescripcion("Error mostrar datos de usuario");
-
-            }
-        } catch (Exception e) {
-            System.out.println("noguardo");
-
-            respuesta.setCodigo(101);
-            respuesta.setValor("error");
-            respuesta.setDescripcion("Error mostrar datos de usuario");
-        }
-
-        return respuesta;
-    }
-
-    @AnotacionVariabilidad(enabled = true)
-    @POST
-    @Path("/recuperarClave")
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public RespuestaJson recuperarClave(RecuperarClaveJson usuarioJson) {
-        if (true)
-		throw new RuntimeException("serivicio obligatorio");
-        RespuestaJson respuesta = new RespuestaJson();
-        ArrayList<String> datos = new ArrayList<String>();
-
-        try {
-            String clave = usuarioDAOLocal.recuperarClave(usuarioJson.getCorreo());
-
-            if (!clave.equals("error")) {
-
-                // datos.add(clave);
-                respuesta.setCodigo(0);
-                respuesta.setValor("info");
-                respuesta.setDescripcion("Correo con clave enviado");
-                respuesta.setDatos(datos);
-                System.out.print("antesenvio");
-                EnviaCorreo e = new EnviaCorreo();
-                e.enviarCorreo(usuarioJson.getCorreo(), clave);
-                System.out.print("despuesenvio");
-            } else {
-
-                respuesta.setCodigo(101);
-                respuesta.setValor("error");
-                respuesta.setDescripcion("usuario no encontrado");
-                respuesta.setDatos(datos);
-
-            }
-        } catch (Exception e) {
-            System.out.println("noguardo");
-
-            respuesta.setCodigo(101);
-            respuesta.setValor("error");
-            respuesta.setDescripcion("usuario no encontrado");
-            respuesta.setDatos(datos);
-        }
-
-        return respuesta;
-    }
-
-    @AnotacionVariabilidad(enabled = true)
-    @POST
-    @Path("/setConexion")
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public RespuestaJson setConexion(SetConexionJson conexionJson) {
-      if (true)
-		throw new RuntimeException("serivicio obligatorio");
-        RespuestaJson respuesta = new RespuestaJson();
-
-        try {
-            String res = conexionesDAOLocal.setConexion(conexionJson.getId_usuario(), new Date(), conexionJson.getTipoConexion());
-
-            if (res.equals("ok")) {
-
-                respuesta.setCodigo(0);
-                respuesta.setValor("info");
-                respuesta.setDescripcion("Conexion establecida");
-            } else {
-                respuesta.setCodigo(101);
-                respuesta.setValor("error");
-                respuesta.setDescripcion("Error de conexion");
-            }
-        } catch (Exception e) {
-            System.out.println("noguardo");
-
-            respuesta.setCodigo(101);
-            respuesta.setValor("error");
-            respuesta.setDescripcion("Error de conexion");
-        }
-
-        return respuesta;
-    }
-
-    @AnotacionVariabilidad(enabled = true)
-    @POST
-    @Path("/getConexion")
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public RespuestaJson getConexion(GetConexionJson conexionJson) {
-       if (true)
-		throw new RuntimeException("serivicio obligatorio");
-        RespuestaJson respuesta = new RespuestaJson();
-        ArrayList<Conexiones> datos = new ArrayList<Conexiones>();
-        ArrayList datosEnviar = new ArrayList();
-        try {
-
-            datos = conexionesDAOLocal.getConexion(conexionJson.getId_usuario());
-            if (datos != null) {
-                Format formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                for (int i = 0; i < datos.size(); i++) {
-
-                    String s = formatter.format(datos.get(i).getFechaConexion());
-                    TemporalConexion tc = new TemporalConexion(datos.get(i).getIdConexion(), datos.get(i).getIdUsuario(), s, datos.get(i).getTipoConexion());
-
-                    datosEnviar.add(tc);
-
-                }
-
-                respuesta.setCodigo(0);
-                respuesta.setValor("info");
-                respuesta.setDescripcion("Lista de conexiones");
-                respuesta.setDatos(datosEnviar);
-            } else {
-
-                respuesta.setCodigo(101);
-                respuesta.setValor("error");
-                respuesta.setDescripcion("Error de acceso");
-                respuesta.setDatos(datos);
-
-            }
-        } catch (Exception e) {
-            System.out.println("noguardo");
-
-            respuesta.setCodigo(101);
-            respuesta.setValor("error");
-            respuesta.setDescripcion("Error de acceso");
-            respuesta.setDatos(datos);
-        }
-
-        return respuesta;
-    }
-
-    @AnotacionVariabilidad(enabled = true)
-    @POST
-    @Path("/cerrarSesion")
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public RespuestaJson cerrarSesion(CerrarSesionJson cerrarSesionJson) {
-       if (true)
-		throw new RuntimeException("serivicio obligatorio");
-        RespuestaJson respuesta = new RespuestaJson();
-
-        try {
-            String res = conexionesDAOLocal.setConexion(cerrarSesionJson.getId_usuario(), new Date(), cerrarSesionJson.getTipoConexion());
-
-            if (res.equals("ok")) {
-
-                respuesta.setCodigo(0);
-                respuesta.setValor("info");
-                respuesta.setDescripcion("Cerro sesion correctamente");
-            } else {
-                respuesta.setCodigo(101);
-                respuesta.setValor("error");
-                respuesta.setDescripcion("Error de logout");
-            }
-        } catch (Exception e) {
-            System.out.println("noguardo");
-
-            respuesta.setCodigo(101);
-            respuesta.setValor("error");
-            respuesta.setDescripcion("Error de logout");
-        }
-
-        return respuesta;
-    }
     
-    //aqui empeizan los dd red social
-@AnotacionVariabilidad(enabled = false)
+    //Opcional, redesSociales
+    @AnotacionVariabilidad (featureName = FeatureName.RedesSociales)
     @POST
     @Path("/loginUsuarioFacebook")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -598,7 +572,9 @@ public class GestionUsuario {
 
         return respuesta;
     }
-@AnotacionVariabilidad(enabled = false)
+
+    //Opcional, redesSociales
+@AnotacionVariabilidad (featureName = FeatureName.RedesSociales)
     @POST
     @Path("/loginUsuarioTwitter")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -634,7 +610,9 @@ public class GestionUsuario {
 
         return respuesta;
     }
-@AnotacionVariabilidad(enabled = false)
+    
+    //Opcional Redes Sociales
+    @AnotacionVariabilidad (featureName = FeatureName.RedesSociales)
     @POST
     @Path("/registrarUsuarioFacebook")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -668,7 +646,9 @@ public class GestionUsuario {
 
         return respuesta;
     }
-@AnotacionVariabilidad(enabled = false)
+
+    //Opcional RedesSociales
+    @AnotacionVariabilidad (featureName = FeatureName.RedesSociales)
     @POST
     @Path("/registrarUsuarioTwitter")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -701,64 +681,25 @@ public class GestionUsuario {
 
         return respuesta;
     }
+
+    //variabilidad Completo
     @GET
     //@Path("/variabilidad/{name")
     @Path("/variabilidad")
     @Produces(MediaType.APPLICATION_JSON)
     public void variabilidadRedSocial() {
         System.out.println("Testing...");
-        int passed = 0, failed = 0, count = 0, ignore = 0;
         Class<GestionUsuario> obj = GestionUsuario.class;
-    if (obj.isAnnotationPresent(AnotacionVariabilidadInfo.class)) {
-
-		Annotation annotation = obj.getAnnotation(AnotacionVariabilidadInfo.class);
-		AnotacionVariabilidadInfo testerInfo = (AnotacionVariabilidadInfo) annotation;
-
-		System.out.printf("%nPriority :%s", testerInfo.priority());
-		System.out.printf("%nCreatedBy :%s", testerInfo.createdBy());
-                System.out.printf("%nTags :");
-
-		int tagLength = testerInfo.tags().length;
-		for (String tag : testerInfo.tags()) {
-			if (tagLength > 1) {
-				System.out.print(tag + ", ");
-			} else {
-				System.out.print(tag);
-			}
-			tagLength--;
-		}
-
-		System.out.printf("%nLastModified :%s%n%n", testerInfo.lastModified());
-	}
-    for (Method method : obj.getDeclaredMethods()) {
-
-		// if method is annotated with @Test
-		if (method.isAnnotationPresent(AnotacionVariabilidad.class)) {
-
-			Annotation annotation = method.getAnnotation(AnotacionVariabilidad.class);
-			AnotacionVariabilidad test = (AnotacionVariabilidad) annotation;
-
-			// if enabled = true (default)
-			if (test.enabled()) {
-
-			  try {
-				method.invoke(obj.newInstance());
-				System.out.printf("%s - Test '%s' - passed %n", ++count, method.getName());
-				passed++;
-			  } catch (Throwable ex) {
-				System.out.printf("%s - Test '%s' - failed: %s %n", ++count, method.getName(), ex.getCause());
-				failed++;
-			  }
-
-			} else {
-				System.out.printf("%s - Test '%s' - ignored%n", ++count, method.getName());
-				ignore++;
-			}
-
-		}
-
+        for (Method method: obj.getDeclaredMethods()){
+            if (method.isAnnotationPresent(AnotacionVariabilidad.class)){
+                Annotation annotation = method.getAnnotation(AnotacionVariabilidad.class);
+                    AnotacionVariabilidad anotacionVariabilidad= (AnotacionVariabilidad)annotation;
+                    System.out.print("Anotacion sobre el metodo "+ method.getName()+" label anotacion "+ anotacionVariabilidad.featureName()
+                    +"valor de ese label de anotacion "+LectorProperties.getMensajeFeatureProperties(anotacionVariabilidad.featureName().toString()));
+                      
             }
-    System.out.printf("%nResult : Total : %d, Passed: %d, Failed %d, Ignore %d%n", count, passed, failed, ignore);
+        }
     }
+
 
 }

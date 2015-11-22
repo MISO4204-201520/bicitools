@@ -7,7 +7,7 @@ package com.bicitools.dao;
 
 import com.bicitools.entity.Conexiones;
 import com.bicitools.entity.Usuario;
-import com.bicitools.uploadfiles.PostFile;
+
 
 import java.util.ArrayList;
 import java.util.Date;
