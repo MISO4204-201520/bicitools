@@ -46,6 +46,7 @@ app.controller('ReporteRecorridosController', function($scope, $http, $state) {
         $scope.d.rutaArchivo = "C:\\Users\\Jorge\\Downloads";
 
         $scope.post($scope.setReportsPath('reporteLocal'), $scope.d, function(response){
+            $scope.showSuccessAlert('Reporte generado correctamente en la carpeta Descargas');
             console.log(response);
         });
     };
@@ -104,6 +105,7 @@ app.controller('ReportesRutasFrecuentesController', function($scope, $http, $sta
         $scope.d.rutaArchivo = "C:\\Users\\Jorge\\Downloads";
 
         $scope.post($scope.setReportsPath('reporteLocal'), $scope.d, function(response){
+            $scope.showSuccessAlert('Reporte generado correctamente en la carpeta Descargas');
             console.log(response);
         });
     };
@@ -163,6 +165,7 @@ app.controller('ReporteRutasRecorridosController', function($scope, $http, $stat
         $scope.d.rutaArchivo = "C:\\Users\\Jorge\\Downloads";
 
         $scope.post($scope.setReportsPath('reporteLocal'), $scope.d, function(response){
+            $scope.showSuccessAlert('Reporte generado correctamente en la carpeta Descargas');
             console.log(response);
         });
     };

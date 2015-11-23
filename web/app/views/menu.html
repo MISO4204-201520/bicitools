@@ -1,4 +1,4 @@
-<nav class="navbar navbar-default navbar-inverse navbar-fixed-top">
+<nav class="navbar navbar-default navbar-inverse navbar-fixed-top" ng-controller="MenuController">
 	<div class="container">
 		<div class="navbar-header">
 			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -36,7 +36,7 @@
 					<ul class="dropdown-menu">
 						<li><a ui-sref="perfil" ng-if="featureExists('ManejoPerfiles')">Perfil</a></li>
 						<li role="separator" class="divider" ng-if="featureExists('ManejoPerfiles')"></li>
-						<li><a ui-sref="intro">Cerrar sesión</a></li>
+						<li><a ng-click="logout()">Cerrar sesión</a></li>
 					</ul>
 				</li>
 			</ul>

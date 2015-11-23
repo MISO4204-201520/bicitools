@@ -83,132 +83,151 @@ app.controller('indexController', ['$scope', '$http', '$state', '$localStorage',
                 //     //$('#alerta').alert('close');
                 // });
             });
-    }
-
-    $scope.post = function(path, input, action){
-        console.log(path);
-        console.log(input);
-        return invokeService( $http.post(path, input), action );
-    }
-
-    $scope.get = function(path, action){
-        console.log(path);
-        return invokeService( $http.get(path), action );
-    }
-
-    $scope.bodyStyle = 'bg-black-dark-blue';
-    $scope.setBodyStyle = function(style){
-        $scope.bodyStyle = style;
-    }
-
-    $scope.setMock = function(action){
-        $scope.invokeMock = action;
-    };
-}]);
-
-app.controller('HomeController', function($scope, $http, $state, uiGmapGoogleMapApi) {
-
-
-    $scope.r = {};
-    $scope.r.usuario = "toroj"; //$scope.$storage.user.usuario; //
-    $scope.map = { center: { latitude: 4.603063, longitude:-74.064863 }, zoom: 15 };
-
-    $scope.map.markers = [
-        {
-            id: Date.now(),
-            coords: {
-                latitude: 4.603063,
-                longitude: -74.064863
-            }
         }
-    ];
 
-    $scope.mapa = true;
-    $scope.verMapa = function(i){
-        $scope.mapa = true;
-        $scope.map.center =  {
-            latitude: $scope.datos[i].lugares[0].latitud,
-            longitude: $scope.datos[i].lugares[0].longitud
+        $scope.post = function(path, input, action){
+            console.log(path);
+            console.log(input);
+            return invokeService( $http.post(path, input), action );
+        }
+
+        $scope.get = function(path, action){
+            console.log(path);
+            return invokeService( $http.get(path), action );
+        }
+
+        $scope.bodyStyle = 'bg-black-dark-blue';
+        $scope.setBodyStyle = function(style){
+            $scope.bodyStyle = style;
+        }
+
+        $scope.setMock = function(action){
+            $scope.invokeMock = action;
         };
+    }]);
 
-        $scope.map.markers = [];
+    app.controller('HomeController', function($scope, $http, $state, uiGmapGoogleMapApi) {
 
-        $scope.datos[i].lugares.forEach(function(e){
-            var marker = {
+
+        $scope.r = {};
+        $scope.r.usuario = "toroj"; //$scope.$storage.user.usuario; //
+        $scope.map = { center: { latitude: 4.603063, longitude:-74.064863 }, zoom: 15 };
+
+        $scope.map.markers = [
+            {
                 id: Date.now(),
                 coords: {
-                    latitude: e.latitud,
-                    longitude: e.longitud
+                    latitude: 4.603063,
+                    longitude: -74.064863
                 }
+            }
+        ];
+
+        $scope.mapa = true;
+        $scope.verMapa = function(i){
+            $scope.mapa = true;
+            $scope.map.center =  {
+                latitude: $scope.datos[i].lugares[0].latitud,
+                longitude: $scope.datos[i].lugares[0].longitud
             };
-            $scope.map.markers.push(marker);
+
+            $scope.map.markers = [];
+
+            $scope.datos[i].lugares.forEach(function(e){
+                var marker = {
+                    id: Date.now(),
+                    coords: {
+                        latitude: e.latitud,
+                        longitude: e.longitud
+                    }
+                };
+                $scope.map.markers.push(marker);
+            });
+            //$('#myModal').modal();
+        };
+
+
+        $scope.r = {
+            usuario: "toroj",
+            inicio: "",
+            fin: ""
+        }
+        $scope.post($scope.setReportsPath('consultarRecorridosUsuario'), $scope.r, function(response){
+            $scope.datos = response.data.datos;
         });
-        //$('#myModal').modal();
-    };
 
 
-    $scope.r = {
-        usuario: "toroj",
-        inicio: "",
-        fin: ""
-    }
-    $scope.post($scope.setReportsPath('consultarRecorridosUsuario'), $scope.r, function(response){
-        $scope.datos = response.data.datos;
+        if($scope.$storage.user === undefined){
+            $scope.$storage.user = {
+                id: 0,
+                nombres: 'Jorge',
+                apellidos: 'Castro'
+            }
+        }
+
+        var input = {
+            id_usuario: $scope.$storage.user.id
+        }
+        $scope.post( $scope.setUsersPath('obtenerDetallesUsuario'), input, function(response){
+            var r = response.data.datos;
+
+            var tipoIdentificacion = 'Pasaporte';
+            if(r[1] === '1'){
+                tipoIdentificacion = 'Cédula de ciudadanía';
+            } else if(r[1] === '2'){
+                tipoIdentificacion = 'Tarjeta de identidad';
+            } else if(r[1] === '3'){
+                tipoIdentificacion = 'Cédula de extranjería';
+            }
+
+            var tipoPerfil = 'Ciclista recurrente';
+            if(r[1] === '1'){
+                tipoPerfil = 'Ciclista domiciliario';
+            } else if(r[1] === '2'){
+                tipoPerfil = 'Vendedor';
+            }
+
+            $scope.u = {
+                id: $scope.$storage.user.id,
+                numeroIdentificacion: r[0],
+                tipoIdentificacion: tipoIdentificacion,
+                tipoPerfil: tipoPerfil,
+                genero: (r[3] === '1' ? 'Hombre' : 'Mujer'),
+                nombres: r[4],
+                apellidos: r[5],
+                foto: r[0],
+                correo: r[7],
+                fechaNacimiento: r[8],
+                direccionCasa: r[9],
+                direccionTrabajo: r[10],
+                telefonoFijo: r[11],
+                telefonoMovil: r[12],
+                facebookUser: r[13],
+                twitterUser: r[14],
+                usuario: r[15]
+            };
+            $scope.$storage.user = $scope.u;
+        });
+
+        $scope.iniciarRecorrido = function(){
+            $scope.recorridoIniciado = true;
+            $scope.mostrarDatosRecorrido = false;
+        }
+
+        $scope.detenerRecorrido = function(){
+            $scope.recorridoIniciado = false;
+            $scope.mostrarDatosRecorrido = true;
+        }
     });
 
-
-
-    var input = {
-		id_usuario: $scope.$storage.user.id
-	}
-    $scope.post( $scope.setUsersPath('obtenerDetallesUsuario'), input, function(response){
-		var r = response.data.datos;
-
-		var tipoIdentificacion = 'Pasaporte';
-		if(r[1] === '1'){
-			tipoIdentificacion = 'Cédula de ciudadanía';
-		} else if(r[1] === '2'){
-			tipoIdentificacion = 'Tarjeta de identidad';
-		} else if(r[1] === '3'){
-			tipoIdentificacion = 'Cédula de extranjería';
-		}
-
-		var tipoPerfil = 'Ciclista recurrente';
-		if(r[1] === '1'){
-			tipoPerfil = 'Ciclista domiciliario';
-		} else if(r[1] === '2'){
-			tipoPerfil = 'Vendedor';
-		}
-
-		$scope.u = {
-            id: $scope.$storage.user.id,
-			numeroIdentificacion: r[0],
-			tipoIdentificacion: tipoIdentificacion,
-			tipoPerfil: tipoPerfil,
-			genero: (r[3] === '1' ? 'Hombre' : 'Mujer'),
-			nombres: r[4],
-			apellidos: r[5],
-			foto: r[0],
-			correo: r[7],
-			fechaNacimiento: r[8],
-			direccionCasa: r[9],
-			direccionTrabajo: r[10],
-			telefonoFijo: r[11],
-			telefonoMovil: r[12],
-			facebookUser: r[13],
-			twitterUser: r[14],
-			usuario: r[15]
-		};
-        $scope.$storage.user = $scope.u;
-	});
-
-    $scope.iniciarRecorrido = function(){
-        $scope.recorridoIniciado = true;
-        $scope.mostrarDatosRecorrido = false;
-    }
-
-    $scope.detenerRecorrido = function(){
-        $scope.recorridoIniciado = false;
-        $scope.mostrarDatosRecorrido = true;
-    }
-});
+    app.controller('MenuController', function($scope, $http, $state) {
+        console.log('menu controller');
+        $scope.logout = function(){
+            FB.logout(function(response) {
+                appId: '471697476347037'
+                // user is now logged out
+            });
+            $scope.$storage.user = undefined;
+            $state.go('intro');
+        }
+    });

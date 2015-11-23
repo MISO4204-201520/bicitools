@@ -56,6 +56,12 @@ app.controller('listaAmigosController', function($scope, $http, $state) {
                 image: "https://github.com/Levaneng/line-fact/raw/master/Miso.Fabricas.Principal.Web/Images/Jhony-sq.png"
         },
         {
+                nombres: "Jorge",
+                apellidos: "Castro",
+                bloqueado: false,
+                image: "https://github.com/Levaneng/line-fact/raw/master/Miso.Fabricas.Principal.Web/Images/jorge-sq.png"
+        },
+        {
                 nombres: "Ludwing",
                 apellidos: "Badillo",
                 bloqueado: false,
@@ -88,6 +94,11 @@ app.controller('listaAmigosController', function($scope, $http, $state) {
 
 
 app.controller('buscarAmigosController', function($scope, $http, $state) {
+
+    $scope.agregar = function(a){
+        a.bloqueado = true;
+    }
+
     $scope.amigos = [
         {
                 nombres: "Juan Manuel",

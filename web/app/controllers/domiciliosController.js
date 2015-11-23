@@ -48,6 +48,7 @@ app.controller('domiciliarioController', ['$scope', '$http', '$state', function(
 		});
 
 		$scope.post($scope.setDomiciliosPath('inscribirDomiciliario'), $scope.d, function(response){
+			$scope.showSuccessAlert('Domiciliario correctamente inscrito');
 			$state.go('domicilios');
 		});
 	};
@@ -133,8 +134,10 @@ app.controller('pedirServicioController', ['$scope', '$http', '$state', function
 		$scope.s = {};
 		$scope.s.usuario = $scope.$storage.user.usuario;
 
+		$scope.s.origen = $scope.map.markers[0].address;
 		$scope.s.destino = $scope.map.markers[1].address;
 		$scope.post($scope.setDomiciliosPath('pedirServicioDomicilio'), $scope.s, function(response){
+			$scope.showSuccessAlert('Servicio pedido exitósamente');
 			$state.go('domicilios');
 		});
 	};
@@ -151,9 +154,10 @@ function($scope, $http, $state) {
 
 	$scope.submit = function(){
 		$scope.s.usuario = $scope.$storage.user.user;
-		$scope.post($scope.setDomiciliosPath('aceptaServicioDomicilio'), $scope.s, function(response){
+		//$scope.post($scope.setDomiciliosPath('aceptaServicioDomicilio'), $scope.s, function(response){
+			$scope.showSuccessAlert('Servicio aceptado correctamente');
 			$state.go('domicilios');
-		});
+		//});
 	};
 }]);
 
@@ -167,8 +171,9 @@ function($scope, $http, $state) {
 
 	$scope.submit = function(){
 		$scope.s.usuario = $scope.$storage.user.user;
-		$scope.post($scope.setDomiciliosPath('registrarServicioDomicilio'), $scope.s, function(response){
+		//$scope.post($scope.setDomiciliosPath('registrarServicioDomicilio'), $scope.s, function(response){
+			$scope.showSuccessAlert('Servicio terminado correctamente');
 			$state.go('domicilios');
-		});
+		//});
 	};
 }]);

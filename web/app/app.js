@@ -49,6 +49,7 @@ app.run(["$q", "$rootScope", "$state", "$http", "$urlRouter", function ($q, $roo
             parent: 'index',
             abstract: true,
             //template: '<ui-view />'
+            //controller: "MenuController",
             templateUrl : "views/menu.html"
         },
         {

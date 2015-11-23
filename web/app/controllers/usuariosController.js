@@ -16,24 +16,6 @@ function($scope, $http, $state) {
 		});
 	}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }]);
 
 app.controller('registrarController', ['$scope', '$http', '$state', function($scope, $http, $state) {
@@ -78,7 +60,8 @@ app.controller('registrarController', ['$scope', '$http', '$state', function($sc
 	$scope.submit = function(){
 		$scope.$storage.user = $scope.u;
 		$scope.post( $scope.setUsersPath('registrarUsuario'), $scope.u, function(response){
-			$state.go('home');
+			$state.go('intro');
+			$scope.showSuccessAlert('Registrado exitósamente en Bicitools');
 		});
 	}
 }]);

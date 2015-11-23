@@ -7,14 +7,14 @@
 	</div>
 	<div class="row">
 
-		<div class="col-sm-offset-4 col-sm-4">
+		<div class="col-sm-offset-3 col-sm-6">
 			<br>
 
 			<table class="table">
 				<tr>
 					<th>Nombre</th>
 					<th ng-if="featureExists('Grupal')">Invitar</th>
-					<th>Compartir</th>
+					<th ng-if="featureExists('CompartirRedesSociales')">Compartir</th>
 				</tr>
 				<tr ng-repeat="r in $storage.routes">
 					<td>{{r.nombre}}</td>
@@ -23,10 +23,8 @@
 							Invitar
 						</button>
 					</td>
-					<td>
-
-						<a onclick="return !window.open(this.href, 'Share on Facebook', 'width=640, height=536')" href="https://www.facebook.com/dialog/feed?app_id=471697476347037&display=popup&name=Ruta%20Uniandes%20-%20Centro%20Comercial%20Andino&caption=Bicitools&picture=http://manayunk.com/assets/content/images/DSR/DSR_BikeIcon_Circle.jpg&link=http://www.bicitools.com&description=Miren%20mi%20nueva%20ruta,%20es%20la%20ostia&redirect_uri=http://localhost:4204/rutas" target="_window"><img src='/_img/icons/facebook.png' /></a>
-						<button type="button" name="fb_share"  class="btn btn-social btn-facebook" ng-click="compartirFacebook()"><i class="fa fa-facebook"></i>Compartir</button>
+					<td ng-if="featureExists('CompartirRedesSociales')">
+						<a class="btn btn-social btn-facebook" onclick="return !window.open(this.href, 'Share on Facebook', 'width=640, height=536')" href="https://www.facebook.com/dialog/feed?app_id=471697476347037&display=popup&name=Ruta%20Uniandes%20-%20Centro%20Comercial%20Andino&caption=Bicitools&picture=http://manayunk.com/assets/content/images/DSR/DSR_BikeIcon_Circle.jpg&link=http://www.bicitools.com&description=Miren%20mi%20nueva%20ruta,%20es%20la%20ostia&redirect_uri=http://localhost:4204/rutas" target="_window"><i class="fa fa-facebook"></i>Compartir</a>
 					</td>
 				</tr>
 			</table>
