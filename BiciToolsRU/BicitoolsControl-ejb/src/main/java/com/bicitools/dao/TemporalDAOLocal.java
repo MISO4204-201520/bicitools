@@ -5,9 +5,9 @@
  */
 package com.bicitools.dao;
 
-import javax.ejb.Local;
+import javax.ejb.Local; 
 
-/**
+/** 
  *
  * @author Ludwing
  */

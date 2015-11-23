@@ -5,9 +5,11 @@
  */
 package com.bicitools.dao;
 
+import com.bicitools.entity.AlquileresProductos;
 import com.bicitools.entity.Ruta;
 import com.bicitools.entity.RutaPunto;
 import com.bicitools.entity.UsuarioRuta;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -28,7 +30,11 @@ public interface RutaDAOLocal {
     public List<RutaPunto> getPuntosRuta(String usuario);
     
     public List<UsuarioRuta> getUsuarioRuta(String Ruta);
-    
-    
-    
+     
+    public void AgregarLogUsuario(String usuario_, Date fechaRegistro_, float latitud_, float longitud_, String rutaActual_, Date fechaInicioRecorrido_);
+
+   public List<AlquileresProductos> getAlquileresProductos();
+  
+    public void  alquilarProducto( String empresa_ , String articulo_, String usuario_);
+      
 }

@@ -2,7 +2,7 @@ package com.bicitools.pruebarest;
 
 import com.bicitools.dao.RutaDAO;
 import com.bicitools.dao.RutaDAOLocal;
-import com.bicitools.dao.TemporalDAOLocal;
+import com.bicitools.entity.AlquileresProductos;
 import com.bicitools.entity.Ruta;
 import com.bicitools.entity.RutaPunto;
 import com.bicitools.entity.UsuarioRuta;
@@ -33,6 +33,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.Date;
 import java.util.List;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
@@ -46,9 +47,7 @@ import javax.ws.rs.core.UriBuilder;
 @Stateless
 public class MyResource {
 
-    @EJB
-    private TemporalDAOLocal m;
-    @EJB(name="RutaDAOLocal")
+    @EJB(name = "RutaDAOLocal")
     private RutaDAOLocal r;
 
     /**
@@ -64,7 +63,7 @@ public class MyResource {
         TemporalJson st = new TemporalJson();
         st.setPkColumn(1);
         st.setEstring(name);
-        
+
         return st;
     }
 
@@ -78,6 +77,7 @@ public class MyResource {
         return Response.status(200).entity(re.toString()).build();
     }
 //s7 ' 246685
+
     @POST
     @Path("/CrearRuta")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -92,33 +92,13 @@ public class MyResource {
         return builder.build();
         //Response.status(200).entity(re).build();
     }
-  @POST
+
+    @POST
     @Path("/AgregarPuntoARuta")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response AgregarPuntoARuta(AgregarPuntoARutaJson temporal) {
-        r.creaRutaPunto((temporal.getNombre()), temporal.getLatitudOrigen(),temporal.getLongitudOrigen());
+        r.creaRutaPunto((temporal.getNombre()), temporal.getLatitudOrigen(), temporal.getLongitudOrigen());
         Respuesta re = new Respuesta(0, "Info", "Ok");
-        ResponseBuilder builder = new ResponseBuilderImpl();
-        builder.entity(re);
-        builder.status(Status.OK);
-        builder.type(MediaType.APPLICATION_JSON);
-        return builder.build(); 
-        //Response.status(200).entity(re).build();
-    }
-
-    
-  @POST
-    @Path("/AgregarUsuarioARuta")
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Response AgregarUsuarioARuta(AgregarUsuarioARutaJson temporal) {
-     App app = App.getInstance();
-      Respuesta re = null;
-      if (app.prop.getProperty("DesplazamientoGrupal")  == "Y" ) {
-       
-        System.out.println(temporal.getNombre());
-        r.creaUsuarioARuta((temporal.getNombre()), temporal.getUsuario());
-        re = new Respuesta(0, "Info", "Ok");
-      }
         ResponseBuilder builder = new ResponseBuilderImpl();
         builder.entity(re);
         builder.status(Status.OK);
@@ -126,22 +106,40 @@ public class MyResource {
         return builder.build();
         //Response.status(200).entity(re).build();
     }
-    
+
+    @POST
+    @Path("/AgregarUsuarioARuta")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response AgregarUsuarioARuta(AgregarUsuarioARutaJson temporal) {
+        App app = App.getInstance();
+        Respuesta re = null;
+        if (app.prop.getProperty("DesplazamientoGrupal").equals("Y")) {
+
+            System.out.println(temporal.getNombre());
+            r.creaUsuarioARuta((temporal.getNombre()), temporal.getUsuario());
+            re = new Respuesta(0, "Info", "Ok");
+        }
+        ResponseBuilder builder = new ResponseBuilderImpl();
+        builder.entity(re);
+        builder.status(Status.OK);
+        builder.type(MediaType.APPLICATION_JSON);
+        return builder.build();
+        //Response.status(200).entity(re).build();
+    }
+
     @POST
     @Path("/ObtenerDistanciaTiempoRuta")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response ObtenerDistanciaTiempoRuta(OrigenDestinoJson OriDest) {
-         GoogleResponseRoute response2 = null;
+        GoogleResponseRoute response2 = null;
         try {
             Client client = ClientBuilder.newClient();
             WebTarget target = client.target(
                     UriBuilder.fromUri(
                             "http://maps.googleapis.com/maps/api/directions/json?origin=" + OriDest.getLatitudOrigen() + "," + OriDest.getLongitudOrigen() + "&destination=" + OriDest.getLatitudDestino() + "," + OriDest.getLongitudDestino() + "&sensor=false&units=metric&mode=driving"));
-             response2 = target.request().accept(MediaType.APPLICATION_JSON_TYPE).get(GoogleResponseRoute.class);
+            response2 = target.request().accept(MediaType.APPLICATION_JSON_TYPE).get(GoogleResponseRoute.class);
 
-             System.out.println("Output from Server 0 ." + response2);
-
-      
+            System.out.println("Output from Server 0 ." + response2);
 
         } catch (Exception e) {
 
@@ -150,59 +148,56 @@ public class MyResource {
         }
 
         System.out.println("asd asd ");
-        RespuestaObtenerDistanciaTiempoRuta re = new RespuestaObtenerDistanciaTiempoRuta(0, "Info", "Ok",new DistanciaTiempoRuta(response2.getRoutes()[0].getLegs()[0].getDistance().getText(),response2.getRoutes()[0].getLegs()[0].getDuration().getText()));
-          ResponseBuilder builder = new ResponseBuilderImpl();
+        RespuestaObtenerDistanciaTiempoRuta re = new RespuestaObtenerDistanciaTiempoRuta(0, "Info", "Ok", new DistanciaTiempoRuta(response2.getRoutes()[0].getLegs()[0].getDistance().getText(), response2.getRoutes()[0].getLegs()[0].getDuration().getText()));
+        ResponseBuilder builder = new ResponseBuilderImpl();
         builder.entity(re);
         builder.status(Status.OK);
         builder.type(MediaType.APPLICATION_JSON);
         return builder.build();
     }
-    
+
     @POST
     @Path("/ObtenerPuntosLatLongRuta")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response ObtenerPuntosLatLongRuta(OrigenDestinoJson OriDest) {
-         GoogleResponseRoute response2 = null;
+        GoogleResponseRoute response2 = null;
         try {
             Client client = ClientBuilder.newClient();
             WebTarget target = client.target(
                     UriBuilder.fromUri(
                             "http://maps.googleapis.com/maps/api/directions/json?origin=" + OriDest.getLatitudOrigen() + "," + OriDest.getLongitudOrigen() + "&destination=" + OriDest.getLatitudDestino() + "," + OriDest.getLongitudDestino() + "&sensor=false&units=metric&mode=driving"));
-             response2 = target.request().accept(MediaType.APPLICATION_JSON_TYPE).get(GoogleResponseRoute.class);
+            response2 = target.request().accept(MediaType.APPLICATION_JSON_TYPE).get(GoogleResponseRoute.class);
 
-             System.out.println("Output from Server ." + response2);
-
-      
+            System.out.println("Output from Server ." + response2);
 
         } catch (Exception e) {
 
             e.printStackTrace();
 
         }
-        RespuestaObtenerPuntosLatLongRuta re = new RespuestaObtenerPuntosLatLongRuta(0, "Info", "Ok",response2.getRoutes()[0].getLegs()[0].getSteps());
-          ResponseBuilder builder = new ResponseBuilderImpl();
+        RespuestaObtenerPuntosLatLongRuta re = new RespuestaObtenerPuntosLatLongRuta(0, "Info", "Ok", response2.getRoutes()[0].getLegs()[0].getSteps());
+        ResponseBuilder builder = new ResponseBuilderImpl();
         builder.entity(re);
         builder.status(Status.OK);
         builder.type(MediaType.APPLICATION_JSON);
         return builder.build();
     }
-    
-    
+
     @POST
     @Path("/ObtenerCoordenadasPorSitioDireccion")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response ObtenerCoordenadasPorSitioDireccion(ObtenerCoordenadasJson obtCoord) {
-         Geocoding response2 = null;
+        Geocoding response2 = null;
         try {
             Client client = ClientBuilder.newClient();
             WebTarget target = client.target(
                     UriBuilder.fromUri(
-                            "https://maps.googleapis.com/maps/api/geocode/json?address="+ URLEncoder.encode(obtCoord.getSitioDireccion(), "UTF-8")+"&region=co"));
-             response2 = target.request().accept(MediaType.APPLICATION_JSON_TYPE).get(Geocoding.class);
+                            "https://maps.googleapis.com/maps/api/geocode/json?address=" + URLEncoder.encode(obtCoord.getSitioDireccion(), "UTF-8") + "&region=co"));
+            response2 = target.request().accept(MediaType.APPLICATION_JSON_TYPE).get(Geocoding.class);
 
-             System.out.println("Output from Server 2." + response2);/*
-https://maps.googleapis.com/maps/api/geocode/json?address="+obtCoord.getSitioDireccion()+"&region=co */
-      
+            System.out.println("Output from Server 2." + response2);/*
+             https://maps.googleapis.com/maps/api/geocode/json?address="+obtCoord.getSitioDireccion()+"&region=co */
+
 
         } catch (Exception e) {
 
@@ -210,75 +205,115 @@ https://maps.googleapis.com/maps/api/geocode/json?address="+obtCoord.getSitioDir
 
         }
 
-          ResponseBuilder builder = new ResponseBuilderImpl();
+        ResponseBuilder builder = new ResponseBuilderImpl();
         builder.entity(response2.getResults()[0].getGeometry().getLocation());
         builder.status(Status.OK);
         builder.type(MediaType.APPLICATION_JSON);
         return builder.build();
     }
-    
- 
+
     @GET
     @Path("/ObtenerRutas/{usuario}")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response ObtenerRutas(@PathParam("usuario") String usuario) {
-         
+
         List<Ruta> rutaByUsuario;
         rutaByUsuario = r.getRutaByUsuario(usuario);
-        RespuestaObtenerRuta re = new RespuestaObtenerRuta(0, "Info", "Ok",rutaByUsuario.toArray());
+        RespuestaObtenerRuta re = new RespuestaObtenerRuta(0, "Info", "Ok", rutaByUsuario.toArray());
         ResponseBuilder builder = new ResponseBuilderImpl();
         builder.entity(re);
         builder.status(Status.OK);
         builder.type(MediaType.APPLICATION_JSON);
         return builder.build();
-    } 
-    
-     @GET
+    }
+
+    @GET
     @Path("/ObtenerPuntosRuta/{ruta}")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response ObtenerPuntosRuta(@PathParam("ruta") String ruta) {
-         
+
         List<RutaPunto> puntosRuta;
         puntosRuta = r.getPuntosRuta(ruta);
-         System.out.println("sz" + puntosRuta.size());
-        RespuestaObtenerRuta re = new RespuestaObtenerRuta(0, "Info", "Ok",puntosRuta.toArray());
+        System.out.println("sz" + puntosRuta.size());
+        RespuestaObtenerRuta re = new RespuestaObtenerRuta(0, "Info", "Ok", puntosRuta.toArray());
         ResponseBuilder builder = new ResponseBuilderImpl();
         builder.entity(re);
         builder.status(Status.OK);
         builder.type(MediaType.APPLICATION_JSON);
-        return builder.build(); 
-    } 
-    
-      @GET
+        return builder.build();
+    }
+
+    @GET
     @Path("/ObtenerUsuariosRuta/{ruta}")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response ObtenerUsuariosRuta(@PathParam("ruta") String ruta) {
-       App app = App.getInstance();
+        App app = App.getInstance();
         List<UsuarioRuta> usuarioRuta = null;
-        if (app.prop.getProperty("DesplazamientoGrupal")  == "Y" ) {
-         
-        usuarioRuta = r.getUsuarioRuta(ruta);
+        if (app.prop.getProperty("DesplazamientoGrupal").equals("Y")) {
+
+            usuarioRuta = r.getUsuarioRuta(ruta);
         }
-        RespuestaObtenerRuta re = new RespuestaObtenerRuta(0, "Info", "Ok",usuarioRuta.toArray());
+        RespuestaObtenerRuta re = new RespuestaObtenerRuta(0, "Info", "Ok", usuarioRuta.toArray());
         ResponseBuilder builder = new ResponseBuilderImpl();
         builder.entity(re);
         builder.status(Status.OK);
         builder.type(MediaType.APPLICATION_JSON);
-        return builder.build(); 
-        
-    } 
+        return builder.build();
+
+    }
+
     @POST
     @Path("/AgregarLogUsuario")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response AgregarPuntoARuta(AgregarLogUsuarioJson temporal) {
-        r.creaRutaPunto((temporal.getNombre()), temporal.getLatitudOrigen(),temporal.getLongitudOrigen());
+
+        r.AgregarLogUsuario(temporal.getNombre(), new Date(), temporal.getLatitudOrigen(), temporal.getLongitudOrigen(), temporal.getRutaActual(), temporal.getFechaInicioRecorrido());
         Respuesta re = new Respuesta(0, "Info", "Ok");
         ResponseBuilder builder = new ResponseBuilderImpl();
         builder.entity(re);
         builder.status(Status.OK);
         builder.type(MediaType.APPLICATION_JSON);
-        return builder.build(); 
+        return builder.build();
         //Response.status(200).entity(re).build();
     }
-}
+
+    @GET
+    @Path("/ObtenerAlquileresProductos")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response ObtenerAlquileresProductos() {
+        App app = App.getInstance();
+        List<AlquileresProductos> alq = null;
+        if (app.prop.getProperty("Alquileres").equals("Y")) {
+            alq = r.getAlquileresProductos();
+        }
+        RespuestaObtenerRuta re = new RespuestaObtenerRuta(0, "Info", "Ok", alq.toArray());
+        ResponseBuilder builder = new ResponseBuilderImpl();
+        builder.entity(re);
+        builder.status(Status.OK);
+        builder.type(MediaType.APPLICATION_JSON);
+        return builder.build();
+
+    }
     
+    
+     @POST
+    @Path("/AlquilarProducto")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response AlquilarProducto(AlquilarProductoJson temporal) {
+        Respuesta re = null;
+        App app = App.getInstance();
+        if (app.prop.getProperty("Alquileres").equals("Y")) {
+        r.alquilarProducto(temporal.getEmpresa(),temporal.getArticulo(), temporal.getUsuario());
+        re = new Respuesta(0, "Info", "Ok");
+        }else{
+        re = new Respuesta(1, "Sin Auth", "Null");
+      }
+          ResponseBuilder builder = new ResponseBuilderImpl();
+        builder.entity(re);
+        builder.status(Status.OK);
+        builder.type(MediaType.APPLICATION_JSON);
+        return builder.build();
+        //Response.status(200).entity(re).build();
+    }
+    
+}
