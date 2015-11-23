@@ -130,7 +130,8 @@ app.controller('pedirServicioController', ['$scope', '$http', '$state', function
 	});
 
 	$scope.submit = function(){
-		$scope.s.usuario = $scope.$storage.user.user;
+		$scope.s = {};
+		$scope.s.usuario = $scope.$storage.user.usuario;
 
 		$scope.s.destino = $scope.map.markers[1].address;
 		$scope.post($scope.setDomiciliosPath('pedirServicioDomicilio'), $scope.s, function(response){

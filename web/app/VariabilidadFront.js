@@ -1,0 +1,1 @@
+var variabilidad = ["Sitios","Facebook","Twitter"];

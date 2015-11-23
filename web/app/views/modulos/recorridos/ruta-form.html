@@ -6,10 +6,10 @@
 		<div class="row">
 			<div class="col-sm-5">
 				<br>
-				<zx-textbox  model="r.usuario" label="Usuario" required></zx-textbox>
+				<!-- <zx-textbox  model="r.usuario" label="Usuario" required></zx-textbox> -->
 				<zx-textbox  model="r.nombre" label="Nombre" required></zx-textbox>
 
-				<br>
+				<!-- <br>
 				<br>
 				<table class="table table-coordinates">
 					<tr>
@@ -30,7 +30,7 @@
 				</table>
 				<button type="button" class="btn btn-success pull-right" ng-click="addCoordinate()">Adicionar</button>
 				<br>
-				<br>
+				<br> -->
 				<hr>
 				<div class="form-group pull-right">
 					<button type="button" class="btn btn-default" ui-sref="consultar-rutas">Cancelar</button>
@@ -39,7 +39,13 @@
 
 			</div>
 			<div class="col-sm-7">
-				<div id="map" class="map"></div>
+				<ui-gmap-google-map center='map.center' zoom='map.zoom' draggable="true" events="map.events">
+					<ui-gmap-marker ng-repeat="m in map.markers" coords="m.coords" icon="m.icon" idkey="m.id"></ui-gmap-marker>
+					<ui-gmap-polyline ng-repeat="p in polylines" path="p.path" stroke="p.stroke" visible='p.visible' geodesic='p.geodesic' fit="false"></ui-gmap-polyline>
+				</ui-gmap-google-map>
+				<!-- <ui-gmap-google-map center="map.center" zoom="map.zoom" draggable="true" options="options" bounds="map.bounds">
+				    <ui-gmap-polyline ng-repeat="p in polylines" path="p.path" stroke="p.stroke" visible='p.visible' geodesic='p.geodesic' fit="false"></ui-gmap-polyline>
+				</ui-gmap-google-map> -->
 			</div>
 		</div>
 	</form>

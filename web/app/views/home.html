@@ -1,3 +1,43 @@
 <div class="container">
-    <h2>¡Hola {{$storage.user.nombres}}!</h2>
+    <h2>¡Hola {{$storage.user.nombres}}!, bienvenido a Bicitools!</h2>
+    <br>
+    <button type="button" class="btn btn-default btn-lg pull-right btn-primary" name="button">Iniciar Recorrido</button>
+    <br>
+    <h3 class="text-center">Tu estás aqui</h3>
+    <ui-gmap-google-map ng-if="mapa" center='map.center' zoom='map.zoom' draggable="true">
+        <ui-gmap-marker ng-repeat="m in map.markers" coords="m.coords" icon="m.icon" idkey="m.id"></ui-gmap-marker>
+    </ui-gmap-google-map>
+    <br>
+    <br>
+    <h3 class="text-center">Estos son tus recorridos hasta hoy</h3>
+    <form name="form" ng-submit="form.$valid && submit()" novalidate>
+        <br>
+        <div ng-if="datos">
+            <div class="row">
+                <table class="table">
+                    <tr>
+                        <th>Fecha</th>
+                        <th>Ruta</th>
+                        <th>Tiempo estimado</th>
+                        <th>Distancia estimada</th>
+                    </tr>
+                    <tr ng-repeat="d in datos">
+                        <td ng-bind="d.fechaHora"></td>
+                        <td ng-bind="d.nombre"></td>
+                        <td ng-bind="d.tiempo"></td>
+                        <td ng-bind="d.distancia"></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </form>
+    <br>
+    <br>
+    <br>
+
 </div>
+
+
+<!-- <div class="container">
+    <h2>¡Hola {{$storage.user.nombres}}!</h2>
+</div> -->

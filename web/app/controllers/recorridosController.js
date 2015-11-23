@@ -118,9 +118,82 @@ app.controller('calcularRutaController', function($scope, $http, $state, $sce) {
 	};
 }); // Controller
 
-app.controller('crearRutaController', ['$scope', '$http', '$state',
-function($scope, $http, $state) {
-	google.maps.event.addDomListener(window, 'load', initialize);
+app.controller('crearRutaController', ['$scope', '$http', '$state', 'uiGmapGoogleMapApi',
+function($scope, $http, $state, uiGmapGoogleMapApi) {
+	//google.maps.event.addDomListener(window, 'load', initialize);
+
+	$scope.polylines = [
+		{
+			id: 1,
+			path: [],
+			stroke: {
+				color: '#6060FB',
+				weight: 3
+			},
+			editable: true,
+			draggable: true,
+			geodesic: true,
+			visible: true
+		},
+	];
+
+
+	angular.extend($scope, {
+		map: {
+			center: {
+				latitude: 4.603063,
+				longitude:-74.064863
+			},
+			zoom: 15,
+			markers: [],
+			events: {
+				click: function (map, eventName, originalEventArgs) {
+					var e = originalEventArgs[0];
+					var lat = e.latLng.lat();
+					var lon = e.latLng.lng();
+					var address = '';
+
+					var geocoder = new google.maps.Geocoder();
+					var latlng = new google.maps.LatLng(lat, lon);
+
+					geocoder.geocode({ 'latLng': latlng }, function (results, status) {
+						if (status == google.maps.GeocoderStatus.OK) {
+							if (results[0]) {
+								address = results[0].formatted_address;
+							} else {
+								console.log('Location not found');
+							}
+						} else {
+							console.log('Geocoder failed due to: ' + status);
+						}
+
+						var marker = {
+							id: Date.now(),
+							coords: {
+								latitude: lat,
+								longitude: lon
+							},
+							address: address
+						};
+
+						if($scope.map.markers.length <= 0){
+							$scope.map.markers.push(marker);
+						}
+
+
+						uiGmapGoogleMapApi.then(function(){
+						    $scope.polylines[0].path.push({ latitude: lat, longitude: lon })
+						});
+
+
+						console.log($scope.map.markers);
+						$scope.$apply();
+					});
+				}
+			}
+		}
+	});
+
 
 	$scope.r = {};
 	$scope.coordinates = [{}];
@@ -157,65 +230,75 @@ function($scope, $http, $state) {
 	}
 
 	$scope.submit = function(){
-		//$state.go('recorridos');
-		$scope.post($scope.setRoutesPath('CrearRuta'), $scope.r, function(response1){
-			console.log('RUTA CREADA');
-			$scope.coordinates.forEach(function(e){
-				var coordinate = {
-					nombre: $scope.r.nombre,
-					latitudOrigen: e.latitudOrigen,
-					longitudOrigen: e.longitudOrigen
-				}
-				//e.nombre = $scope.r.nombre;
+		$scope.$storage.routes.push({ nombre: $scope.r.nombre});
+		$scope.showSuccessAlert('Ruta creada exitósamente');
+		$state.go('recorridos');
 
-				console.log(coordinate);
-				$scope.post($scope.setRoutesPath('AgregarPuntoARuta'), coordinate, function(response2){
-					console.log(response2.data);
-				});
-			});
-
-		});
+		// $scope.post($scope.setRoutesPath('CrearRuta'), $scope.r, function(response1){
+		// 	console.log('RUTA CREADA');
+		// 	$scope.coordinates.forEach(function(e){
+		// 		var coordinate = {
+		// 			nombre: $scope.r.nombre,
+		// 			latitudOrigen: e.latitudOrigen,
+		// 			longitudOrigen: e.longitudOrigen
+		// 		}
+		// 		//e.nombre = $scope.r.nombre;
+		//
+		// 		console.log(coordinate);
+		// 		$scope.post($scope.setRoutesPath('AgregarPuntoARuta'), coordinate, function(response2){
+		// 			console.log(response2.data);
+		// 		});
+		// 	});
+		//
+		// });
 	};
 }]);
 
 app.controller('consultarRutasController', ['$scope', '$http', '$state',
 function($scope, $http, $state) {
-	$scope.routes = [
-		{
-			nombre: 'Uniandes - Centro Comercial Andino'
-		},
-		{
-			nombre: 'Parque Simón Bolivar - Universidad de los Andes'
-		},
-		{
-			nombre: 'La Candelaria - Municipio de Suba'
-		}
-	];
-	$scope.get('obtenerRutasUsuario', function(response1){
-		$scope.routes = response1.data;
-		console.log(response1.data);
-	});
+	if($scope.$storage.routes === undefined || $scope.$storage.routes.length <= 0)
+	{
+		$scope.$storage.routes = [
+			{
+				nombre: 'Uniandes - Centro Comercial Andino'
+			},
+			{
+				nombre: 'Parque Simón Bolivar - Universidad de los Andes'
+			},
+			{
+				nombre: 'La Candelaria - Municipio de Suba'
+			}
+		];
+	}
+
+	// $scope.get('obtenerRutasUsuario', function(response1){
+	// 	$scope.routes = response1.data;
+	// 	console.log(response1.data);
+	// });
 }]);
 
 app.controller('invitarARutaController', ['$scope', '$http', '$state',
 function($scope, $http, $state) {
 
 	$scope.users = [ 'nombre.usuario1', 'nombre.usuario2' ];
+	$scope.usuarios = {};
 
 
-	$scope.get('obtenerUsuarioRuta', function(response){
-		$scope.users = response.data;
-		console.log(response.data);
-	});
+
+	// $scope.get('obtenerUsuarioRuta', function(response){
+	// 	$scope.users = response.data;
+	// 	console.log(response.data);
+	// });
 
 	$scope.addUser = function(){
 		$scope.users.push('');
 	}
 
 	$scope.submit = function(){
-		$scope.post('invitarARuta', $scope.users, function(response){
-			console.log(response.data);
-		});
+		console.log($scope.usuarios);
+		// $scope.post('invitarARuta', $scope.users, function(response){
+		// 	console.log(response.data);
+		// });
 	};
 }]);
 

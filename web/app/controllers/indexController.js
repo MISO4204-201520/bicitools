@@ -2,6 +2,10 @@ app.controller('indexController', ['$scope', '$http', '$state', '$localStorage',
     $scope.$storage = $localStorage;
     $('#alerta').hide();
 
+    $scope.featureExists = function(feature){
+        return variabilidad.indexOf(feature) > -1;
+    }
+
     var domain = "http://192.168.0.6:8080/";  //"http://192.168.0.11:8080/"; //
 
     $scope.setUsersPath = function(path) {
@@ -27,6 +31,8 @@ app.controller('indexController', ['$scope', '$http', '$state', '$localStorage',
     $scope.setBikeConfPath = function(path) {
         return domain + "bicitoolsMi/serviciosRest/miBici/" + path;
     }
+
+
 
     $scope.showSuccessAlert = function(mensaje){
         $scope.alert = {
@@ -101,6 +107,66 @@ app.controller('indexController', ['$scope', '$http', '$state', '$localStorage',
 }]);
 
 app.controller('HomeController', function($scope, $http, $state, uiGmapGoogleMapApi) {
+
+
+    $scope.r = {};
+    $scope.r.usuario = "toroj"; //$scope.$storage.user.usuario; //
+    $scope.map = { center: { latitude: 4.603063, longitude:-74.064863 }, zoom: 15 };
+
+    $scope.map.markers = [
+        {
+            id: Date.now(),
+            coords: {
+                latitude: 4.603063,
+                longitude: -74.064863
+            }
+        }
+    ];
+
+    $scope.mapa = true;
+    $scope.verMapa = function(i){
+        $scope.mapa = true;
+        $scope.map.center =  {
+            latitude: $scope.datos[i].lugares[0].latitud,
+            longitude: $scope.datos[i].lugares[0].longitud
+        };
+
+        $scope.map.markers = [];
+
+        $scope.datos[i].lugares.forEach(function(e){
+            var marker = {
+                id: Date.now(),
+                coords: {
+                    latitude: e.latitud,
+                    longitude: e.longitud
+                }
+            };
+            $scope.map.markers.push(marker);
+        });
+        //$('#myModal').modal();
+    };
+    $scope.descargar = function(){
+        $scope.d = $scope.r;
+        $scope.d.tipoArchivo = "1";
+        $scope.d.tipoReporte = "2";
+        $scope.d.rutaArchivo = "C:\\Users\\Jorge\\Downloads";
+
+        $scope.post($scope.setReportsPath('reporteLocal'), $scope.d, function(response){
+            console.log(response);
+        });
+    };
+
+    $scope.r = {
+        usuario: "toroj",
+        inicio: "",
+        fin: ""
+    }
+    $scope.post($scope.setReportsPath('consultarRecorridosUsuario'), $scope.r, function(response){
+        $scope.datos = response.data.datos;
+    });
+
+
+
     var input = {
 		id_usuario: $scope.$storage.user.id
 	}

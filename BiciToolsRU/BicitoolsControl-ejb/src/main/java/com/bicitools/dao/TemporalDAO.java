@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.bicitools.dao;
+package com.bicitools.dao; 
 
 import com.bicitools.common.MessagesBicitools;
 import com.bicitools.entity.Temporal;

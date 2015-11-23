@@ -15,7 +15,7 @@
 					<th>Nombre</th>
 					<th>Invitar</th>
 				</tr>
-				<tr ng-repeat="r in routes">
+				<tr ng-repeat="r in $storage.routes">
 					<td>{{r.nombre}}</td>
 					<td>
 						<button type="button" class="btn btn-default" ui-sref="ruta-invitar" >

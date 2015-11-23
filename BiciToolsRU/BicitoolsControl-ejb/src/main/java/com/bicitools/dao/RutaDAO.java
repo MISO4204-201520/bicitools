@@ -1,11 +1,14 @@
-/*
+ /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.bicitools.dao;
+package com.bicitools.dao; 
 
 import com.bicitools.common.MessagesBicitools;
+import com.bicitools.entity.Alquileres;
+import com.bicitools.entity.AlquileresProductos;
+import com.bicitools.entity.LogsUsuario;
 import com.bicitools.entity.Ruta;
 import com.bicitools.entity.RutaPunto;
 import com.bicitools.entity.UsuarioRuta;
@@ -93,4 +96,28 @@ public class RutaDAO implements RutaDAOLocal {
         Query query = em.createNamedQuery("UsuarioRuta.findByRuta");
         query.setParameter("ruta", ruta);
         return  query.getResultList();  }
+
+    @Override
+    public void AgregarLogUsuario(String usuario_, Date fechaRegistro_, float latitud_, float longitud_, String rutaActual_, Date fechaInicioRecorrido_) {
+        LogsUsuario t = new LogsUsuario( usuario_,  fechaRegistro_,  String.valueOf(latitud_),  String.valueOf(longitud_),  rutaActual_,  fechaInicioRecorrido_);
+     
+        em.persist(t);
+    }
+
+    @Override
+    public List<AlquileresProductos> getAlquileresProductos() {
+      AlquileresProductos r = new AlquileresProductos();
+      
+        Query query = em.createNamedQuery("AlquileresProductos.findAll");
+        return  query.getResultList();
+        
+        
+        
+    }
+
+    @Override
+    public void alquilarProducto(String empresa_, String articulo_, String usuario_) {
+      Alquileres t = new Alquileres(empresa_,  articulo_,  usuario_, new Date());
+        em.persist(t);
+     }
 }

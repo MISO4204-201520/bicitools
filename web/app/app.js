@@ -267,6 +267,11 @@ function ($stateProvider, $httpProvider, $locationProvider, $urlMatcherFactoryPr
     //$httpProvider.interceptors.push("AuthHttpResponseInterceptor");
 }]);
 
+app.config(function(uiGmapGoogleMapApiProvider) {
+      uiGmapGoogleMapApiProvider.configure({
+          libraries: 'geometry,visualization'
+      });
+  });
 
 app.filter('num', function() {
     return function(input) {
