@@ -17,6 +17,7 @@ var vendorScripts ='vendor-scripts';
 
 // Paths
 var scriptsPath = [
+    'app/VariabilidadFront.js',
     'app/app.js',
     'app/controllers/**/*.js',
     'app/directives/sg-directive.js',

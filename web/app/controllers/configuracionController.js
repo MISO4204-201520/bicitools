@@ -199,7 +199,8 @@ app.controller('armarBiciController', ['$scope', '$http', '$state', function($sc
 }]);
 
 app.controller('ordenesController', ['$scope', '$http', '$state', function($scope, $http, $state) {
-	$scope.post($scope.setBikeConfPath('misOrdenes'), { usuario: $scope.$storage.user.usuario}, function(response){
+	//$scope.post($scope.setBikeConfPath('misOrdenes'), { usuario: $scope.$storage.user.usuario}, function(response){
+	$scope.post($scope.setBikeConfPath('misOrdenes'), { usuario: "toroj"}, function(response){
 		console.log(response.data.datos);
 		$scope.datos = response.data.datos;
 	});
