@@ -136,7 +136,7 @@ public class Reportes {
                         if (datoFin == "") {
                             datoFin = new Date().toString();
                         }
-                        if (readProperties("historialdeviajes")) 
+                        if (readProperties("historialviajes")) 
                         {
                             RutasDAOLocal ruta = new RutasDAODecorador(new RutasDAO());
                             res = ruta.obtenerRecorridosUsuarioFechas(usuario, datoIni, datoFin);

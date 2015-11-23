@@ -5,6 +5,11 @@
  */
 package validadorentrada;
 
+import java.awt.FlowLayout;
+import javax.swing.JCheckBox;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
 /**
  *
  * @author jhony
@@ -15,8 +20,9 @@ public class Principal extends javax.swing.JFrame {
      * Creates new form Principal
      */
     public Principal() {
-        initComponents();
         
+        initComponents();
+        crearComponentes();
         
     }
 
@@ -43,6 +49,8 @@ public class Principal extends javax.swing.JFrame {
         });
 
         jLabel1.setText("Entrada: ");
+
+        panelPrincipal.setBackground(new java.awt.Color(51, 255, 0));
 
         javax.swing.GroupLayout panelPrincipalLayout = new javax.swing.GroupLayout(panelPrincipal);
         panelPrincipal.setLayout(panelPrincipalLayout);
@@ -118,6 +126,30 @@ public class Principal extends javax.swing.JFrame {
                 new Principal().setVisible(true);
             }
         });
+    }
+    
+    
+    
+    
+    private void crearComponentes(){
+        Propiedades prop = new Propiedades();
+        JLabel label = new JLabel("label test",JLabel.LEFT);
+        JCheckBox chk = new JCheckBox();
+        JLabel lab1 = new JLabel("User Name", JLabel.LEFT);
+        panelPrincipal.setLayout(new FlowLayout());        
+        panelPrincipal.add(lab1);
+        
+        label.setText("label test");
+        chk.setSelected(true);
+        panelPrincipal.add(label);
+        panelPrincipal.add(chk);
+        chk.setVisible(true);
+        label.setVisible(true);
+        this.add(chk);
+        this.add(label);
+        //jButton1.setEnabled(false);
+        pack();
+        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

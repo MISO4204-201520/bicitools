@@ -44,7 +44,8 @@ public class VarReportes {
                     content = args[i];
                     String[] features = content.split(",");
                     for (String feature : features) {
-                        if (feature.equals("historialdeviajes") || feature.equals("reportes")) {
+                        feature = feature.toLowerCase();
+                        if (feature.equals("historialviajes") || feature.equals("reportes")) {
                             feature += " = true";
                             byte[] contentInBytes = feature.getBytes();
 
