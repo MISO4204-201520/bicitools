@@ -114,9 +114,8 @@ bicitools reportes/BicitoolsManager-ear/target/gfdeploy/BicitoolsManager-ear/gfv
 /bicitoolsRE/BicitoolsControl-ejb/target/
 /bicitoolsRE/BicitoolsManager-ear/target/
 /bicitoolsRE/BicitoolsServices-war/target/
-*.jar
+*.zip
 
-*.jar
 
 bicitoolsRE/BicitoolsCommon-jar/target/BicitoolsCommon-jar.jar
 
