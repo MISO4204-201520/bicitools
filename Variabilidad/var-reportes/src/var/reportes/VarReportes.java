@@ -30,7 +30,8 @@ public class VarReportes {
 
         String content = "#This is the text content";
 
-        try (FileOutputStream fop = new FileOutputStream(tmp)) {
+        try  {
+            FileOutputStream fop = new FileOutputStream(tmp);
 
             // if file doesnt exists, then create it
             if (!tmp.exists()) {
