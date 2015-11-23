@@ -26,9 +26,6 @@ import com.bicitools.mjson.gestionusuario.RegistrarUsuarioTwitterJson;
 import com.bicitools.mjson.gestionusuario.RespuestaJson;
 import com.bicitools.mjson.gestionusuario.SetConexionJson;
 import com.bicitools.mjson.gestionusuario.TemporalConexion;
-
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Method;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -36,10 +33,8 @@ import java.util.Date;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
@@ -50,18 +45,14 @@ import javax.ws.rs.core.MediaType;
 @Path("/gestionusuario")
 @Stateless
 public class GestionUsuario {
-    boolean variableTemporal=true;
+    boolean variableTemporal = true;
     @EJB
     private UsuarioDAOLocal usuarioDAOLocal;
     @EJB
     private VendedorDAOLocal vendedorDAOLocal;
     @EJB
     private ConexionesDAOLocal conexionesDAOLocal;
-
-    
-    
     //Obligatorio, GestionUsuario   
-    
     //@AnotacionVariabilidad (featureName = FeatureName.GestionUsuario)
     @POST
     @Path("/registrarUsuario")
@@ -89,7 +80,7 @@ public class GestionUsuario {
             dato.add(0);
             respuesta = ConstruyeRespuesta.construyeRespuestaFalla("Error al insertar", dato);
         }
-    return respuesta;
+        return respuesta;
     }
 
     //Obligatorio, Seguridad
@@ -195,7 +186,6 @@ public class GestionUsuario {
         return respuesta;
     }
 
-
     //Obligatorio, Seguridad
     //@AnotacionVariabilidad (featureName = FeatureName.Seguridad)
     @POST
@@ -224,7 +214,6 @@ public class GestionUsuario {
 
         return respuesta;
     }
-
 
     //Obligatorio, Seguridad
     //@AnotacionVariabilidad (featureName = FeatureName.Seguridad)
@@ -318,7 +307,6 @@ public class GestionUsuario {
         return respuesta;
     }
 
-
     //Obligatorio, Seguridad
     //@AnotacionVariabilidad (featureName = FeatureName.Seguridad)
     @POST
@@ -347,7 +335,7 @@ public class GestionUsuario {
 
         return respuesta;
     }
-    
+
     //Variable, ManejoPerfiles
     //@AnotacionVariabilidad (featureName = FeatureName.ManejoPerfiles)
     @POST
@@ -383,7 +371,6 @@ public class GestionUsuario {
         return respuesta;
     }
 
-    
     //Variable, ManejoPerfiles
     //@AnotacionVariabilidad (featureName = FeatureName.ManejoPerfiles)
     @POST
@@ -391,8 +378,7 @@ public class GestionUsuario {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public RespuestaJson actualizarPerfil(ActualizarPerfilJson actualizarPerfilJson) {
-  
-        
+
         RespuestaJson respuesta = new RespuestaJson();
 
         try {
@@ -433,7 +419,7 @@ public class GestionUsuario {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public RespuestaJson actualizarPerfilVendedor(ActualizarPerfilVendedorJson vendedorJson) {
-      
+
         RespuestaJson respuesta = new RespuestaJson();
 
         try {
@@ -509,7 +495,7 @@ public class GestionUsuario {
 
         return respuesta;
     }
-    
+
     //Opcional, redesSociales
     //@AnotacionVariabilidad (featureName = FeatureName.RedesSociales)
     @POST
@@ -582,7 +568,7 @@ public class GestionUsuario {
 
         return respuesta;
     }
-    
+
     //Opcional Redes Sociales
     //@AnotacionVariabilidad (featureName = FeatureName.RedesSociales)
     @POST
@@ -649,28 +635,5 @@ public class GestionUsuario {
 
         return respuesta;
     }
-
-    //variabilidad Completo
-    @GET
-    //@Path("/variabilidad/{name")
-    @Path("/variabilidad")
-    @Produces(MediaType.APPLICATION_JSON)
-    public void variabilidadRedSocial() {
-        System.out.println("Testing...");
-        /*
-        
-        Class<GestionUsuario> obj = GestionUsuario.class;
-        for (Method method: obj.getDeclaredMethods()){
-            if (method.isAnnotationPresent(AnotacionVariabilidad.class)){
-                Annotation annotation = method.getAnnotation(AnotacionVariabilidad.class);
-                    AnotacionVariabilidad anotacionVariabilidad= (AnotacionVariabilidad)annotation;
-                    System.out.print("Anotacion sobre el metodo "+ method.getName()+" label anotacion "+ anotacionVariabilidad.featureName()
-                    +"valor de ese label de anotacion "+LectorProperties.getMensajeFeatureProperties(anotacionVariabilidad.featureName().toString()));
-                      
-            }
-        }*/
-        
-    }
-
 
 }
