@@ -1,0 +1,39 @@
+<div class="container">
+    <h2 class="text-center">Alquileres</h2>
+    <br>
+    <form name="form" ng-submit="form.$valid && submit()" novalidate>
+        <br>
+        <div ng-if="datos">
+            <div class="row">
+                <table class="table">
+                    <tr>
+                        <th>Nombre Empresa</th>
+                        <th>Tipo</th>
+                        <th>Referencia</th>
+                        <th>Descripción</th>
+                        <th>Estado</th>
+                        <th>Tiempo</th>
+                        <th>Costo (H)</th>
+                        <th>Alquilar</th>
+                    </tr>
+                    <tr ng-repeat="d in datos">
+                        <td ng-bind="d.nombre"></td>
+                        <td ng-bind="d.tipo"></td>
+                        <td ng-bind="d.referencia"></td>
+                        <td ng-bind="d.descripcion"></td>
+                        <td ng-bind="d.estado"></td>
+                        <td ng-bind="d.tiempo"></td>
+                        <td ng-bind="d.costo"></td>
+                        <td><button class="btn btn-primary" type="button" ng-click="alquilar($index)"><i class="fa fa-shopping-cart"></i></button></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </form>
+    <br>
+    <br>
+    <br>
+    <ui-gmap-google-map ng-if="mapa" center='map.center' zoom='map.zoom' draggable="true">
+        <ui-gmap-marker ng-repeat="m in map.markers" coords="m.coords" icon="m.icon" idkey="m.id"></ui-gmap-marker>
+    </ui-gmap-google-map>
+</div>

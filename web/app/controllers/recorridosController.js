@@ -295,7 +295,8 @@ function($scope, $http, $state) {
 	}
 
 	$scope.submit = function(){
-		console.log($scope.usuarios);
+		$scope.showSuccessAlert('Usuarios agregados exitósamente');
+		$state.go('consultar-rutas');
 		// $scope.post('invitarARuta', $scope.users, function(response){
 		// 	console.log(response.data);
 		// });
@@ -306,3 +307,116 @@ function($scope, $http, $state) {
 app.controller('miPosicionController', ['$scope', '$http', '$state',
 function($scope, $http, $state) {
 }]);
+
+
+app.controller('SitiosController', function($scope, $http, $state) {
+    $scope.r = {};
+    $scope.r.usuario = "toroj"; //$scope.$storage.user.usuario; //
+
+	$scope.datos = [
+		{
+			nombre: "Parque Simón Bolivar",
+			tipo: "Parque",
+			descripcion: "El mejor lugar para que te puedas divertir en familia",
+			tiempo: "57 mins",
+			distancia: "26.0km",
+			latitud: "4.653293",
+			longitud: "-74.091720",
+		},
+		{
+			nombre: "El gato gris",
+			tipo: "Restaurante",
+			descripcion: "¿Quieres sorprender a tu novio(a)? ¡Tráelo a comer aqui!",
+			tiempo: "10 mins",
+			distancia: "0.9 km",
+			latitud: "4.5969222",
+			longitud: "-74.069698",
+		},
+		{
+			nombre: "La Piscina",
+			tipo: "Hotel",
+			descripcion: "Tu ya sabes. (Puede que te regreses sin la bicicleta)",
+			tiempo: "12 mins",
+			distancia: "1.1 km",
+			latitud: "4.612562",
+			longitud: "-74.074901",
+		},
+		{
+			nombre: "Plaza de Bolivar",
+			tipo: "Otro",
+			descripcion: "Conoce los puntos clave de Bogotá",
+			tiempo: "21 mins",
+			distancia: "1.9 km",
+			latitud: "4.598294000000001",
+			longitud: "-74.07537189999999",
+		}
+	];
+
+    $scope.map = { center: { latitude: 4.603063, longitude:-74.064863 }, zoom: 15 };
+
+    $scope.verMapa = function(i){
+        $scope.mapa = true;
+        $scope.map.center =  {
+            latitude: $scope.datos[i].latitud,
+            longitude: $scope.datos[i].longitud
+        };
+
+        $scope.map.markers = [];
+
+        var marker = {
+            id: Date.now(),
+            coords: {
+                latitude: $scope.datos[i].latitud,
+                longitude: $scope.datos[i].longitud
+            }
+        };
+        $scope.map.markers.push(marker);
+        //$('#myModal').modal();
+    };
+});
+
+app.controller('AlquileresController', function($scope, $http, $state) {
+	$scope.datos = [
+		{
+			nombre: "Bicicletas ACME",
+			tipo: "Ciudad",
+			referencia: "TF14",
+			descripcion: "Ideal para recorridos largos",
+			estado: "Perfecto",
+			costo: "$9.900",
+			tiempo: "6h"
+		},
+		{
+			nombre: "Bicicletas ACME",
+			tipo: "Motor",
+			referencia: "WD07",
+			descripcion: "Pefecta para esas subidas empinadas",
+			estado: "Bueno",
+			costo: "$39.900",
+			tiempo: "2h"
+		},
+		{
+			nombre: "Mountain Destiny",
+			tipo: "Montaña",
+			referencia: "m174FV",
+			descripcion: "Excelente para terrenos difíciles",
+			costo: "$14.750",
+			estado: "Perfecto",
+			tiempo: "12h"
+		},
+		{
+			nombre: "Afrodita's Bikes",
+			tipo: "Ciudad",
+			referencia: "Afrodita7200",
+			descripcion: "No verás una bicicleta como esta",
+			estado: "Perfecto",
+			costo: "$5.000",
+			tiempo: "18h"
+		},
+	];
+
+	$scope.alquilar = function(i){
+		$scope.showSuccessAlert('Alquiler de la bicicleta ' + $scope.datos[i].referencia + ' realizado satisfactóriamente');
+		$state.go('recorridos');
+	};
+});

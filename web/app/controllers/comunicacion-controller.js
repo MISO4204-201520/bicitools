@@ -46,3 +46,28 @@ app.controller('chatController', function($scope, $http, $state) {
         });
     }
 });
+
+app.controller('listaAmigosController', function($scope, $http, $state) {
+    $scope.amigos = [
+        {
+                nombres: "Johny",
+                apellidos: "Toro",
+                image: "https://github.com/Levaneng/line-fact/raw/master/Miso.Fabricas.Principal.Web/Images/Jhony-sq.png"
+        },
+        {
+                nombres: "Ludwing",
+                apellidos: "Badillo",
+                image: "https://raw.githubusercontent.com/Levaneng/line-fact/master/Miso.Fabricas.Principal.Web/Images/Ludwing-sq.png"
+        },
+        {
+                nombres: "Pedro",
+                apellidos: "Pineda",
+                image: "https://raw.githubusercontent.com/Levaneng/line-fact/master/Miso.Fabricas.Principal.Web/Images/Pedro-sq.png"
+        },
+        {
+                nombres: "Taidy",
+                apellidos: "Marrugo",
+                image: "https://raw.githubusercontent.com/Levaneng/line-fact/master/Miso.Fabricas.Principal.Web/Images/Taidy-sq.png"
+        }
+    ];
+});

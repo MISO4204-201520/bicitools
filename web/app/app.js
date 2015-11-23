@@ -100,6 +100,7 @@ app.run(["$q", "$rootScope", "$state", "$http", "$urlRouter", function ($q, $roo
             name: "listaAmigos",
             parent: 'menu-footer',
             url: "amigos/lista",
+            controller: "listaAmigosController",
             templateUrl : "views/modulos/comunicacion/lista-amigos.html"
         },
         {
@@ -179,6 +180,20 @@ app.run(["$q", "$rootScope", "$state", "$http", "$urlRouter", function ($q, $roo
             templateUrl : "views/modulos/configuracion-bicicletas/parte-form.html"
         },
         // ==== Recorridos ==========================================
+        {
+            name: 'sitios',
+            parent: 'menu-footer',
+            url: "sitios",
+            controller: "SitiosController",
+            templateUrl : "views/modulos/recorridos/sitios.html"
+        },
+        {
+            name: 'alquileres',
+            parent: 'menu-footer',
+            url: "alquileres",
+            controller: "AlquileresController",
+            templateUrl : "views/modulos/recorridos/alquileres.html"
+        },
         {
             name: 'recorridos',
             parent: 'menu-footer',
