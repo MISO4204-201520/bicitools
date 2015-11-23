@@ -1,0 +1,6 @@
+Recorridos,bicitoolsRU
+GestionUsuario,BicitoolsGU
+Comunicacion,BicitoolsCO
+Reportes,bicitoolsRE
+ConfiguradorBicicletas,BicitoolsMi
+Domicilios,BicitoolsDO

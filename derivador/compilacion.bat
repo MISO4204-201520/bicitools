@@ -12,6 +12,10 @@ cd BicitoolsCO
 start mvn clean install
 
 cd..
+cd bicitoolsRE
+start mvn clean install
+
+cd..
 cd BicitoolsMi
 start mvn clean install
 

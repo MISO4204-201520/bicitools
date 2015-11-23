@@ -1,0 +1,1 @@
+javac -cp C:/LBD/Personal/Maestria/MISO4204/bicitools3/bicitools/BicitoolsGU/BicitoolsCommon-jar/target/BicitoolsCommon-jar.jar C:/LBD/Personal/Maestria/MISO4204/bicitools3/bicitools/BicitoolsGU/BicitoolsCommon-jar/src/main/java/com/bicitools/variabilidad/Test.java
