@@ -3,13 +3,13 @@
 		<div class="col-sm-offset-4 col-sm-4">
 			<h2 class="text-center">Menu Reportes</h2>
 			<br>
-			<div class="form-group">
+			<div class="form-group" ng-if="featureExists('ReporteRutas')">
 				<button type="button" class="btn btn-default btn-lg col-xs-12" ui-sref="reportes-rutas-frecuentes">Rutas frecuentes</button>
 			</div>
-			<div class="form-group">
+			<div class="form-group" ng-if="featureExists('ReporteHistorialViajes')">
 				<button type="button" class="btn btn-default btn-lg col-xs-12" ui-sref="reportes-recorridos">Recorridos</button>
 			</div>
-			<div class="form-group">
+			<div class="form-group" ng-if="featureExists('ReporteMetricas')">
 				<button type="button" class="btn btn-default btn-lg col-xs-12" ui-sref="reportes-rutasrecorridos">Recorridos por Ruta</button>
 			</div>
 		</div>

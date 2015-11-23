@@ -3,11 +3,12 @@
 
     <br>
     <div class="row">
-        <div class="row"></div>
-        <h3 class="text-center">Tu estás aqui</h3>
-        <ui-gmap-google-map ng-if="mapa" center='map.center' zoom='map.zoom' draggable="true">
-            <ui-gmap-marker ng-repeat="m in map.markers" coords="m.coords" icon="m.icon" idkey="m.id"></ui-gmap-marker>
-        </ui-gmap-google-map>
+        <div ng-if="featureExists('Posicion')">
+            <h3 class="text-center">Tu estás aqui</h3>
+            <ui-gmap-google-map ng-if="mapa" center='map.center' zoom='map.zoom' draggable="true">
+                <ui-gmap-marker ng-repeat="m in map.markers" coords="m.coords" icon="m.icon" idkey="m.id"></ui-gmap-marker>
+            </ui-gmap-google-map>
+        </div>
         <br>
         <div class="row">
             <div class="col-xs-3">
@@ -26,48 +27,52 @@
         <br>
     </div>
     <hr>
-    <h3 class="text-center">Métricas</h3>
-    <br>
-    <div>
-        <div class="row">
-            <div class="col-xs-4 col-xs-offset-4">
+    <div ng-if="featureExists('Metricas')">
+        <h3 class="text-center">Métricas</h3>
+        <br>
+        <div>
+            <div class="row">
+                <div class="col-xs-4 col-xs-offset-4">
 
-                <table class="table" style="font-size: 18px;">
-                    <tr>
-                        <td><strong>Distancia Recorrida Anual</strong></td>
-                        <td>58 km</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Distancia Recorrida Mensual</strong></td>
-                        <td>11 km</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Distancia Recorrida Diaria</strong></td>
-                        <td>1.3 km</td>
-                    </tr>
-                </table>
+                    <table class="table" style="font-size: 18px;">
+                        <tr>
+                            <td><strong>Distancia Recorrida Anual</strong></td>
+                            <td>58 km</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Distancia Recorrida Mensual</strong></td>
+                            <td>11 km</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Distancia Recorrida Diaria</strong></td>
+                            <td>1.3 km</td>
+                        </tr>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
     <hr>
-    <h3 class="text-center">Estos son tus recorridos hasta hoy</h3>
-    <br>
-    <div ng-if="datos">
-        <div class="row">
-            <table class="table">
-                <tr>
-                    <th>Fecha</th>
-                    <th>Ruta</th>
-                    <th>Tiempo estimado</th>
-                    <th>Distancia estimada</th>
-                </tr>
-                <tr ng-repeat="d in datos">
-                    <td ng-bind="d.fechaHora"></td>
-                    <td ng-bind="d.nombre"></td>
-                    <td ng-bind="d.tiempo"></td>
-                    <td ng-bind="d.distancia"></td>
-                </tr>
-            </table>
+    <div ng-if="featureExists('HistorialViajes')">
+        <h3 class="text-center" >Estos son tus recorridos hasta hoy</h3>
+        <br>
+        <div ng-if="datos">
+            <div class="row">
+                <table class="table">
+                    <tr>
+                        <th>Fecha</th>
+                        <th>Ruta</th>
+                        <th>Tiempo estimado</th>
+                        <th>Distancia estimada</th>
+                    </tr>
+                    <tr ng-repeat="d in datos">
+                        <td ng-bind="d.fechaHora"></td>
+                        <td ng-bind="d.nombre"></td>
+                        <td ng-bind="d.tiempo"></td>
+                        <td ng-bind="d.distancia"></td>
+                    </tr>
+                </table>
+            </div>
         </div>
     </div>
     <br>
