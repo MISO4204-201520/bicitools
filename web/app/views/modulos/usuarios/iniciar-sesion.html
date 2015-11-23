@@ -10,36 +10,42 @@
 				<div class="col-sm-offset-2 col-sm-8">
 					<h2 class="color-black">Iniciar sesión</h2>
 					<br>
-					<div class="row" ng-if="featureExists('Facebook')">
-						<button class="btn btn-lg btn-social btn-facebook col-xs-12">
-							<i class="fa fa-facebook"></i>Iniciar sesión con Facebook
-						</button>
-					</div>
-					<br>
-					<div class="row" ng-if="featureExists('Twitter')">
-						<button class="btn btn-lg btn-social btn-twitter col-xs-12">
-							<i class="fa fa-twitter"></i>Iniciar sesión con Twitter
-						</button>
-					</div>
-					<br>
-					<hr>
-					<form name="form" ng-submit="form.$valid && submit()" novalidate>
-						<sg-textbox model="u.user" label="Nombre de usuario" labelType="hideRequired" required></sg-textbox>
-						<sg-passwordbox model="u.contrasenia" label="Contraseña" labelType="hideRequired" required></sg-passwordbox>
-						<br>
-						<button type="submit" class="col-xs-12 btn btn-lg btn-block btn-primary">Iniciar sesión</button>
-					</form>
-					<br>
-					<!-- <p class="text-center"><a ui-sref="registrar">¿Olvidaste la contraseña?</a></p> -->
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-sm-offset-4 col-sm-4 ">
-					<hr>
-					<p class="text-center">¿No tienes una cuenta? <a ui-sref="registrar">Regístrate</a></p>
-				</div>
-			</div>
-		</div>
 
+					<div class="row" ng-if="featureExists('Facebook')">
+						<!-- <button class="btn btn-lg btn-social btn-facebook col-xs-12">
+						<i class="fa fa-facebook"></i>Iniciar sesión con Facebook
+					</button> -->
+					<fb:login-button scope="public_profile,email,publish_actions" onlogin="checkLoginState();" >
+				</fb:login-button>
+				<div id="nombre"></div>
+				<div id="iduserfacebook"></div>
+				<div id="correo"></div>
+			</div>
+			<br>
+			<div class="row" ng-if="featureExists('Twitter')">
+				<button class="btn btn-social btn-twitter">
+					<i class="fa fa-twitter"></i>Log in
+				</button>
+			</div>
+			<br>
+			<hr>
+			<form name="form" ng-submit="form.$valid && submit()" novalidate>
+				<sg-textbox model="u.user" label="Nombre de usuario" labelType="hideRequired" required></sg-textbox>
+				<sg-passwordbox model="u.contrasenia" label="Contraseña" labelType="hideRequired" required></sg-passwordbox>
+				<br>
+				<button type="submit" class="col-xs-12 btn btn-lg btn-block btn-primary">Iniciar sesión</button>
+			</form>
+			<br>
+			<!-- <p class="text-center"><a ui-sref="registrar">¿Olvidaste la contraseña?</a></p> -->
+		</div>
 	</div>
+	<div class="row">
+		<div class="col-sm-offset-4 col-sm-4 ">
+			<hr>
+			<p class="text-center">¿No tienes una cuenta? <a ui-sref="registrar">Regístrate</a></p>
+		</div>
+	</div>
+</div>
+
+</div>
 </header>

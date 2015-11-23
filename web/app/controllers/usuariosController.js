@@ -15,6 +15,25 @@ function($scope, $http, $state) {
 			$state.go('home');
 		});
 	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }]);
 
 app.controller('registrarController', ['$scope', '$http', '$state', function($scope, $http, $state) {

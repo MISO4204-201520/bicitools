@@ -10,6 +10,10 @@ app.run(["$rootScope", "$state", "$stateParams", function ($rootScope, $state, $
     $rootScope.$stateParams = $stateParams;
 }]);
 
+
+
+
+
 var $stateProviderRef = null;
 
 app.run(["$q", "$rootScope", "$state", "$http", "$urlRouter", function ($q, $rootScope, $state, $http, $urlRouter) {

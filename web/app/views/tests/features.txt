@@ -1,0 +1,29 @@
+ProyectoBicicletas,Recorridos,Sitios,Alquileres,MejorRuta,Mapas,Posicion,Desplazamiento,Individual,Grupal,Metricas,HistorialViajes,GestionUsuario,Seguridad,ManejoPerfiles,RedesSociales,Twitter,Facebook,Comunicacion,CompartirRedesSociales,GestionAmigos,Mensaje,Notificaciones,Reportes,ReporteMetricas,ReporteRutas,ReporteHistorialViajes,ConfiguradorBicicletas,FrontEnd,Movil,Web,Domicilios
+
+
+
+Ruta%20Uniandes%20-%20Centro%20Comercial%20Andino
+
+Miren%20mi%20nueva%20ruta,%20es%20la%20ostia
+
+Bicitools
+%20
+
+
+
+$(document).ready(function(){
+    $('#share_button').click(function(e){
+      e.preventDefault();
+      FB.ui(
+        {
+          method: 'feed',
+          name: 'This is the content of the "name" field.',
+          link: 'URL which you would like to share ',
+          picture: ‘URL of the image which is going to appear as thumbnail image in share dialogbox’,
+          caption: 'Caption like which appear as title of the dialog box',
+          description: 'Small description of the post',
+          message: ''
+        }
+      );
+    });
+  });

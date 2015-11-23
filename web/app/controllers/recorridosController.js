@@ -271,6 +271,21 @@ function($scope, $http, $state) {
 		];
 	}
 
+	$scope.compartirFacebook = function(){
+		console.log(':)');
+		FB.ui(
+          {
+            method: 'feed',
+            name: 'This is the content of the "name" field.',
+            link: 'URL which you would like to share ',
+            picture: 'URL of the image which is going to appear as thumbnail image in share dialogbo',
+            caption: 'Caption like which appear as title of the dialog box',
+            description: 'Small description of the post',
+            message: 'Holaaa'
+          }
+        );
+	}
+
 	// $scope.get('obtenerRutasUsuario', function(response1){
 	// 	$scope.routes = response1.data;
 	// 	console.log(response1.data);
