@@ -26,9 +26,7 @@ import com.bicitools.mjson.gestionusuario.RegistrarUsuarioTwitterJson;
 import com.bicitools.mjson.gestionusuario.RespuestaJson;
 import com.bicitools.mjson.gestionusuario.SetConexionJson;
 import com.bicitools.mjson.gestionusuario.TemporalConexion;
-import com.bicitools.variabilidad.AnotacionVariabilidad;
-import com.bicitools.variabilidad.AnotacionVariabilidad.FeatureName;
-import com.bicitools.variabilidad.LectorProperties;
+
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.text.Format;
@@ -64,14 +62,12 @@ public class GestionUsuario {
     
     //Obligatorio, GestionUsuario   
     
-    @AnotacionVariabilidad (featureName = FeatureName.GestionUsuario)
+    //@AnotacionVariabilidad (featureName = FeatureName.GestionUsuario)
     @POST
     @Path("/registrarUsuario")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public RespuestaJson registrarUsuario(RegistrarUsuarioJson usuarioJson) {
-      if (true)
-		throw new RuntimeException("serivicio obligatorio");
         RespuestaJson respuesta = new RespuestaJson();
         ArrayList<Integer> dato = new ArrayList<Integer>();
         try {
@@ -97,14 +93,12 @@ public class GestionUsuario {
     }
 
     //Obligatorio, Seguridad
-@AnotacionVariabilidad (featureName = FeatureName.Seguridad)
+//@AnotacionVariabilidad (featureName = FeatureName.Seguridad)
     @POST
     @Path("/loginUsuario")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public RespuestaJson loginUsuario(LoginUsuarioJson usuarioJson) {
-       if (true)
-		throw new RuntimeException("serivicio obligatorio");
         RespuestaJson respuesta = new RespuestaJson();
         ArrayList<Integer> datos = new ArrayList<Integer>();
         try {
@@ -132,14 +126,12 @@ public class GestionUsuario {
     }
 
     //Obligatorio, GestionUsuario
-    @AnotacionVariabilidad (featureName = FeatureName.GestionUsuario)
+    //@AnotacionVariabilidad (featureName = FeatureName.GestionUsuario)
     @POST
     @Path("/getUsuariobyUsername")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public RespuestaJson getUsuariobyUsername(GetUsuariobyUsernameJson usuarioJson) {
-        if (true)
-		throw new RuntimeException("serivicio obligatorio");
         RespuestaJson respuesta = new RespuestaJson();
         ArrayList datos = new ArrayList();
         try {
@@ -165,14 +157,12 @@ public class GestionUsuario {
     }
 
     //Obligatorio, Seguridad
-    @AnotacionVariabilidad (featureName = FeatureName.Seguridad)
+    //@AnotacionVariabilidad (featureName = FeatureName.Seguridad)
     @POST
     @Path("/recuperarClave")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public RespuestaJson recuperarClave(RecuperarClaveJson usuarioJson) {
-        if (true)
-		throw new RuntimeException("serivicio obligatorio");
         RespuestaJson respuesta = new RespuestaJson();
         ArrayList<String> datos = new ArrayList<String>();
 
@@ -207,14 +197,12 @@ public class GestionUsuario {
 
 
     //Obligatorio, Seguridad
-    @AnotacionVariabilidad (featureName = FeatureName.Seguridad)
+    //@AnotacionVariabilidad (featureName = FeatureName.Seguridad)
     @POST
     @Path("/setConexion")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public RespuestaJson setConexion(SetConexionJson conexionJson) {
-      if (true)
-		throw new RuntimeException("serivicio obligatorio");
         RespuestaJson respuesta = new RespuestaJson();
         try {
             String res = conexionesDAOLocal.setConexion(conexionJson.getId_usuario(), new Date(), conexionJson.getTipoConexion());
@@ -239,14 +227,12 @@ public class GestionUsuario {
 
 
     //Obligatorio, Seguridad
-    @AnotacionVariabilidad (featureName = FeatureName.Seguridad)
+    //@AnotacionVariabilidad (featureName = FeatureName.Seguridad)
     @POST
     @Path("/getConexion")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public RespuestaJson getConexion(GetConexionJson conexionJson) {
-       if (true)
-		throw new RuntimeException("serivicio obligatorio");
         RespuestaJson respuesta = new RespuestaJson();
         ArrayList<Conexiones> datos = new ArrayList<Conexiones>();
         ArrayList datosEnviar = new ArrayList();
@@ -280,14 +266,12 @@ public class GestionUsuario {
     }
 
     //Oblogatorio, GestionUsuario
-    @AnotacionVariabilidad (featureName = FeatureName.GestionUsuario)    
+    //@AnotacionVariabilidad (featureName = FeatureName.GestionUsuario)    
     @POST
     @Path("/obtenerDetallesUsuario")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public RespuestaJson obtenerDetallesUsuario(ObtenerDetallesUsuarioJson usuarioJson) {
-      if (true)
-		throw new RuntimeException("serivicio obligatorio");
         RespuestaJson respuesta = new RespuestaJson();
         ArrayList<String> datos = new ArrayList<String>();
         try {
@@ -336,14 +320,12 @@ public class GestionUsuario {
 
 
     //Obligatorio, Seguridad
-    @AnotacionVariabilidad (featureName = FeatureName.Seguridad)
+    //@AnotacionVariabilidad (featureName = FeatureName.Seguridad)
     @POST
     @Path("/cerrarSesion")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public RespuestaJson cerrarSesion(CerrarSesionJson cerrarSesionJson) {
-       if (true)
-		throw new RuntimeException("serivicio obligatorio");
         RespuestaJson respuesta = new RespuestaJson();
         try {
             String res = conexionesDAOLocal.setConexion(cerrarSesionJson.getId_usuario(), new Date(), cerrarSesionJson.getTipoConexion());
@@ -367,14 +349,12 @@ public class GestionUsuario {
     }
     
     //Variable, ManejoPerfiles
-    @AnotacionVariabilidad (featureName = FeatureName.ManejoPerfiles)
+    //@AnotacionVariabilidad (featureName = FeatureName.ManejoPerfiles)
     @POST
     @Path("/registrarPerfilVendedor")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public RespuestaJson registrarPerfilVendedor(RegistrarPerfilVendedorJson vendedorJson) {
-      if (true)
-		throw new RuntimeException("serivicio obligatorio");
         RespuestaJson respuesta = new RespuestaJson();
 
         try {
@@ -405,7 +385,7 @@ public class GestionUsuario {
 
     
     //Variable, ManejoPerfiles
-    @AnotacionVariabilidad (featureName = FeatureName.ManejoPerfiles)
+    //@AnotacionVariabilidad (featureName = FeatureName.ManejoPerfiles)
     @POST
     @Path("/actualizarPerfil")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -447,15 +427,13 @@ public class GestionUsuario {
     }
 
     //Variable, ManejoPerfiles
-    @AnotacionVariabilidad (featureName = FeatureName.ManejoPerfiles)
+    //@AnotacionVariabilidad (featureName = FeatureName.ManejoPerfiles)
     @POST
     @Path("/actualizarPerfilVendedor")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public RespuestaJson actualizarPerfilVendedor(ActualizarPerfilVendedorJson vendedorJson) {
       
-        if (true)
-		throw new RuntimeException("serivicio obligatorio");
         RespuestaJson respuesta = new RespuestaJson();
 
         try {
@@ -487,14 +465,12 @@ public class GestionUsuario {
     }
 
     //Opcional, ManejoPerfiles
-    @AnotacionVariabilidad (featureName = FeatureName.ManejoPerfiles)
+    //@AnotacionVariabilidad (featureName = FeatureName.ManejoPerfiles)
     @POST
     @Path("/obtenerDetallePerfilVendedor")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public RespuestaJson obtenerDetallePerfilVendedor(ObtenerDetallesPerfilVendedorJson usuarioJson) {
-      if (true)
-		throw new RuntimeException("serivicio obligatorio");
         RespuestaJson respuesta = new RespuestaJson();
         ArrayList<String> datos = new ArrayList<String>();
         try {
@@ -535,14 +511,12 @@ public class GestionUsuario {
     }
     
     //Opcional, redesSociales
-    @AnotacionVariabilidad (featureName = FeatureName.RedesSociales)
+    //@AnotacionVariabilidad (featureName = FeatureName.RedesSociales)
     @POST
     @Path("/loginUsuarioFacebook")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public RespuestaJson loginUsuarioFacebook(LoginUsuarioFacebookJson usuarioJson) {
-      if (false)
-		throw new RuntimeException("este servicio es opciional");
         RespuestaJson respuesta = new RespuestaJson();
         ArrayList<String> datos = new ArrayList<String>();
         try {
@@ -574,14 +548,12 @@ public class GestionUsuario {
     }
 
     //Opcional, redesSociales
-@AnotacionVariabilidad (featureName = FeatureName.RedesSociales)
+//@AnotacionVariabilidad (featureName = FeatureName.RedesSociales)
     @POST
     @Path("/loginUsuarioTwitter")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public RespuestaJson loginUsuarioTwitter(LoginUsuarioTwitterJson usuarioJson) {
-      if (false)
-		throw new RuntimeException("este servicio es opciional");
         RespuestaJson respuesta = new RespuestaJson();
         ArrayList<String> datos = new ArrayList<String>();
         try {
@@ -612,14 +584,12 @@ public class GestionUsuario {
     }
     
     //Opcional Redes Sociales
-    @AnotacionVariabilidad (featureName = FeatureName.RedesSociales)
+    //@AnotacionVariabilidad (featureName = FeatureName.RedesSociales)
     @POST
     @Path("/registrarUsuarioFacebook")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public RespuestaJson registrarUsuarioFacebook(RegistrarUsuarioFacebookJson usuarioFacebookJson) {
-       if (false)
-		throw new RuntimeException("este servicio es opciional");
         RespuestaJson respuesta = new RespuestaJson();
         ArrayList<Integer> dato = new ArrayList<Integer>();
         try {
@@ -648,15 +618,13 @@ public class GestionUsuario {
     }
 
     //Opcional RedesSociales
-    @AnotacionVariabilidad (featureName = FeatureName.RedesSociales)
+    //@AnotacionVariabilidad (featureName = FeatureName.RedesSociales)
     @POST
     @Path("/registrarUsuarioTwitter")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
 
     public RespuestaJson registrarUsuarioTwitter(RegistrarUsuarioTwitterJson usuarioTwitterJson) {
-       if (false)
-		throw new RuntimeException("este servicio es opciional");
         RespuestaJson respuesta = new RespuestaJson();
         ArrayList<Integer> dato = new ArrayList<Integer>();
         try {
@@ -689,6 +657,8 @@ public class GestionUsuario {
     @Produces(MediaType.APPLICATION_JSON)
     public void variabilidadRedSocial() {
         System.out.println("Testing...");
+        /*
+        
         Class<GestionUsuario> obj = GestionUsuario.class;
         for (Method method: obj.getDeclaredMethods()){
             if (method.isAnnotationPresent(AnotacionVariabilidad.class)){
@@ -698,7 +668,8 @@ public class GestionUsuario {
                     +"valor de ese label de anotacion "+LectorProperties.getMensajeFeatureProperties(anotacionVariabilidad.featureName().toString()));
                       
             }
-        }
+        }*/
+        
     }
 
 
