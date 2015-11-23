@@ -120,3 +120,6 @@ bicitools reportes/BicitoolsManager-ear/target/gfdeploy/BicitoolsManager-ear/gfv
 /Variabilidad/var-reportes/nbproject/private/
 /Variabilidad/var-reportes/build/
 /Variabilidad/var-reportes/dist/
+*.jar
+
+*.jar
