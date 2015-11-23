@@ -29,15 +29,18 @@
                                 <img class="thumb-lg img-circle bx-s" ng-src="{{a.image}}" alt="">
                             </a>
                             <div class="pull-right btn-group-sm">
-                                <a href="#" class="btn btn-warning tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Edit" ng-click="">
+                                <a href="#" class="btn btn-success tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Edit" ng-click="bloquear(a)" ng-if="a.bloqueado">
+                                    <i class="fa fa-check"></i> Desbloquear
+                                </a>
+                                <a href="#" class="btn btn-warning tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Edit" ng-click="bloquear(a)" ng-if="!a.bloqueado">
                                     <i class="fa fa-ban"></i> Bloquear
                                 </a>
-                                <a href="#" class="btn btn-danger tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Delete" ng-click="">
+                                <a href="#" class="btn btn-danger tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Delete" ng-click="eliminar(a, $index)">
                                     <i class="fa fa-trash"></i> Eliminar
                                 </a>
                             </div>
                             <div class="info">
-                                <h4 ng-bind="a.nombres + ' ' + a.apellidos"></h4>
+                                <h4 ng-class="{'text-danger': a.bloqueado}" ng-bind="a.nombres + ' ' + a.apellidos"></h4>
                             </div>
                         </div>
                         <div class="clearfix"></div>

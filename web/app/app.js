@@ -107,6 +107,7 @@ app.run(["$q", "$rootScope", "$state", "$http", "$urlRouter", function ($q, $roo
             name: "encontrarAmigos",
             parent: 'menu-footer',
             url: "amigos/buscador",
+            controller: "buscarAmigosController",
             templateUrl : "views/modulos/comunicacion/encontrar-amigos.html"
         },
         {

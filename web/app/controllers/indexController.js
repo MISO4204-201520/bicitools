@@ -59,29 +59,29 @@ app.controller('indexController', ['$scope', '$http', '$state', '$localStorage',
                     // }
                 } else {
                     console.log('Código diferente a cero - ' + response.descripcion);
-                    $scope.alert = {
-                        tipo: 'alert-warning',
-                        mensaje: response.descripcion
-                    }
+                    // $scope.alert = {
+                    //     tipo: 'alert-warning',
+                    //     mensaje: response.descripcion
+                    // }
                 }
-                $('#alerta').show();
-                $('#alerta').fadeTo(2000, 500).slideUp(500, function(){
-                    $('#alerta').hide();
-                });
+                // $('#alerta').show();
+                // $('#alerta').fadeTo(2000, 500).slideUp(500, function(){
+                //     $('#alerta').hide();
+                // });
             }, function(response){
                 console.log('SERVICE ERROR');
                 console.log(response);
                 //$scope.error = "Error en la invocación";
                 //window.location.hash = '#body';
-                $scope.alert = {
-                    tipo: 'alert-danger',
-                    mensaje: "Error en la invocación"
-                };
-                $('#alerta').show();
-                $('#alerta').fadeTo(2000, 500).slideUp(500, function(){
-                    $('#alerta').hide();
-                    //$('#alerta').alert('close');
-                });
+                // $scope.alert = {
+                //     tipo: 'alert-danger',
+                //     mensaje: "Error en la invocación"
+                // };
+                // $('#alerta').show();
+                // $('#alerta').fadeTo(2000, 500).slideUp(500, function(){
+                //     $('#alerta').hide();
+                //     //$('#alerta').alert('close');
+                // });
             });
     }
 
@@ -145,16 +145,7 @@ app.controller('HomeController', function($scope, $http, $state, uiGmapGoogleMap
         });
         //$('#myModal').modal();
     };
-    $scope.descargar = function(){
-        $scope.d = $scope.r;
-        $scope.d.tipoArchivo = "1";
-        $scope.d.tipoReporte = "2";
-        $scope.d.rutaArchivo = "C:\\Users\\Jorge\\Downloads";
 
-        $scope.post($scope.setReportsPath('reporteLocal'), $scope.d, function(response){
-            console.log(response);
-        });
-    };
 
     $scope.r = {
         usuario: "toroj",
@@ -210,4 +201,14 @@ app.controller('HomeController', function($scope, $http, $state, uiGmapGoogleMap
 		};
         $scope.$storage.user = $scope.u;
 	});
+
+    $scope.iniciarRecorrido = function(){
+        $scope.recorridoIniciado = true;
+        $scope.mostrarDatosRecorrido = false;
+    }
+
+    $scope.detenerRecorrido = function(){
+        $scope.recorridoIniciado = false;
+        $scope.mostrarDatosRecorrido = true;
+    }
 });

@@ -1,1 +1,51 @@
-<h1>Encontrar amigos</h1>
+<div class="container">
+    <div class="row">
+        <h2 class="text-center">Buscar nuevos amigos</h2>
+        <div class="col-sm-6 col-sm-offset-3">
+        <hr>
+        </div>
+    </div>
+    <!-- <div class="row">
+        <div class="col-lg-8">
+            <div class="panel panel-default">
+                <div class="panel-body p-t-0">
+                    <div class="input-group">
+                        <input type="text" id="example-input1-group2" name="example-input1-group2" class="form-control" placeholder="Search">
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-effect-ripple btn-primary"><i class="fa fa-search"></i></button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> -->
+    <div class="row">
+        <div ng-repeat="a in amigos">
+            <div class="col-sm-6 col-sm-offset-3">
+                <div class="panel" style="margin-bottom: 0;">
+                    <div class="panel-body p-t-10">
+                        <div class="media-main">
+                            <a class="pull-left" href="#" >
+                                <img class="thumb-lg img-circle bx-s" ng-src="{{a.image}}" alt="">
+                            </a>
+                            <div class="pull-right btn-group-sm">
+                                <a href="#" class="btn btn-success tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Edit" ng-if="!a.bloqueado" ng-click="agregar(a)">
+                                    <i class="fa fa-plus"></i> Agregar
+                                </a>
+                                <a href="#" class="btn btn-success tooltips" disabled="disabled"  data-placement="top" data-toggle="tooltip" ng-if="a.bloqueado" data-original-title="Edit">
+                                    <i class="fa fa-check"></i> Solicitud enviada
+                                </a>
+                            </div>
+                            <div class="info">
+                                <h4 ng-class="{'text-danger': a.bloqueado}" ng-bind="a.nombres + ' ' + a.apellidos"></h4>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <hr>
+                    </div> <!-- panel-body -->
+                </div> <!-- panel -->
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+</div>
