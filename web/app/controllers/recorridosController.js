@@ -232,43 +232,57 @@ function($scope, $http, $state, uiGmapGoogleMapApi) {
 	$scope.submit = function(){
 		$scope.$storage.routes.push({ nombre: $scope.r.nombre});
 		$scope.showSuccessAlert('Ruta creada exitósamente');
-		$state.go('recorridos');
+		//$state.go('recorridos');
+		$scope.r.usuario = $scope.r.nombre;
+		$scope.r.nombre = $scope.$storage.user.usuario;
+		console.log($scope.r);
+		$scope.post($scope.setRoutesPath('CrearRuta'), $scope.r, function(response1){
+			console.log('RUTA CREADA');
+			$scope.coordinates.forEach(function(e){
+				var coordinate = {
+					nombre: $scope.r.usuario,
+					latitudOrigen:  "4.606" + Math.floor((Math.random() * 10) + 1) + "07",
+					longitudOrigen: -74.080161
+				}
+				//e.nombre = $scope.r.nombre;
 
-		// $scope.post($scope.setRoutesPath('CrearRuta'), $scope.r, function(response1){
-		// 	console.log('RUTA CREADA');
-		// 	$scope.coordinates.forEach(function(e){
-		// 		var coordinate = {
-		// 			nombre: $scope.r.nombre,
-		// 			latitudOrigen: e.latitudOrigen,
-		// 			longitudOrigen: e.longitudOrigen
-		// 		}
-		// 		//e.nombre = $scope.r.nombre;
-		//
-		// 		console.log(coordinate);
-		// 		$scope.post($scope.setRoutesPath('AgregarPuntoARuta'), coordinate, function(response2){
-		// 			console.log(response2.data);
-		// 		});
-		// 	});
-		//
-		// });
+				console.log(coordinate);
+				$scope.post($scope.setRoutesPath('AgregarPuntoARuta'), coordinate, function(response2){
+					console.log(response2.data);
+				});
+
+				coordinate = {
+					nombre: $scope.r.usuario,
+					latitudOrigen: 4.606808,
+					longitudOrigen: -74.080061
+				}
+				$scope.post($scope.setRoutesPath('AgregarPuntoARuta'), coordinate, function(response2){
+					console.log(response2.data);
+				});
+			});
+			$state.go('recorridos');
+		});
 	};
 }]);
 
 app.controller('consultarRutasController', ['$scope', '$http', '$state',
 function($scope, $http, $state) {
-	if($scope.$storage.routes === undefined || $scope.$storage.routes.length <= 0)
+	console.log('aaaaaaaaa');
+
+	//$scope.$storage.routes = [];
+	if($scope.$storage.routes === undefined || $scope.$storage.routes === null || $scope.$storage.routes.length <= 0)
 	{
-		$scope.$storage.routes = [
-			{
-				nombre: 'Uniandes - Centro Comercial Andino'
-			},
-			{
-				nombre: 'Parque Simón Bolivar - Universidad de los Andes'
-			},
-			{
-				nombre: 'La Candelaria - Municipio de Suba'
-			}
-		];
+		// $scope.$storage.routes = [
+		// 	{
+		// 		nombre: 'Uniandes - Centro Comercial Andino'
+		// 	},
+		// 	{
+		// 		nombre: 'Parque Simón Bolivar - Universidad de los Andes'
+		// 	},
+		// 	{
+		// 		nombre: 'La Candelaria - Municipio de Suba'
+		// 	}
+		// ];
 	}
 
 	$scope.compartirFacebook = function(){
@@ -286,10 +300,11 @@ function($scope, $http, $state) {
         );
 	}
 
-	// $scope.get('obtenerRutasUsuario', function(response1){
-	// 	$scope.routes = response1.data;
-	// 	console.log(response1.data);
-	// });
+
+	$http.get($scope.setRoutesPath('obtenerRutas'), function(response1){
+		$scope.routes = response1.data;
+		console.log(response1.data);
+	});
 }]);
 
 app.controller('invitarARutaController', ['$scope', '$http', '$state',

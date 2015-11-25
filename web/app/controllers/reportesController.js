@@ -10,7 +10,7 @@ app.controller('ReporteRecorridosController', function($scope, $http, $state) {
     });
     $('.input-group.date.d-fin').datepicker({
         format: "yyyy-mm-dd",
-        endDate: "today",
+        //endDate: "today",
         clearBtn: true,
         //language: "es",
         orientation: "bottom auto"
@@ -59,7 +59,11 @@ app.controller('ReporteRecorridosController', function($scope, $http, $state) {
 
 app.controller('ReportesRutasFrecuentesController', function($scope, $http, $state) {
     $scope.r = {};
-    $scope.r.usuario = "toroj"; //$scope.$storage.user.usuario; //
+
+    console.log('usuario');
+    console.log($scope.$storage.user);
+
+    $scope.r.usuario = $scope.$storage.user.usuario;
 
     $('.input-group.date.d-inicio').datepicker({
         format: "yyyy-mm-dd",
@@ -69,7 +73,7 @@ app.controller('ReportesRutasFrecuentesController', function($scope, $http, $sta
     });
     $('.input-group.date.d-fin').datepicker({
         format: "yyyy-mm-dd",
-        endDate: "today",
+        //endDate: "today",
         clearBtn: true,
         //language: "es",
         orientation: "bottom auto"
@@ -129,7 +133,7 @@ app.controller('ReporteRutasRecorridosController', function($scope, $http, $stat
     });
     $('.input-group.date.d-fin').datepicker({
         format: "yyyy-mm-dd",
-        endDate: "today",
+        //endDate: "today",
         clearBtn: true,
         //language: "es",
         orientation: "bottom auto"

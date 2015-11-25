@@ -10,6 +10,7 @@ function($scope, $http, $state) {
 
 	$scope.submit = function(){
 		$scope.$storage.user = $scope.u;
+		$scope.$storage.routes = [];
 		$scope.post( $scope.setUsersPath('loginUsuario'), $scope.u, function(response){
 			$scope.$storage.user.id = response.data.datos[0];
 			$state.go('home');
